@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import * as Actions from 'app/store/actions';
 import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
+export const SET_USER_LIST_LOADING = '[USER LIST] SET USER LIST LOADING';
 export const GET_USER_LIST = '[USER LIST] GET USER LIST';
 export const UPDATE_USER_LIST = '[USER LIST] UPDATE USER LIST';
 export const SET_SEARCH_TEXT = '[USER LIST] SET SEARCH TEXT';
@@ -29,16 +30,21 @@ export function getUserList(routeParams) {
 		params: routeParams
 	});
 
-	return (dispatch) =>
-		request.then((response) => dispatch({
-			type: GET_USER_LIST,
-			payload: {
-				users: response.data.docs,
-				routeParams,
-				totalPages: response.data.totalPages,
-				totalUsers: response.data.totalDocs,
-			},
-		}));
+	return (dispatch) => {
+		dispatch({ type: SET_USER_LIST_LOADING })
+		request.then((response) => {
+			dispatch({
+				type: GET_USER_LIST,
+				payload: {
+					users: response.data.docs,
+					routeParams,
+					totalPages: response.data.totalPages,
+					totalUsers: response.data.totalDocs,
+				},
+			})
+		}
+		);
+	}
 }
 
 export function updateUserListWithPageIndex(routeParams) {
@@ -46,7 +52,8 @@ export function updateUserListWithPageIndex(routeParams) {
 		params: routeParams
 	});
 
-	return (dispatch) =>
+	return (dispatch) => {
+		dispatch({ type: SET_USER_LIST_LOADING })
 		request.then((response) =>
 			dispatch({
 				type: UPDATE_USER_LIST,
@@ -60,6 +67,7 @@ export function updateUserListWithPageIndex(routeParams) {
 				},
 			})
 		);
+	}
 }
 
 export function setSearchText(event) {
@@ -117,6 +125,8 @@ export function updateUserPermission({ userId, email, role }) {
 			role
 		});
 
+		dispatch({ type: SET_USER_LIST_LOADING })
+
 		return request.then((response) =>
 			Promise.all([
 				dispatch({
@@ -141,6 +151,8 @@ export function toggleUserActivation({ userId, email, active }) {
 			active
 		});
 
+		dispatch({ type: SET_USER_LIST_LOADING })
+
 		return request.then((response) =>
 			Promise.all([
 				dispatch({
@@ -162,6 +174,8 @@ export function deactiveUsers(userIds) {
 		const request = axios.post('/api/contacts-app/remove-contacts', {
 			userIds
 		});
+
+		dispatch({ type: SET_USER_LIST_LOADING })
 
 		return request.then((response) =>
 			Promise.all([

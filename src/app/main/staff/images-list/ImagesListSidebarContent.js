@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormControlLabel, Switch, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import moment from 'moment';
 
 import * as Actions from 'app/store/actions';
+import LoadingSpinnerOverlay from 'app/main/shared/LoadingSpinnerOverlay';
 import { imageNameToPathConverter, avatarNameToPathConverter } from 'app/utils';
 import { mimnTypeConverter, bytesToSizeConverter } from 'app/utils';
 
@@ -25,6 +26,66 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 const useStyles = makeStyles({
+	tag: {
+		transition: 'transform .3s, filter .3s',
+		filter: 'grayscale(85%)',
+		'&:hover': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	red: {
+		backgroundColor: '#ef7c71',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	orange: {
+		backgroundColor: '#f5bb67',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	yellow: {
+		backgroundColor: '#fbe571',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	green: {
+		backgroundColor: '#80db7b',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	blue: {
+		backgroundColor: '#63a5f8',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	purple: {
+		backgroundColor: '#cb8cf8',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	gray: {
+		backgroundColor: '#b4b4b8',
+		'&.active': {
+			transform: 'scale(1.1)',
+			filter: 'grayscale(0%)',
+		}
+	},
+	noContent: {
+		height: '20em',
+	},
 	table: {
 		'& th': {
 			padding: '16px 0'
@@ -41,6 +102,7 @@ function ImagesListSidebarContent(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const theme = useTheme();
+	const isImageListLoading = useSelector(({ uploads }) => uploads.image.loading);
 	const selectedItem = useSelector(({ uploads }) => uploads.image.docs.find(doc => doc._id === uploads.image.selectedItemId));
 	const isMobileView = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -60,19 +122,41 @@ function ImagesListSidebarContent(props) {
 		if (imageCaption !== selectedItem.imageCaption) {
 			dispatch(Actions.updateImageById({
 				imageId: selectedItem._id,
-				imageCaption: imageCaption
+				imageCaption: imageCaption,
+				imageTags: selectedItem.imageTags
 			}));
 		}
 	}
 
+	function handleUpdateImageTags(newTag) {
+		const currentTags = new Set(selectedItem.imageTags);
+
+		if (currentTags.has(newTag)) {
+			currentTags.delete(newTag);
+		} else {
+			currentTags.add(newTag);
+		}
+
+		dispatch(Actions.updateImageById({
+			imageId: selectedItem._id,
+			imageCaption: selectedItem.imageCaption,
+			imageTags: Array.from(currentTags)
+		}));
+	}
+
 	if (!selectedItem) {
-		return null;
+		return (
+			<div className={clsx(classes.noContent, "flex flex-col justify-center items-center")}>
+				<Icon className="text-128" color="action">edit</Icon>
+				<Typography variant="subtitle1" className="py-16">選取圖片，即可查看其詳細資訊。</Typography>
+			</div>
+		);
 	}
 
 	return (
 		<FuseAnimate animation="transition.slideUpIn" delay={200}>
-
 			<div className="file-details p-16 sm:p-24">
+				{isImageListLoading && <LoadingSpinnerOverlay width={128} height={128} />}
 
 				<div className="preview h-128 sm:h-256 file-icon flex items-center justify-center">
 					<FuseAnimate animation="transition.expandIn" delay={300}>
@@ -84,7 +168,7 @@ function ImagesListSidebarContent(props) {
 					</FuseAnimate>
 				</div>
 
-				<FormControlLabel
+				{/* <FormControlLabel
 					className="offline-switch"
 					control={
 						<Switch
@@ -93,12 +177,21 @@ function ImagesListSidebarContent(props) {
 						/>
 					}
 					label="Available Offline"
-				/>
+				/> */}
 
 				<Typography variant="subtitle1" className="py-16">圖片資訊</Typography>
 
 				<div className="flex justify-start items-center">
-					<Avatar className="mr-5" alt="user avatar" src={avatarNameToPathConverter(selectedItem.author.photoURL)} />
+					<Avatar className="mr-12" alt="user avatar" src={avatarNameToPathConverter(selectedItem.author.photoURL)} />
+					<div className="flex justify-around items-center w-full">
+						<div onClick={() => handleUpdateImageTags('red')} className={clsx(classes.tag, classes.red, selectedItem.imageTags.includes('red') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('orange')} className={clsx(classes.tag, classes.orange, selectedItem.imageTags.includes('orange') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('yellow')} className={clsx(classes.tag, classes.yellow, selectedItem.imageTags.includes('yellow') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('green')} className={clsx(classes.tag, classes.green, selectedItem.imageTags.includes('green') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('blue')} className={clsx(classes.tag, classes.blue, selectedItem.imageTags.includes('blue') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('purple')} className={clsx(classes.tag, classes.purple, selectedItem.imageTags.includes('purple') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+						<div onClick={() => handleUpdateImageTags('gray')} className={clsx(classes.tag, classes.gray, selectedItem.imageTags.includes('gray') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+					</div>
 				</div>
 
 				<table className={clsx(classes.table, "w-full text-left")}>
@@ -114,14 +207,10 @@ function ImagesListSidebarContent(props) {
 										defaultValue={selectedItem.imageCaption}
 										onChange={event => setImageCaption(event.target.value)}
 										onBlur={event => handleSubmit()}
-										// {
-										// 	setImageCaptionEditMode(false);
-										// 	setImageCaption('');
-										// }}
 										InputProps={{
 											endAdornment: (
 												<InputAdornment position="end" className="cursor-pointer">
-													<Icon className="text-20" color="action">edit</Icon>
+													<Icon className="text-20" color="action">editedit</Icon>
 												</InputAdornment>
 											)
 										}}
@@ -160,7 +249,7 @@ function ImagesListSidebarContent(props) {
 
 						<tr>
 							<th>更新日期</th>
-							<td>{moment(selectedItem.updatedAt).format('YYYY-MM-DD HH:mm')}</td>
+							<td>{moment(selectedItem.updatedAt).format('LLL')}</td>
 						</tr>
 					</tbody>
 				</table>

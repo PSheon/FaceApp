@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Card, CardContent, Checkbox, Divider, FormControl, FormControlLabel, Typography, InputAdornment, Icon, CircularProgress } from '@material-ui/core';
+import { Button, Card, CardContent, Checkbox, Divider, FormControl, FormControlLabel, Typography, InputAdornment, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleLogin from 'react-google-login';
@@ -16,23 +16,17 @@ import clsx from 'clsx';
 import * as Actions from 'app/store/actions';
 import { GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID } from 'app/fuse-configs/envsConfig';
 import { socialLogoConverter } from 'app/utils';
+import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 
 const useStyles = makeStyles(theme => ({
 	root: {
 		// background: 'linear-gradient(to right, ' + theme.palette.primary.dark + ' 0%, ' + darken(theme.palette.primary.dark, 0.5) + ' 100%)',
-		backgroundImage: 'url(/assets/images/backgrounds/login-bg.jpg)',
+		backgroundImage: 'url(/assets/images/backgrounds/ys-bg.jpg)',
 		backgroundPosition: 'center',
 		backgroundAttachment: 'fixed',
 		backgroundRepeat: 'no-repeat',
 		backgroundSize: 'cover',
 		color: theme.palette.primary.contrastText
-	},
-	submitLoading: {
-		top: '50%',
-		left: '50%',
-		marginTop: -8,
-		marginLeft: -12,
-		color: theme.palette.primary,
 	},
 	googleButton: {
 		backgroundColor: '#d9534f',
@@ -63,8 +57,9 @@ function LoginPage() {
 				...login.error
 			});
 			disableButton();
+			setIsLoading(false);
 		}
-	}, [login.error]);
+	}, [login.error, login.success]);
 
 	const { form, handleChange } = useForm({
 		email: '',
@@ -119,14 +114,16 @@ function LoginPage() {
 			<div className="flex flex-col flex-grow-0 items-center text-white p-16 text-center md:p-128 md:items-start md:flex-shrink-0 md:flex-1 md:text-left">
 
 				<FuseAnimate animation="transition.expandIn">
-					<img className="w-128 mb-32" src="assets/images/logos/logo.png" alt="logo" />
+					<Link to="/home">
+						<img className="w-400 mb-32" src="assets/images/logos/logo.png" alt="logo" />
+					</Link>
 				</FuseAnimate>
 
-				<FuseAnimate animation="transition.slideUpIn" delay={300}>
+				{/* <FuseAnimate animation="transition.slideUpIn" delay={300}>
 					<Typography variant="h3" color="inherit" className="font-light">
 						青年職涯發展中心
 					</Typography>
-				</FuseAnimate>
+				</FuseAnimate> */}
 
 				{/* <FuseAnimate delay={400}>
 					<Typography variant="subtitle1" color="inherit" className="max-w-512 mt-16">
@@ -150,9 +147,8 @@ function LoginPage() {
 								<Button variant="contained" size="large"
 									onClick={renderProps.onClick}
 									className={clsx(classes.googleButton, "normal-case w-256 mb-8 rounded-full text-white hover:shadow-xl")}>
-									<img className="w-44 px-12 mr-20" src={socialLogoConverter('google')} alt="google logo" />
+									<img className="w-36 px-0 mr-20 bg-white rounded-full" src={socialLogoConverter('google')} alt="google logo" />
 									使用 Google 登入
-									{isLoading && <CircularProgress size={30} className={clsx(classes.submitLoading, "absolute")} />}
 								</Button>
 							)}
 							onSuccess={googleInfo => { handleSubmitGoogle(googleInfo) }}
@@ -166,9 +162,8 @@ function LoginPage() {
 								<Button variant="contained" size="large"
 									onClick={renderProps.onClick}
 									className={clsx(classes.facebookButton, "normal-case w-256 rounded-full text-white hover:shadow-xl")}>
-									<img className="w-44 px-12 mr-20" src={socialLogoConverter('facebook')} alt="facebook logo" />
+									<img className="w-36 px-0 mr-20 bg-white rounded-full" src={socialLogoConverter('facebook')} alt="facebook logo" />
 									使用 Facebook 登入
-									{isLoading && <CircularProgress size={30} className={clsx(classes.submitLoading, "absolute")} />}
 								</Button>
 							)}
 							callback={facebookInfo => { handleSubmitFacebook(facebookInfo) }}
@@ -177,7 +172,7 @@ function LoginPage() {
 
 						<div className="my-24 flex items-center justify-center">
 							<Divider className="w-64" />
-							<span className="mx-8 font-bold">OR</span>
+							<span className="mx-8 font-bold">或者</span>
 							<Divider className="w-64" />
 						</div>
 
@@ -242,19 +237,19 @@ function LoginPage() {
 								</Link>
 							</div>
 
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								className="w-full mx-auto mt-16 rounded-full hover:shadow-xl"
+								aria-label="登入"
+								disabled={!isFormValid}
+								value="legacy"
+							>
+								{isLoading ? '登入中' : '登入'}
+								{isLoading && <LoadingSpinner width={32} height={32} />}
+							</Button>
 							<div className="relative m-4">
-								<Button
-									type="submit"
-									variant="contained"
-									color="primary"
-									className="w-full mx-auto mt-16 rounded-full hover:shadow-xl"
-									aria-label="登入"
-									disabled={!isFormValid}
-									value="legacy"
-								>
-									{isLoading ? '登入中' : '登入'}
-								</Button>
-								{isLoading && <CircularProgress size={30} className={clsx(classes.submitLoading, "absolute")} />}
 							</div>
 
 						</Formsy>

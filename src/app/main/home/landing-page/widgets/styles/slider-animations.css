@@ -1,6 +1,6 @@
-* {
+/* * {
   outline: none;
-}
+} */
 
 .slide h1 {
   transition: all 0.3s ease;
@@ -114,7 +114,7 @@
   transition-delay: 0s;
 }
 
-button {
+button.slider-button {
   -webkit-appearance: none;
   appearance: none;
   -webkit-filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
@@ -134,7 +134,7 @@ button {
   cursor: cursor;
 }
 
-button:hover {
+button.slider-button:hover {
   color: #ffffff;
   background: #222222;
   -webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));

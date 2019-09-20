@@ -1,18 +1,18 @@
 import React from 'react';
-import {create} from 'jss';
+import { create } from 'jss';
 import jssExtend from 'jss-extend';
 import Frame from 'react-frame-component';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import {StylesProvider, jssPreset, ThemeProvider, createGenerateClassName} from '@material-ui/styles';
+import { StylesProvider, jssPreset, ThemeProvider, createGenerateClassName } from '@material-ui/styles';
+import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
         backgroundColor: theme.palette.background.default,
-        flexGrow       : 1,
-        height         : 400,
-        border         : 'none',
-        boxShadow      : theme.shadows[1]
+        flexGrow: 1,
+        height: 400,
+        border: 'none',
+        boxShadow: theme.shadows[1]
     }
 });
 
@@ -32,14 +32,14 @@ class DemoFrame extends React.Component {
 
     onContentDidMount = () => {
         this.setState({
-            ready        : true,
-            jss          : create({
+            ready: true,
+            jss: create({
                 ...jssPreset(),
-                plugins       : [...jssPreset().plugins, jssExtend()],
+                plugins: [...jssPreset().plugins, jssExtend()],
                 insertionPoint: this.contentDocument.querySelector('#jss-demo-insertion-point')
             }),
             sheetsManager: new Map(),
-            container    : this.contentDocument.body
+            container: this.contentDocument.body
         });
     };
 
@@ -59,14 +59,13 @@ class DemoFrame extends React.Component {
                 `
                 }}
                 />
-                <noscript id="jss-demo-insertion-point"/>
+                <noscript id="jss-demo-insertion-point" />
             </React.Fragment>
         )
     };
 
-    render()
-    {
-        const {children, classes, theme} = this.props;
+    render() {
+        const { children, classes, theme } = this.props;
 
         return (
             <Frame
@@ -96,8 +95,8 @@ class DemoFrame extends React.Component {
 
 DemoFrame.propTypes = {
     children: PropTypes.node.isRequired,
-    classes : PropTypes.object.isRequired,
-    theme   : PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, {withTheme: true})(DemoFrame);
+export default withStyles(styles, { withTheme: true })(DemoFrame);

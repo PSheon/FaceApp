@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Divider, Icon, IconButton, Input, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography } from '@material-ui/core';
+import { amber } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/styles';
 import * as UserActions from 'app/auth/store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { FuseUtils, FuseAnimateGroup } from '@fuse';
 import { Link } from 'react-router-dom';
-import amber from '@material-ui/core/colors/amber';
 import clsx from 'clsx';
 
 const useStyles = makeStyles({
@@ -107,7 +107,7 @@ function FuseShortcuts(props) {
 				enter={{
 					animation: "transition.expandIn"
 				}}
-				className={clsx("flex flex-1", props.variant === "vertical" && "flex-col")}
+				className={clsx("flex flex-1 justify-end", props.variant === "vertical" && "flex-col")}
 			>
 				{shortcutItems.map(item => item && (
 					<Link to={item.url} key={item.id} className={classes.item}>

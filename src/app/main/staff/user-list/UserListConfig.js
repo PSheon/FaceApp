@@ -4,7 +4,12 @@ import { authRoles } from 'app/auth';
 export const UserListConfig = {
 	settings: {
 		layout: {
-			config: {}
+			config: {
+				mode: 'fullWidth',
+				footer: {
+					display: false,
+				}
+			}
 		}
 	},
 	auth: authRoles.staff,

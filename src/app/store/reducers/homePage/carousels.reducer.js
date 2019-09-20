@@ -3,16 +3,25 @@
 import * as Actions from 'app/store/actions/homePage';
 
 const initialState = {
+  loading: false,
   docs: [],
   selectedItemId: ''
 };
 
 const carousels = function (state = initialState, action) {
   switch (action.type) {
+    case Actions.SET_HOMEPAGE_CAROUSELS_LOADING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
     case Actions.SYNC_HOMEPAGE_CAROUSELS:
       {
         return {
           ...state,
+          loading: false,
           docs: [...action.payload]
         };
       }
@@ -21,8 +30,8 @@ const carousels = function (state = initialState, action) {
         return {
           ...state,
           docs: [
+            action.ayload,
             ...state.docs,
-            action.ayload
           ]
         };
       }

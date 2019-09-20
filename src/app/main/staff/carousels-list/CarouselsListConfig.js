@@ -5,6 +5,7 @@ export const CarouselsListConfig = {
   settings: {
     layout: {
       config: {
+        mode: 'fullWidth',
         footer: false,
       }
     }

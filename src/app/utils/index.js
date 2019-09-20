@@ -1,8 +1,11 @@
 import _ from 'lodash';
 
 export * from './converter';
+export * from './event';
+export * from './appointment';
 export * from './reduceState';
 export * from './stockChart';
+export * from './statisticChart';
 
 export const exchangesExtractor = (EXCHANGES, { onlyTradable = false, onlyImportable = false }) => {
   let exchanges = Object.assign({}, EXCHANGES);
@@ -22,4 +25,35 @@ export const exchangesExtractor = (EXCHANGES, { onlyTradable = false, onlyImport
   }
 
   return exchanges;
+}
+
+export const userDetailChecker = (userDetail) => {
+  return (
+    !!userDetail.fullName &&
+    !!userDetail.bob &&
+    !!userDetail.gender &&
+    !!userDetail.education &&
+    !!userDetail.schoolName &&
+    !!userDetail.departmentName &&
+    !!userDetail.employmentStatus &&
+    !!userDetail.phone &&
+    !!userDetail.city &&
+    !!userDetail.heardFrom &&
+    !!userDetail.haveParticipated
+  )
+}
+
+export const preQuestionFormChecker = (form, requiredList) => {
+  if (!requiredList || requiredList.length === 0) {
+    return true
+  } else {
+    let tempStatus = true;
+    requiredList.forEach(item => {
+      if (!form[item]) {
+        tempStatus = false
+      }
+    })
+
+    return tempStatus;
+  }
 }

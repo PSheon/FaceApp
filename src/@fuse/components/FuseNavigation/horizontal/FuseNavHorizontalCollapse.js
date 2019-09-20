@@ -132,7 +132,7 @@ function FuseNavHorizontalCollapse(props) {
                                             onMouseLeave={() => handleToggle(false)}
                                         >
                                             {item.children && (
-                                                <ul className={clsx(classes.children, "pl-0")}>
+                                                <ul className={clsx(classes.children, "pl-0 py-8")}>
                                                     {
                                                         item.children.map((item) => (
 

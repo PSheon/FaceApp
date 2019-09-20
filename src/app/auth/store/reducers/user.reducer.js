@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js"
-
 import * as Actions from '../actions';
 import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
 import { avatarNameToPathConverter } from 'app/utils';
@@ -38,19 +36,11 @@ const user = function (state = initialState, action) {
 					},
 				}
 			}
-		case Actions.UPDATE_USER_BALANCE:
+		case Actions.SYNC_USER_ACCESS_HISTORY:
 			{
-				const oldBalance = BigNumber(state.data.balance['$numberDecimal']);
-				const plusAmount = BigNumber(action.payload);
-
 				return {
 					...state,
-					data: {
-						...state.data,
-						balance: {
-							'$numberDecimal': oldBalance.plus(plusAmount).toString(),
-						}
-					},
+					accessHistory: action.payload.accessHistory
 				}
 			}
 		case Actions.REMOVE_USER_DATA:

@@ -33,7 +33,7 @@ function StaffListTable(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const totalPages = useSelector(({ staffList }) => staffList.totalPages);
-	const staffs = useSelector(({ staffList }) => staffList.entities);
+	const staffs = useSelector(({ staffList }) => staffList.docs);
 	const selectedStaffIds = useSelector(({ staffList }) => staffList.selectedStaffIds);
 	const searchText = useSelector(({ staffList }) => staffList.searchText);
 
@@ -102,7 +102,7 @@ function StaffListTable(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					沒有符合條件的會員 ...
+					沒有符合條件的員工 ...
 				</Typography>
 			</div>
 		);

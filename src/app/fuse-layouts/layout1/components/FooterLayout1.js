@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import { AppBar, Toolbar, Typography, Icon } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { ThemeProvider, useTheme } from '@material-ui/styles';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import moment from 'moment';
 
+import { socialLogoConverter } from 'app/utils';
+
+const useStyles = makeStyles(theme => ({
+	logoImgWrapper: {
+		width: '1.5em',
+	},
+	unLinkImg: {
+		filter: 'grayscale(100%)',
+	}
+}));
+
 function FooterLayout1(props) {
-	const theme = useTheme();
+	const classes = useStyles();
 	const [timestamp, setTimestamp] = useState(null);
-	const isMobileView = useMediaQuery(theme.breakpoints.down('xs'));
 
 	const footerTheme = useSelector(({ fuse }) => fuse.settings.footerTheme);
 
@@ -23,19 +33,30 @@ function FooterLayout1(props) {
 	return (
 		<ThemeProvider theme={footerTheme}>
 			<AppBar id="fuse-footer" className="relative z-10" color="default">
-				<Toolbar className="px-16 py-0 flex items-center justify-between">
+				<Toolbar className="px-16 py-24 flex flex-col items-center justify-between sm:flex-row sm:py-0">
 					<div>
 						<Typography>
-							在線客服 | 聯繫我們
+							版權所有 © 勞動部勞動力發展署高屏澎東分署
 						</Typography>
+						<div className="flex justify-center items-center">
+							<Typography>
+								隱私權政策
+							</Typography>
+							<Typography>
+								政府網站資料開放宣告
+							</Typography>
+							<Typography>
+								著作權聲明
+							</Typography>
+						</div>
 					</div>
-					<div className="flex">
-						<Typography className="flex items-center pr-12">
-							{!isMobileView && <Icon>access_time</Icon>}
-							<span className="ml-6 font-semibold">
-								{timestamp}
-							</span>
-						</Typography>
+					<div className="flex justify-around items-center min-w-128">
+						<div className={classes.logoImgWrapper}>
+							<img className={classes.unLinkImg} alt="google Icon" src={socialLogoConverter('google')} />
+						</div>
+						<div className={classes.logoImgWrapper}>
+							<img className={classes.unLinkImg} alt="google Icon" src={socialLogoConverter('facebook')} />
+						</div>
 					</div>
 				</Toolbar>
 			</AppBar>

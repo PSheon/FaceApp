@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { AppBar, Card, CardContent, Toolbar, Typography, TableBody, Table, TableHead, TableCell, TableRow, Icon } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import humanizeDuration from "humanize-duration";
 import moment from 'moment';
 import UAParser from 'ua-parser-js';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 
-import jwtService from 'app/services/jwtService';
-
 function WidgetAccessHistory() {
-  const [accessHistory, setAccessHisory] = useState([]);
+  const accessHistory = useSelector(({ auth }) => auth.user.accessHistory);
+
   const uaParser = new UAParser();
 
-  useEffect(() => {
-    jwtService.getSelfAccessHistory()
-      .then(newAcccessHistory => {
-        // console.log('newAcccessHistory ', newAcccessHistory);
-        setAccessHisory(newAcccessHistory);
-      }).catch(err => {
-        console.log(err)
-      })
-  }, []);
-
-  if (!accessHistory.length) {
+  if (!accessHistory) {
     return (
       <div className="flex justify-center items-center">
         <LoadingSpinner width="128" height="128" />
@@ -55,6 +45,9 @@ function WidgetAccessHistory() {
         <Toolbar className="pl-16 pr-8">
           <Typography variant="subtitle1" color="inherit" className="flex-1">
             近期登入記錄
+          </Typography>
+          <Typography variant="subtitle1" color="inherit" className="rounded-full bg-green-600 text-white px-12">
+            沒有異常警示
           </Typography>
         </Toolbar>
       </AppBar>
@@ -118,7 +111,7 @@ function WidgetAccessHistory() {
                     scope="row"
                   >
                     <Typography className={clsx("inline text-11 font-500 px-8 py-4 rounded-4 whitespace-no-wrap")}>
-                      {moment(row.updatedAt).format('YYYY-MM-DD hh:mm:ss')}
+                      {moment(row.updatedAt).format('LLLL')}
                       ---
                       {
                         humanizeDuration(

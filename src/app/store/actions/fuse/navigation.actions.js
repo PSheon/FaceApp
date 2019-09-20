@@ -5,7 +5,6 @@ export const SET_NAVIGATION = '[NAVIGATION] SET NAVIGATION';
 export const RESET_NAVIGATION = '[NAVIGATION] RESET NAVIGATION'; // To Guest
 export const SET_NAVIGATION_USER = '[NAVIGATION] SET NAVIGATION - USER';
 export const SET_NAVIGATION_STAFF = '[NAVIGATION] SET NAVIGATION - STAFF';
-export const SET_NAVIGATION_LEADER = '[NAVIGATION] SET NAVIGATION - LEADER';
 export const SET_NAVIGATION_ADMIN = '[NAVIGATION] SET NAVIGATION - ADMIN';
 
 export function getNavigation() {
@@ -30,11 +29,6 @@ export function resetNavigation() {
 export function setNavigationUser() {
 	return {
 		type: SET_NAVIGATION_USER,
-	}
-}
-export function setNavigationLeader() {
-	return {
-		type: SET_NAVIGATION_LEADER,
 	}
 }
 export function setNavigationStaff() {

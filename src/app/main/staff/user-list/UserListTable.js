@@ -33,7 +33,7 @@ function UserListTable(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const totalPages = useSelector(({ userList }) => userList.totalPages);
-	const users = useSelector(({ userList }) => userList.entities);
+	const users = useSelector(({ userList }) => userList.docs);
 	const selectedUserIds = useSelector(({ userList }) => userList.selectedUserIds);
 	const searchText = useSelector(({ userList }) => userList.searchText);
 

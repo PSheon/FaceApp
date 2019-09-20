@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { InputAdornment, Icon, Button, Card, CardContent, Checkbox, FormControl, FormControlLabel, Typography, CircularProgress } from '@material-ui/core';
-// import { darken } from '@material-ui/core/styles/colorManipulator';
+import { InputAdornment, Icon, Button, Card, CardContent, Checkbox, FormControl, FormControlLabel, Typography } from '@material-ui/core';
+import { darken } from '@material-ui/core/styles/colorManipulator';
 import Formsy from 'formsy-react';
 import { TextFieldFormsy } from '@fuse';
 import { makeStyles } from '@material-ui/styles';
@@ -11,23 +11,17 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import LoadingSpinner from 'app/main/shared/LoadingSpinner';
+
 const useStyles = makeStyles(theme => ({
   root: {
-    // background: 'linear-gradient(to right, ' + theme.palette.primary.dark + ' 0%, ' + darken(theme.palette.primary.dark, 0.5) + ' 100%)',
-    backgroundImage: 'url(/assets/images/backgrounds/login-bg.jpg)',
+    background: 'linear-gradient(to right, ' + theme.palette.primary.dark + ' 0%, ' + darken(theme.palette.primary.dark, 0.5) + ' 100%)',
+    // backgroundImage: 'url(/assets/images/backgrounds/ys-bg.jpg)',
     backgroundPosition: 'center',
     backgroundAttachment: 'fixed',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     color: theme.palette.primary.contrastText,
-
-  },
-  submitLoading: {
-    top: '50%',
-    left: '50%',
-    marginTop: -8,
-    marginLeft: -12,
-    color: theme.palette.primary,
   },
 }));
 
@@ -198,20 +192,18 @@ function RegisterPage() {
                 />
               </FormControl>
 
-              <div className="relative m-4">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="w-full mx-auto mt-16 rounded-full"
-                  aria-label="Register"
-                  disabled={!isFormValid || !form.acceptTermsConditions}
-                  value="legacy"
-                  type="submit"
-                >
-                  建立帳號
-                </Button>
-                {isLoading && <CircularProgress size={30} className={clsx(classes.submitLoading, "absolute")} />}
-              </div>
+              <Button
+                variant="contained"
+                color="primary"
+                className="w-full mx-auto mt-16 rounded-full"
+                aria-label="Register"
+                disabled={!isFormValid || !form.acceptTermsConditions}
+                value="legacy"
+                type="submit"
+              >
+                {isLoading ? '建立帳號中' : '建立帳號'}
+                {isLoading && <LoadingSpinner width={32} height={32} />}
+              </Button>
 
             </Formsy>
 

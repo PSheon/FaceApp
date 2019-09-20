@@ -18,14 +18,14 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.primary,
         '&.active, &.active:hover, &.active:focus': {
             backgroundColor: theme.palette.secondary.main + '!important',
-            color: theme.palette.secondary.contrastText + '!important'
+            color: theme.palette.secondary.contrastText + '!important',
         },
         '& .list-item-text': {
             padding: '0 0 0 16px'
         },
         '&.level-0': {
             height: 48,
-            borderRadius: 4,
+            borderRadius: '12rem',
             '&:hover': {
                 background: 'transparent'
             },
@@ -113,7 +113,7 @@ function FuseNavHorizontalGroup(props) {
             </Reference>
             {ReactDOM.createPortal(
                 <Popper
-                    placement={nestedLevel === 0 ? "bottom-start" : "right"}
+                    placement={nestedLevel === 0 ? "bottom-start" : "center"}
                     eventsEnabled={opened}
                     positionFixed
                 >
@@ -132,9 +132,10 @@ function FuseNavHorizontalGroup(props) {
                                     <Paper
                                         onMouseEnter={() => handleToggle(true)}
                                         onMouseLeave={() => handleToggle(false)}
+                                        className="rounded-12"
                                     >
                                         {item.children && (
-                                            <ul className={clsx(classes.children, "pl-0")}>
+                                            <ul className={clsx(classes.children, "pl-0 py-8")}>
                                                 {
                                                     item.children.map((item) => (
                                                         <React.Fragment key={item.id}>

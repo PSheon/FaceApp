@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Icon, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from '@material-ui/core';
-import * as Actions from 'app/store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { json2csv } from 'json-2-csv';
+
+import { useSelector } from 'react-redux';
 
 function UserListMultiSelectMenu(props) {
-	const dispatch = useDispatch();
+	const USERS = useSelector(({ userList }) => userList.docs);
 	const selectedUserIds = useSelector(({ userList }) => userList.selectedUserIds);
+	const csvSource = USERS.filter(user => selectedUserIds.includes(user._id))
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -36,14 +38,17 @@ function UserListMultiSelectMenu(props) {
 				<MenuList>
 					<MenuItem
 						onClick={() => {
-							dispatch(Actions.deactiveUsers(selectedUserIds));
+							// dispatch(Actions.deactiveUsers(selectedUserIds));
+							json2csv(csvSource, () => {
+								console.log('sucess')
+							})
 							closeSelectedUsersMenu();
 						}}
 					>
 						<ListItemIcon className="min-w-40">
-							<Icon>delete</Icon>
+							<Icon>cloud_download</Icon>
 						</ListItemIcon>
-						<ListItemText primary="Remove" />
+						<ListItemText primary="匯出 CSV" />
 					</MenuItem>
 				</MenuList>
 			</Menu>

@@ -37,9 +37,13 @@ function ImagesListSidebarHeader(props) {
 					</Tooltip>
 				</FuseAnimate>
 				<FuseAnimate animation="transition.expandIn" delay={200}>
-					<IconButton>
-						<Icon>cloud_download</Icon>
-					</IconButton>
+					<Tooltip title="下載圖片" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} placement="bottom">
+						<a href={imageNameToPathConverter(selectedItem.imageName)} target="_blank" rel="noopener noreferrer">
+							<IconButton>
+								<Icon>cloud_download</Icon>
+							</IconButton>
+						</a>
+					</Tooltip>
 				</FuseAnimate>
 				<FuseAnimate animation="transition.expandIn" delay={200}>
 					<Tooltip title="刪除圖片" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} placement="bottom" onClick={handleDeleteImage}>

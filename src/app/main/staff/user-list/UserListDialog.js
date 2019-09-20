@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as Actions from 'app/store/actions';
-import { genderConverter, educationConverter, statsuConverter } from 'app/utils';
+import { genderConverter, educationConverter, statusConverter } from 'app/utils';
 
 const defaultFormState = {
 	id: '',
@@ -95,6 +95,8 @@ function UserListDialog(props) {
 		closeComposeDialog();
 	}
 
+	// console.log('form ', form)
+
 	return (
 		<Dialog
 			classes={{
@@ -103,7 +105,7 @@ function UserListDialog(props) {
 			{...userInfoDialog.props}
 			onClose={closeComposeDialog}
 			fullWidth
-			maxWidth="xs"
+			maxWidth="sm"
 		>
 
 			<AppBar position="static" elevation={1}>
@@ -112,7 +114,7 @@ function UserListDialog(props) {
 						會員資料
 					</Typography>
 					<IconButton onClick={closeComposeDialog}>
-						<CloseIcon />
+						<CloseIcon className="text-white" />
 					</IconButton>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
@@ -143,7 +145,9 @@ function UserListDialog(props) {
 							// onChange={handleChange}
 							variant="outlined"
 							required
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -160,7 +164,9 @@ function UserListDialog(props) {
 							value={form.email}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -183,7 +189,9 @@ function UserListDialog(props) {
 							value={form.fullName}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -199,7 +207,9 @@ function UserListDialog(props) {
 							value={form.gender && genderConverter(form.gender)}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -212,10 +222,12 @@ function UserListDialog(props) {
 							label="生日"
 							id="bob"
 							name="bob"
-							value={form.bob && moment(form.bob).format('YYYY/MM/DD')}
+							value={form.bob && moment(form.bob).format('LL')}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -238,7 +250,9 @@ function UserListDialog(props) {
 							value={form.education && educationConverter(form.education)}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -254,7 +268,9 @@ function UserListDialog(props) {
 							value={form.schoolName}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -270,7 +286,9 @@ function UserListDialog(props) {
 							value={form.departmentName}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div><div className="flex">
@@ -282,10 +300,12 @@ function UserListDialog(props) {
 							label="目前身分"
 							id="employmentStatus"
 							name="employmentStatus"
-							value={form.employmentStatus && statsuConverter(form.employmentStatus)}
+							value={form.employmentStatus && statusConverter(form.employmentStatus)}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -308,7 +328,9 @@ function UserListDialog(props) {
 							value={form.phone}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>
@@ -324,7 +346,9 @@ function UserListDialog(props) {
 							value={form.city}
 							// onChange={handleChange}
 							variant="outlined"
-							readOnly
+							InputProps={{
+								readOnly: true,
+							}}
 							fullWidth
 						/>
 					</div>

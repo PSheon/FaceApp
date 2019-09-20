@@ -7,6 +7,7 @@
 import 'typeface-muli';
 import './react-table-defaults';
 import './react-chartjs-2-defaults';
+import './moment-Localization';
 import './styles/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,7 +15,7 @@ import * as serviceWorker from './serviceWorker';
 import App from 'app/App';
 
 ReactDOM.render(
-    <App/>,
+    <App />,
     document.getElementById('root')
 );
 

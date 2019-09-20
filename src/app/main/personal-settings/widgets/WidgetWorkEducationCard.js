@@ -1,14 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { AppBar, Card, CardContent, Toolbar, Typography } from '@material-ui/core';
 
-import { educationConverter, statsuConverter } from 'app/utils';
+import { educationConverter, departmentNameConverter, statusConverter } from 'app/utils';
 
-function WidgetWorkEducationCard() {
-  const USER_PROFILE = useSelector(({ auth }) => auth.user);
-  const UserData = USER_PROFILE.data;
-
-  const { education, schoolName, departmentName, employmentStatus } = UserData;
+function WidgetWorkEducationCard(props) {
+  const { education, schoolName, departmentName, employmentStatus } = props.UserData;
 
   return (
     <Card className="h-full rounded-16">
@@ -42,7 +38,7 @@ function WidgetWorkEducationCard() {
               <td>科系名稱</td>
               <td className="text-right">
                 <Typography className="flex items-center font-semibold">
-                  {departmentName ? departmentName : '未提供'}
+                  {departmentName ? departmentNameConverter(departmentName) : '未提供'}
                 </Typography>
               </td>
             </tr>
@@ -50,7 +46,7 @@ function WidgetWorkEducationCard() {
               <td>現職工作</td>
               <td className="text-right">
                 <Typography className="flex items-center font-semibold">
-                  {employmentStatus ? statsuConverter(employmentStatus) : '未提供'}
+                  {employmentStatus ? statusConverter(employmentStatus) : '未提供'}
                 </Typography>
               </td>
             </tr>

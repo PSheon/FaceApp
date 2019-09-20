@@ -1,97 +1,97 @@
 const config = {
-    title   : 'Layout 2 - Horizontal',
+    title: 'Layout 2 - Horizontal',
     defaults: {
-        mode          : 'fullwidth',
-        scroll        : 'content',
-        navbar        : {
+        mode: 'container',
+        scroll: 'content',
+        navbar: {
             display: true
         },
-        toolbar       : {
-            display : true,
+        toolbar: {
+            display: true,
             position: 'below'
         },
-        footer        : {
+        footer: {
             display: true,
-            style  : 'fixed'
+            style: 'fixed'
         },
-        leftSidePanel : {
+        leftSidePanel: {
             display: true
         },
         rightSidePanel: {
             display: true
         }
     },
-    form    : {
-        mode   : {
-            title  : 'Mode',
-            type   : 'radio',
+    form: {
+        mode: {
+            title: 'Mode',
+            type: 'radio',
             options: [
                 {
-                    name : 'Boxed',
+                    name: 'Boxed',
                     value: 'boxed'
                 },
                 {
-                    name : 'Full Width',
+                    name: 'Full Width',
                     value: 'fullwidth'
                 },
                 {
-                    name : 'Container',
+                    name: 'Container',
                     value: 'container'
                 }
             ]
         },
-        navbar : {
-            type    : 'group',
-            title   : 'Navbar',
+        navbar: {
+            type: 'group',
+            title: 'Navbar',
             children: {
                 display: {
                     title: 'Display',
-                    type : 'switch'
+                    type: 'switch'
                 }
             }
         },
         toolbar: {
-            type    : 'group',
-            title   : 'Toolbar',
+            type: 'group',
+            title: 'Toolbar',
             children: {
-                display : {
+                display: {
                     title: 'Display',
-                    type : 'switch'
+                    type: 'switch'
                 },
                 position: {
-                    title  : 'Position',
-                    type   : 'radio',
+                    title: 'Position',
+                    type: 'radio',
                     options: [
                         {
-                            name : 'Above',
+                            name: 'Above',
                             value: 'above'
                         },
                         {
-                            name : 'Below',
+                            name: 'Below',
                             value: 'below'
                         }
                     ]
                 }
             }
         },
-        footer : {
-            type    : 'group',
-            title   : 'Footer',
+        footer: {
+            type: 'group',
+            title: 'Footer',
             children: {
                 display: {
                     title: 'Display',
-                    type : 'switch'
+                    type: 'switch'
                 },
-                style  : {
-                    title  : 'Style',
-                    type   : 'radio',
+                style: {
+                    title: 'Style',
+                    type: 'radio',
                     options: [
                         {
-                            name : 'Fixed',
+                            name: 'Fixed',
                             value: 'fixed'
                         },
                         {
-                            name : 'Static',
+                            name: 'Static',
                             value: 'static'
                         }
                     ]

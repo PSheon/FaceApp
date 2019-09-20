@@ -1,22 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { AppBar, Card, CardContent, Toolbar, Typography } from '@material-ui/core';
 
 import { genderConverter } from 'app/utils';
 
-function WidgetProfileCard() {
-  const USER_PROFILE = useSelector(({ auth }) => auth.user);
-  const UserData = USER_PROFILE.data;
-
-  const { fullName, gender, bob } = UserData;
+function WidgetProfileCard(props) {
+  const { fullName, gender, bob } = props.UserData;
 
   return (
     <Card className="h-full rounded-16">
       <AppBar position="static" elevation={0}>
         <Toolbar className="pl-16 pr-8">
           <Typography variant="subtitle1" color="inherit" className="flex-1">
-            個人資料
+            個人資訊
           </Typography>
         </Toolbar>
       </AppBar>
@@ -43,7 +39,15 @@ function WidgetProfileCard() {
               <td>生日</td>
               <td className="text-right">
                 <Typography className="flex items-center font-semibold">
-                  {bob ? moment(bob).format('YYYY-MM-DD') : '未提供'}
+                  {bob ? moment(bob).format('LL') : '未提供'}
+                </Typography>
+              </td>
+            </tr>
+            <tr>
+              <td>語言</td>
+              <td className="text-right">
+                <Typography className="flex items-center font-semibold">
+                  繁體中文
                 </Typography>
               </td>
             </tr>

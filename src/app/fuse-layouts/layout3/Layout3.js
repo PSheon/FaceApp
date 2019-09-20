@@ -90,7 +90,7 @@ function Layout3(props) {
                             <ToolbarLayout3 />
                         )}
 
-                        <FuseScrollbars className={clsx(classes.content)}>
+                        <FuseScrollbars className={clsx(classes.content)} scrollToTopOnRouteChange>
 
                             <FuseDialog />
 

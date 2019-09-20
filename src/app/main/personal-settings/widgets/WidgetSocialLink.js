@@ -40,7 +40,7 @@ function WidgetSocialLink() {
     if (USER_DATA[provider]) {
       return (
         <div className="flex items-center">
-          <Chip avatar={<Avatar src={socialLogoConverter(provider)} className="p-2" />} label={USER_DATA[provider.toLowerCase()]['displayName']} className="px-8" />
+          <Chip avatar={<Avatar src={socialLogoConverter(provider)} className="p-2" />} label={USER_DATA[provider.toLowerCase()]['displayName']} className="px-8 bg-green-400 text-white" />
         </div>
       )
     } else {
@@ -52,7 +52,7 @@ function WidgetSocialLink() {
               fields="name,email,picture"
               render={renderProps => (
                 <div className="flex items-center" onClick={renderProps.onClick}>
-                  <div className="p-2 bg-orange items-center text-indigo-100 leading-none rounded-full flex lg:inline-flex" role="alert">
+                  <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
                     <Icon className="text-white mx-6">link</Icon>
                     <Typography className="font-semibold mr-2 text-left flex-auto">連接 {provider.toUpperCase()} 帳號</Typography>
                   </div>
@@ -70,7 +70,7 @@ function WidgetSocialLink() {
               clientId={GOOGLE_CLIENT_ID}
               render={renderProps => (
                 <div className="flex items-center" onClick={renderProps.onClick}>
-                  <div className="p-2 bg-orange items-center text-indigo-100 leading-none rounded-full flex lg:inline-flex" role="alert">
+                  <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
                     <Icon className="text-white mx-6">link</Icon>
                     <Typography className="font-semibold mr-2 text-left flex-auto">連接 {provider.toUpperCase()} 帳號</Typography>
                   </div>

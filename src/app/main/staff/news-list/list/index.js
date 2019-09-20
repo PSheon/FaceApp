@@ -19,6 +19,10 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.primary.main,
     color: theme.palette.getContrastText(theme.palette.primary.main)
   },
+  dateLabel: {
+    top: '2.5rem',
+    left: '-1rem',
+  },
   board: {
     cursor: 'pointer',
     boxShadow: theme.shadows[0],
@@ -33,7 +37,11 @@ const useStyles = makeStyles(theme => ({
       boxShadow: theme.shadows[6]
     }
   },
+  unPublishedEffect: {
+    filter: 'brightness(0.35)',
+  },
   boardInfoWrapper: {
+    transition: 'padding .3s',
     background: 'linear-gradient(transparent, rgba(0, 0, 0, 0.9))',
   },
   boardTag: {
@@ -113,20 +121,23 @@ function NewsListPage(props) {
             {news.map(item => (
               <Link to={`/staff/news-list/${item._id}`} role="button" key={item._id}>
                 <div className="w-320 h-320 p-16">
-                  <div className={clsx(classes.board, "flex flex-col items-center justify-end w-full h-full rounded pt-24 rounded-lg shadow-md hover:shadow-lg")} style={{ backgroundImage: `url(${imageNameToPathConverter(item.imageName)})` }}>
+                  <div className={clsx(classes.board, !item.published && classes.unPublishedEffect, "flex flex-col items-center justify-end w-full h-full rounded pt-24 rounded-lg shadow-md hover:shadow-lg relative")} style={{ backgroundImage: `url(${imageNameToPathConverter(item.imageName)})` }}>
+                    {/* Date Label */}
+                    <div className={clsx(classes.dateLabel, "absolute bg-amber-600 text-white text-center px-8 rounded-full h-32")}>
+                      <Typography className="uppercase font-semibold tracking-wide whitespace-no-wrap text-lg leading-relaxed">
+                        {moment(item.updatedAt).format('LL')} - {item.published ? '已發佈' : '未發佈'}
+                      </Typography>
+                    </div>
                     <div className={clsx(classes.boardInfoWrapper, "flex justify-start items-center rounded-b-lg w-full pb-8")}>
                       <Avatar src={avatarNameToPathConverter(item.author.photoURL)} className="mx-10 my-5" alt={item.author.displayName} />
-                      <div className="flex flex-col justify-start overflow-hidden">
+                      <div className="flex flex-col justify-start overflow-hidden pr-12">
                         <div className="flex justify-start">
-                          {item.published && <div className={clsx(classes.boardTag, "inline-block bg-red-lighter text-red-darker text-xs px-2 rounded-full uppercase font-semibold tracking-wide whitespace-no-wrap mb-4 mr-8")}>發佈中</div>}
                           {item.tags.slice(0, 2).map((tag, tagIndex) => (
-                            <div key={tagIndex} className={clsx(classes.boardTag, "inline-block bg-red-lighter text-red-darker text-xs px-2 rounded-full uppercase font-semibold tracking-wide whitespace-no-wrap mb-4 mr-8")}>{tag}</div>
+                            <div key={tagIndex} className={clsx(classes.boardTag, "inline-block bg-amber-600 px-2 rounded-full uppercase font-semibold tracking-wide whitespace-no-wrap mb-4 mr-8")}>{tag}</div>
                           ))}
                         </div>
                         <Typography className="text-16 font-700 whitespace-no-wrap overflow-hidden truncate" color="inherit">{item.title}</Typography>
-                        <Typography className="text-16 font-300 text-gray-300 pr-32" color="inherit">
-                          {moment(item.updatedAt).format('YYYY/MM/DD')}
-                        </Typography>
+                        <Typography className="text-16 font-300 text-gray-300 pr-32" color="inherit">{item.subTitle}</Typography>
                       </div>
                     </div>
                   </div>

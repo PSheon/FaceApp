@@ -6,6 +6,9 @@ import userList from './userList';
 import staffList from './staffList';
 import uploads from './uploads';
 import homePage from './homePage';
+import activity from './activity';
+import appointment from './appointment';
+import adminDashboard from './adminDashboard';
 
 const createReducer = (asyncReducers) =>
 	combineReducers({
@@ -18,6 +21,9 @@ const createReducer = (asyncReducers) =>
 		uploads,
 
 		homePage,
+		activity,
+		appointment,
+		adminDashboard,
 
 		...asyncReducers,
 	});

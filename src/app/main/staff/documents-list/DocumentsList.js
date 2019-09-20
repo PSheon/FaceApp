@@ -20,7 +20,7 @@ function DocumentsList() {
 	return (
 		<FusePageSimple
 			classes={{
-				root: "bg-red",
+				root: "bg-gray-300",
 				header: "h-128 min-h-128 sm:h-160 sm:min-h-160",
 				sidebarHeader: "h-140 min-h-128 sm:h-160 sm:min-h-160",
 				rightSidebar: "w-320"

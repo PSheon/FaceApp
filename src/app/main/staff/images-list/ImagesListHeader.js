@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { FuseAnimate } from '@fuse';
+import { FuseAnimate, FuseAnimateGroup } from '@fuse';
 import clsx from 'clsx';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Radio from '@material-ui/core/Radio';
 import Fab from '@material-ui/core/Fab';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
@@ -56,7 +58,63 @@ const CssTextField = withStyles({
   },
 })(TextField);
 const useStyles = makeStyles(theme => ({
-  root: {},
+  tag: {
+    transition: 'transform .3s, filter .3s',
+    filter: 'grayscale(85%)',
+    '&:hover': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  red: {
+    backgroundColor: '#ef7c71',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  orange: {
+    backgroundColor: '#f5bb67',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  yellow: {
+    backgroundColor: '#fbe571',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  green: {
+    backgroundColor: '#80db7b',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  blue: {
+    backgroundColor: '#63a5f8',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  purple: {
+    backgroundColor: '#cb8cf8',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
+  gray: {
+    backgroundColor: '#b4b4b8',
+    '&.active': {
+      transform: 'scale(1.1)',
+      filter: 'grayscale(0%)',
+    }
+  },
   dialogTextField: {
     '& label.Mui-focused': {
       color: '#3e3e3e',
@@ -133,6 +191,7 @@ function ImagesListHeader(props) {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [imageCaption, setImageCaption] = useState(null);
+  const [imageTags, setImageTags] = useState([]);
 
   function handleClose() {
     setImageCaption(null);
@@ -140,6 +199,17 @@ function ImagesListHeader(props) {
   }
   function handleOpenUploader() {
     setDialogOpen(true);
+  }
+  function handleChangeTag(newTag) {
+    const currentTags = new Set(imageTags);
+
+    if (currentTags.has(newTag)) {
+      currentTags.delete(newTag);
+    } else {
+      currentTags.add(newTag);
+    }
+
+    setImageTags(Array.from(currentTags));
   }
 
   return (
@@ -154,9 +224,13 @@ function ImagesListHeader(props) {
       </div>
       <div className="flex flex-1 items-end">
         <FuseAnimate delay={200}>
-          <Typography className="flex flex-1 pl-72 pb-12 text-16 sm:text-24">
-            <span className="flex items-center">上傳 <Icon>chevron_right</Icon> 圖片列表</span>
-          </Typography>
+          <div className="flex flex-1 ">
+            <Typography className="pl-72 pb-12 text-16 sm:text-24">
+              <span className="flex items-center">
+                上傳 <Icon>chevron_right</Icon> 圖片列表
+              </span>
+            </Typography>
+          </div>
         </FuseAnimate>
         <FuseAnimate animation="transition.expandIn" delay={600}>
           <Fab color="secondary" aria-label="add" className="absolute bottom-0 right-0 mr-24 sm:mr-16 -mb-28 z-999" onClick={handleOpenUploader}>
@@ -181,7 +255,11 @@ function ImagesListHeader(props) {
             </FuseAnimate>
 
             {imageCaption !== null && (
-              <FuseAnimate>
+              <FuseAnimateGroup
+                enter={{
+                  animation: "transition.expandIn"
+                }}
+              >
                 <CssTextField
                   className="mb-24"
                   label="圖片說明"
@@ -192,11 +270,22 @@ function ImagesListHeader(props) {
                   variant="outlined"
                   fullWidth
                 />
-              </FuseAnimate>
+
+                <div className="flex justify-around items-center mb-24">
+                  <div onClick={() => handleChangeTag('red')} className={clsx(classes.tag, classes.red, imageTags.includes('red') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('orange')} className={clsx(classes.tag, classes.orange, imageTags.includes('orange') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('yellow')} className={clsx(classes.tag, classes.yellow, imageTags.includes('yellow') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('green')} className={clsx(classes.tag, classes.green, imageTags.includes('green') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('blue')} className={clsx(classes.tag, classes.blue, imageTags.includes('blue') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('purple')} className={clsx(classes.tag, classes.purple, imageTags.includes('purple') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                  <div onClick={() => handleChangeTag('gray')} className={clsx(classes.tag, classes.gray, imageTags.includes('gray') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                </div>
+              </FuseAnimateGroup>
             )}
+
             <div className={clsx(classes.filePondWrapper, "mb-12 rounded-12 border-3 border-dotted")}>
               <FilePond
-                labelIdle="點擊 或 拖曳來 <span class='filepond--label-action'>上傳圖片 </span>"
+                labelIdle="點擊 或 拖曳來 <span class='filepond--label-action'>上傳圖片</span>"
                 labelInvalidField="請上傳圖片"
                 labelFileWaitingForSize="檢查圖片大小"
                 labelFileSizeNotAvailable="圖片檔案太大了"
@@ -227,6 +316,7 @@ function ImagesListHeader(props) {
                     const formData = new FormData();
                     formData.append('imageData', file, file.name);
                     formData.append('imageName', file.name);
+                    formData.append('imageTags', imageTags);
                     formData.append('imageCaption', imageCaption);
                     formData.append('mimeType', file.type);
                     formData.append('imageHeight', metadata.size.height);

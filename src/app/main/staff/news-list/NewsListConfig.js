@@ -5,6 +5,7 @@ export const NewsListConfig = {
   settings: {
     layout: {
       config: {
+        mode: 'fullWidth',
         footer: false,
       }
     }

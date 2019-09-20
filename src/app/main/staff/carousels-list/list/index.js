@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 
 import { imageNameToPathConverter, avatarNameToPathConverter } from 'app/utils';
+import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 import * as Actions from 'app/store/actions';
 
 const useStyles = makeStyles(theme => ({
@@ -45,7 +46,9 @@ const useStyles = makeStyles(theme => ({
 function CarouselsListPage(props) {
   const classes = useStyles(props);
   const dispatch = useDispatch();
-  const carousels = useSelector(({ homePage }) => homePage.carousels.docs)
+  const CAROUSEL = useSelector(({ homePage }) => homePage.carousels)
+  const carousels = CAROUSEL.docs;
+  const isSyncing = CAROUSEL.loading;
 
   useEffect(() => {
     dispatch(Actions.syncHomePageCarousels());
@@ -65,36 +68,37 @@ function CarouselsListPage(props) {
           </Typography>
         </FuseAnimate>
 
-        <div>
-          <FuseAnimateGroup
-            className="flex flex-wrap w-full justify-center py-32 px-16"
-            enter={{
-              animation: "transition.slideUpBigIn",
-              duration: 300
-            }}
-          >
-            {carousels.map(carousel => (
-              <Link to={`/staff/carousels-list/${carousel._id}`} role="button" key={carousel._id}>
-                <div className="w-320 h-320 p-16">
-                  <div className={clsx(classes.board, "flex flex-col items-center justify-end w-full h-full rounded pt-24 rounded-lg")} style={{ backgroundImage: `url(${imageNameToPathConverter(carousel.imageName)})` }}>
-                    <div className={clsx(classes.boardInfoWrapper, "flex justify-start items-center rounded-b-lg w-full")}>
-                      <Avatar src={avatarNameToPathConverter(carousel.author.photoURL)} className="mx-10 my-5" alt={carousel.author.displayName} />
-                      <Typography className="text-16 font-300 pr-32" color="inherit">{carousel.author.displayName}</Typography>
-                    </div>
+        <FuseAnimateGroup
+          className="flex flex-wrap w-full justify-center py-32 px-16"
+          enter={{
+            animation: "transition.slideUpBigIn",
+            duration: 300
+          }}
+        >
+          {carousels.length < 5 && (
+            <div className="w-320 h-320 p-16">
+              <Link to="/staff/carousels-list/new" className={clsx(classes.board, classes.newBoard, "flex flex-col items-center justify-center w-full h-full rounded py-24 rounded-lg")} role="button">
+                <Icon className="text-56">add_circle</Icon>
+                <Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">新增輪播圖片</Typography>
+              </Link>
+            </div>
+          )}
+          {carousels.map(carousel => (
+            <Link to={`/staff/carousels-list/${carousel._id}`} role="button" key={carousel._id}>
+              <div className="w-320 h-320 p-16">
+                <div className={clsx(classes.board, "flex flex-col items-center justify-end w-full h-full rounded pt-24 rounded-lg")} style={{ backgroundImage: `url(${imageNameToPathConverter(carousel.imageName)})` }}>
+                  <div className={clsx(classes.boardInfoWrapper, "flex justify-start items-center rounded-b-lg w-full")}>
+                    <Avatar src={avatarNameToPathConverter(carousel.author.photoURL)} className="mx-10 my-5" alt={carousel.author.displayName} />
+                    <Typography className="text-16 font-300 pr-32" color="inherit">{carousel.author.displayName}</Typography>
                   </div>
                 </div>
-              </Link>
-            ))}
-            {carousels.length < 5 && (
-              <div className="w-320 h-320 p-16">
-                <Link to="/staff/carousels-list/new" className={clsx(classes.board, classes.newBoard, "flex flex-col items-center justify-center w-full h-full rounded py-24 rounded-lg")} role="button">
-                  <Icon className="text-56">add_circle</Icon>
-                  <Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">新增輪播圖片</Typography>
-                </Link>
               </div>
-            )}
-          </FuseAnimateGroup>
-        </div>
+            </Link>
+          ))}
+          <div className="flex justify-center items-center w-full min-h-10">
+            {isSyncing && <LoadingSpinner width={128} height={128} />}
+          </div>
+        </FuseAnimateGroup>
       </div>
     </div>
   );

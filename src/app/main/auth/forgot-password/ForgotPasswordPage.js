@@ -12,22 +12,32 @@ import { Link } from 'react-router-dom';
 import jwtService from 'app/services/jwtService';
 import * as Actions from 'app/store/actions';
 
-const ColoredTextField = withStyles({
+const CssTextField = withStyles({
 	root: {
 		'& label.Mui-focused': {
-			color: '#ffffff80',
+			color: '#3e3e3e',
 		},
 		'& .MuiInput-underline:after': {
-			borderBottomColor: '#ffffff80',
+			borderBottomColor: '#fefefe',
 		},
 		'& .MuiOutlinedInput-root': {
+			transition: 'box-shadow .5s',
+			'& fieldset': {
+				borderColor: '#3e3e3e',
+			},
+			'&:hover, &.Mui-focused': {
+				// boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+			},
 			'&:hover fieldset': {
-				borderColor: '#ffffff80',
+				borderColor: '#3e3e3e',
 			},
 			'&.Mui-focused fieldset': {
-				borderColor: '#ffffff80',
+				borderColor: '#3e3e3e',
 			},
 		},
+		'& .MuiOutlinedInput-notchedOutline': {
+			borderRadius: '2.4rem',
+		}
 	},
 })(TextField);
 const useStyles = makeStyles(theme => ({
@@ -53,10 +63,10 @@ function ForgotPasswordPage() {
 
 		jwtService.forgotPassword(form.email)
 			.then(message => {
-				dispatch(Actions.showMessage({ message }));
+				// dispatch(Actions.showMessage({ message }));
 
 				history.push({
-					pathname: '/login'
+					pathname: `/mail-confirm/${form.email}`
 				});
 			})
 			.catch(err => {
@@ -102,7 +112,7 @@ function ForgotPasswordPage() {
 							onSubmit={handleSubmit}
 						>
 
-							<ColoredTextField
+							<CssTextField
 								className="mb-16"
 								label="信箱"
 								autoFocus

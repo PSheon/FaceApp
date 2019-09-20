@@ -99,7 +99,7 @@ function DocumentsTable(props) {
 							<TableCell className="hidden sm:table-cell">{mimnTypeConverter(file.mimeType)}</TableCell>
 							<TableCell className="hidden sm:table-cell">{file.author.displayName}</TableCell>
 							<TableCell className="text-center hidden sm:table-cell">{file.documentSize === '' ? '-' : bytesToSizeConverter(file.documentSize)}</TableCell>
-							<TableCell className="hidden sm:table-cell">{moment(file.updatedAt).format('YYYY-MM-DD')}</TableCell>
+							<TableCell className="hidden sm:table-cell">{moment(file.updatedAt).format('LL')}</TableCell>
 							<Hidden lgUp>
 								<TableCell>
 									<IconButton

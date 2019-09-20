@@ -1,6 +1,7 @@
 import * as Actions from 'app/store/actions/userList';
 
 const initialState = {
+	loading: true,
 	docs: null,
 	searchText: '',
 	selectedUserIds: [],
@@ -17,12 +18,20 @@ const initialState = {
 
 const userListReducer = function (state = initialState, action) {
 	switch (action.type) {
+		case Actions.SET_USER_LIST_LOADING: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
 		case Actions.GET_USER_LIST:
 			{
 				const { users, routeParams, totalPages, totalUsers } = action.payload;
 
 				return {
 					...state,
+					loading: false,
 					docs: users,
 					routeParams: routeParams,
 					totalPages: totalPages,
@@ -39,6 +48,7 @@ const userListReducer = function (state = initialState, action) {
 
 				return {
 					...state,
+					loading: false,
 					docs: [
 						...state.docs,
 						...tempUsersArr,
@@ -57,7 +67,6 @@ const userListReducer = function (state = initialState, action) {
 			}
 		case Actions.TOGGLE_IN_SELECTED_USERS:
 			{
-
 				const { userId } = action.payload;
 
 				let selectedUserIds = [...state.selectedUserIds];
@@ -132,6 +141,7 @@ const userListReducer = function (state = initialState, action) {
 				})
 				return {
 					...state,
+					loading: false,
 					docs: newdocs
 				};
 			}

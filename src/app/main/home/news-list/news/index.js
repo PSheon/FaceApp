@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
 
-import { avatarNameToPathConverter } from 'app/utils';
+import { avatarNameToPathConverter, imageNameToPathConverter } from 'app/utils';
 import * as Actions from 'app/store/actions';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 
@@ -21,13 +21,14 @@ function News(props) {
   const dispatch = useDispatch();
   const selectedNewsId = props.match.params.newsId;
   const NEWS = useSelector(({ homePage }) => homePage.news);
+  const isSyncing = NEWS.loading;
 
   const [newsDetail, setNewsDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (NEWS.docs.length) {
-      const news = NEWS.docs.find(item => item._id === selectedNewsId)
+      const news = NEWS.docs.find(item => item._id === selectedNewsId && item.published)
       if (!news) {
         history.push({
           pathname: '/news-list'
@@ -38,11 +39,10 @@ function News(props) {
       }
     } else {
       /* News list not inited */
-      dispatch(Actions.syncHomePageNewsById(selectedNewsId));
+      if (!isSyncing)
+        dispatch(Actions.syncHomePageNewsById(selectedNewsId));
     }
-  }, [NEWS, NEWS.docs, dispatch, selectedNewsId]);
-
-  // console.log('newsDetail ', newsDetail)
+  }, [NEWS, NEWS.docs, dispatch, isSyncing, selectedNewsId]);
 
   return (
     <FusePageCarded
@@ -72,7 +72,7 @@ function News(props) {
                     </Typography>
                   </FuseAnimate>
                   <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography variant="caption">{moment(newsDetail.updatedAt).format('YYYY-MM-DD')}</Typography>
+                    <Typography variant="caption">{moment(newsDetail.updatedAt).format('LL')}</Typography>
                   </FuseAnimate>
                 </div>
               </div>
@@ -86,8 +86,15 @@ function News(props) {
             <LoadingSpinner width={128} height={128} />
           </div>
         ) : (
-            <div className="flex justify-center items-center">
-              <div className="flex flex-col max-w-xl py-16 px-32 justify-center items-start">
+            <div className="flex flex-col justify-center items-center">
+              <div className="bg-transparent overflow-hidden rounded-t-8">
+                <img
+                  alt={newsDetail.imageName}
+                  src={imageNameToPathConverter(newsDetail.imageName)}
+                  className="object-cover object-center w-full rounded-t-8 max-h-460"
+                />
+              </div>
+              <div className="flex flex-col max-w-2xl py-16 px-32 justify-center items-start">
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
                   <Typography variant="h1" className="text-32 sm:text-40 whitespace-pre-line py-32">
                     {newsDetail.title}

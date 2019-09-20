@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FroalaEditor from 'react-froala-wysiwyg';
 
 import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
+import ImageUploadDialog from 'app/main/shared/ImageUploadDialog';
 import { imageNameToPathConverter } from 'app/utils';
 import * as Actions from 'app/store/actions';
 import eventBusService from 'app/services/eventBusService';
@@ -95,7 +96,7 @@ function News(props) {
 
   const classes = useStyles(props);
   const [tabValue, setTabValue] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [isLoadingNextPageImages, setIsLoadingNextPageImages] = useState(false);
   const { form, handleChange, setForm } = useForm(null);
@@ -116,6 +117,7 @@ function News(props) {
           tags: [],
           published: false
         })
+        setIsLoading(false);
       } else {
         if (NEWS.docs.length) {
           const news = NEWS.docs.filter(item => item._id === selectedNewsId)[0]
@@ -125,15 +127,18 @@ function News(props) {
             })
           } else {
             setForm(news);
+            setIsLoading(false);
           }
         } else {
-          history.push({
-            pathname: '/staff/news-list'
-          })
+          // history.push({
+          //   pathname: '/staff/news-list'
+          // })
+          /* News not inited */
+          dispatch(Actions.syncHomePageNewsById(selectedNewsId));
         }
       }
     }
-  }, [NEWS.docs, form, selectedNewsId, setForm]);
+  }, [NEWS.docs, dispatch, form, selectedNewsId, setForm]);
 
   function handleOnPageBottom() {
     if (!IMAGE.hasNextPage) return
@@ -219,7 +224,7 @@ function News(props) {
                     </Typography>
                   </FuseAnimate>
                   <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography variant="caption">圖片內容</Typography>
+                    <Typography variant="caption">新聞內容</Typography>
                   </FuseAnimate>
                 </div>
               </div>
@@ -241,7 +246,7 @@ function News(props) {
                   <div>
                     <FuseAnimate animation="transition.slideRightIn" delay={300}>
                       <Button
-                        className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-lighter"
+                        className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-300"
                         variant="contained"
                         onClick={handleDeleteNews}
                         disabled={NEWS.docs.length < 2}
@@ -352,51 +357,53 @@ function News(props) {
             )}
             {tabValue === 1 &&
               form && (
-                <div className="mx-36 pb-128">
-                  <FroalaEditor
-                    tag='div'
-                    model={form.content}
-                    config={{
-                      placeholderText: '寫點新聞吧！',
-                      language: 'zh_tw',
-                      heightMin: 350,
-                      heightMax: 550,
-                      toolbarInline: true,
-                      toolbarVisibleWithoutSelection: true,
-                      dragInline: false,
-                      pluginsEnabled: [
-                        'align', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'embedly', 'emoticons', 'entities', 'fontAwesome', 'fontSize', 'image', 'imageManager', 'lineBreaker', 'lineHeight', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quote', 'save', 'url', 'video', 'wordPaste'
-                      ],
-                      imageInsertButtons: ['imageBack', '|', 'imageByURL', 'imageManager'],
-                      videoInsertButtons: ['videoBack', '|', 'videoByURL', 'videoEmbed'],
-                      linkInsertButtons: ['linkBack'],
-                      requestHeaders: {
-                        'Authorization': 'Bearer ' + window.localStorage.getItem('jwt_access_token')
-                      },
-                      imageManagerLoadParams: {
-                        page: 1,
-                        limit: 20,
-                        sort: 'updatedAt',
-                        order: -1
-                      },
-                      imageManagerPageSize: 20,
-                      imageManagerLoadURL: `${AUTH_REST_BASE_END_POINT}/api/image/manager`,
-                      videoResponsive: true,
-                      charCounterCount: false,
-                      tabSpaces: 4,
-                      imageUpload: false
-                    }}
-                    onModelChange={model => {
-                      setForm(form => _.setIn({ ...form }, 'content', model))
-                    }}
-                  />
-                </div>
+                <FuseAnimate animation="transition.slideRightIn" delay={300}>
+                  <div className="mx-36 pb-128">
+                    <FroalaEditor
+                      tag='div'
+                      model={form.content}
+                      config={{
+                        placeholderText: '寫點新聞吧！',
+                        language: 'zh_tw',
+                        heightMin: 350,
+                        heightMax: 550,
+                        toolbarInline: true,
+                        toolbarVisibleWithoutSelection: true,
+                        dragInline: false,
+                        pluginsEnabled: [
+                          'align', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'embedly', 'emoticons', 'entities', 'fontAwesome', 'fontSize', 'image', 'imageManager', 'lineBreaker', 'lineHeight', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quote', 'save', 'url', 'video', 'wordPaste'
+                        ],
+                        imageInsertButtons: ['imageBack', '|', 'imageByURL', 'imageManager'],
+                        videoInsertButtons: ['videoBack', '|', 'videoByURL', 'videoEmbed'],
+                        linkInsertButtons: ['linkBack'],
+                        requestHeaders: {
+                          'Authorization': 'Bearer ' + window.localStorage.getItem('jwt_access_token')
+                        },
+                        imageManagerLoadParams: {
+                          page: 1,
+                          limit: 20,
+                          sort: 'updatedAt',
+                          order: -1
+                        },
+                        imageManagerPageSize: 20,
+                        imageManagerLoadURL: `${AUTH_REST_BASE_END_POINT}/api/image/manager`,
+                        videoResponsive: true,
+                        charCounterCount: false,
+                        tabSpaces: 4,
+                        imageUpload: false
+                      }}
+                      onModelChange={model => {
+                        setForm(form => _.setIn({ ...form }, 'content', model))
+                      }}
+                    />
+                  </div>
+                </FuseAnimate>
               )
             }
             {tabValue === 2 && (
-              <div>
+              <FuseAnimate animation="transition.slideRightIn" delay={300}>
                 <div className="flex justify-center sm:justify-start flex-wrap">
-                  <Link to="/staff/images-list" role="button">
+                  <ImageUploadDialog trigger={
                     <label
                       htmlFor="button-file"
                       className={
@@ -407,14 +414,14 @@ function News(props) {
                     >
                       <Icon fontSize="large" color="action">cloud_upload</Icon>
                     </label>
-                  </Link>
+                  } />
                   {images.map((image, key) => (
                     <div
                       onClick={() => setNewsImageName(image.imageName)}
                       className={
                         clsx(
                           classes.newsImageItem,
-                          "flex items-center justify-center relative w-128 h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5",
+                          "flex items-center justify-center relative h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5",
                           (image.imageName === form.imageName) && 'featured')
                       }
                       key={key}
@@ -434,7 +441,7 @@ function News(props) {
                     }}
                   </VisibilitySensor>
                 </div>
-              </div>
+              </FuseAnimate>
             )}
           </div>
         )

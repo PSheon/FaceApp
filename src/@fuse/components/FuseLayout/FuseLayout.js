@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core';
+import { FuseLayouts } from '@fuse';
+import _ from '@lodash';
 import { withRouter } from 'react-router-dom';
 import { matchRoutes } from 'react-router-config'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from 'app/store/actions';
-import { FuseLayouts } from '@fuse';
-import _ from '@lodash';
 import AppContext from 'app/AppContext';
-import FuseLayoutConfigs from 'app/fuse-layouts/FuseLayoutConfigs';
+import { generateSettings } from 'app/store/reducers/fuse/settings.reducer';
 
 const styles = theme => ({
 	root: {
@@ -56,8 +56,7 @@ class FuseLayout extends Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		const { location } = props;
-		const { pathname } = location;
+		const { pathname } = props.location;
 		const matched = matchRoutes(state.routes, pathname)[0];
 		let newSettings = props.settings;
 
@@ -65,7 +64,7 @@ class FuseLayout extends Component {
 			if (matched && matched.route.settings) {
 				const routeSettings = matched.route.settings;
 
-				newSettings = _.merge({}, props.defaultSettings, routeSettings && routeSettings.layout && routeSettings.layout.style ? { layout: { config: FuseLayoutConfigs[routeSettings.layout.style].defaults } } : {}, routeSettings)
+				newSettings = generateSettings(props.defaultSettings, routeSettings);
 
 				if (!_.isEqual(props.settings, newSettings)) {
 					props.setSettings(newSettings);

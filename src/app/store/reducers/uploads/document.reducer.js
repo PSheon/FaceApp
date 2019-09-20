@@ -26,8 +26,8 @@ const document = function (state = initialState, action) {
       return {
         ...state,
         docs: [
+          action.payload,
           ...state.docs,
-          action.payload
         ]
       };
     }

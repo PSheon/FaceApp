@@ -80,7 +80,7 @@ function DocumentsListSidebarContent(props) {
 
 						<tr className="created">
 							<th>更新日期</th>
-							<td>{moment(selectedItem.updatedAt).format('YYYY-MM-DD HH:mm')}</td>
+							<td>{moment(selectedItem.updatedAt).format('LLL')}</td>
 						</tr>
 					</tbody>
 				</table>

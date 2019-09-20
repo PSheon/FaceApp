@@ -3,6 +3,7 @@
 import * as Actions from 'app/store/actions/homePage';
 
 const initialState = {
+  loading: false,
   docs: [],
   hasNextPage: true,
   hasPrevPage: false,
@@ -18,10 +19,18 @@ const initialState = {
 
 const news = function (state = initialState, action) {
   switch (action.type) {
+    case Actions.SET_NEWS_LIST_LOADING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
     case Actions.SYNC_HOMEPAGE_NEWS:
       {
         return {
           ...state,
+          loading: false,
           ...action.payload
         };
       }
@@ -29,9 +38,10 @@ const news = function (state = initialState, action) {
       {
         return {
           ...state,
+          loading: false,
           docs: [
+            action.payload,
             ...state.docs,
-            action.payload
           ]
         };
       }
@@ -39,6 +49,7 @@ const news = function (state = initialState, action) {
       const { docs, hasNextPage, nextPage } = action.payload;
       return {
         ...state,
+        loading: false,
         docs: [
           ...state.docs,
           ...docs

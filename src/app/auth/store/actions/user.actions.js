@@ -1,5 +1,5 @@
 import history from '@history';
-import { setDefaultSettings, setInitialSettings, resetNavigation, setNavigationUser, setNavigationStaff, setNavigationLeader, setNavigationAdmin } from 'app/store/actions/fuse';
+import { setDefaultSettings, setInitialSettings, resetNavigation, setNavigationUser, setNavigationStaff, setNavigationAdmin } from 'app/store/actions/fuse';
 import _ from '@lodash';
 import store from 'app/store';
 import * as Actions from 'app/store/actions';
@@ -11,7 +11,7 @@ import eventBusService from 'app/services/eventBusService';
 
 export const SET_USER_DATA = '[USER] SET DATA';
 export const UPDATE_USER_AVATAR = '[USER] UPDATE AVATAR';
-export const UPDATE_USER_BALANCE = '[USER] UPDATE BALANCE';
+export const SYNC_USER_ACCESS_HISTORY = '[USER] SYNC USER ACCESS HISTORY';
 export const UPDATE_USER_PROFILE = '[USER] UPDATE PROFILE';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
 export const USER_LOGGED_OUT = '[USER] LOGGED OUT';
@@ -102,9 +102,6 @@ export function setUserData(user) {
 			case 'staff':
 				dispatch(setNavigationStaff());
 				break;
-			case 'leader':
-				dispatch(setNavigationLeader());
-				break;
 			case 'admin':
 				dispatch(setNavigationAdmin());
 				break;
@@ -135,6 +132,27 @@ export function updateUserSettings(settings) {
 		updateUserData(user);
 
 		return dispatch(setUserData(user));
+	}
+}
+
+/**
+ * Sync User Access History
+ */
+export function syncUserAccessHistory() {
+	return (dispatch, getState) => {
+		jwtService.getSelfAccessHistory()
+			.then(newAcccessHistory => {
+				// console.log('newAcccessHistory ', newAcccessHistory);
+				// setAccessHisory(newAcccessHistory);
+				dispatch({
+					type: SYNC_USER_ACCESS_HISTORY,
+					payload: {
+						accessHistory: newAcccessHistory
+					}
+				})
+			}).catch(err => {
+				console.log(err)
+			})
 	}
 }
 

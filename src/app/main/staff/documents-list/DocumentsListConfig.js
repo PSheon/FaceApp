@@ -5,6 +5,7 @@ export const DocumentsListConfig = {
 	settings: {
 		layout: {
 			config: {
+				mode: 'fullWidth',
 				footer: {
 					display: false
 				}

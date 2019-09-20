@@ -14,6 +14,7 @@ Chart.pluginService.register({
         // To only draw at the end of animation, check for easing === 1
         const ctx = chart.ctx;
 
+        let mamberCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         chart.data.datasets.forEach(function (dataset, i) {
             const meta = chart.getDatasetMeta(i);
 
@@ -21,7 +22,8 @@ Chart.pluginService.register({
 
                 meta.data.forEach(function (element, index) {
                     // TODO Fix here
-                    if ((index + 3) % 5 !== 0) return;
+                    mamberCount[index] += Number(dataset.data[index]);
+                    if ((index + 2) % 3 !== 0 || i !== chart.data.datasets.length - 1) return;
 
                     // Draw the text in black, with the specified font
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
@@ -31,7 +33,8 @@ Chart.pluginService.register({
                     ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
                     // Just naively convert to string for now
-                    const dataString = dataset.data[index].toString() + 'k';
+                    // const dataString = dataset.data[index].toString() + ' 位';
+                    const dataString = mamberCount[index].toString() + ' 位';
 
                     // Make sure alignment settings are correct
                     ctx.textAlign = 'center';

@@ -43,16 +43,16 @@ function WidgetAccountCard() {
               <td className="text-right">
                 {verified ? (
                   <div className="flex items-center">
-                    <div className="p-2 bg-green items-center text-indigo-100 leading-none rounded-full flex lg:inline-flex" role="alert">
+                    <div className="p-2 bg-green items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
                       <Icon className="text-white pr-10">check_circle</Icon>
-                      <Typography className="font-semibold mr-2 text-left flex-auto">已認證</Typography>
+                      <Typography className="font-semibold mr-2 text-left flex-auto text-white">已認證</Typography>
                     </div>
                   </div>
                 ) : (
                     <div className="flex items-center">
-                      <div className="p-2 bg-orange items-center text-indigo-100 leading-none rounded-full flex lg:inline-flex" role="alert">
+                      <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
                         <Icon className="text-white pr-10">cancel</Icon>
-                        <Typography className="font-semibold mr-2 text-left flex-auto">尚未認證</Typography>
+                        <Typography className="font-semibold mr-2 text-left flex-auto text-white">尚未認證</Typography>
                       </div>
                     </div>
                   )}

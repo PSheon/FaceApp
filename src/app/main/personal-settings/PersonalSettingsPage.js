@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Tab, Tabs, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { FusePageSimple, FuseAnimate } from '@fuse';
+
+import * as Actions from 'app/auth/store/actions';
 import AboutTab from './tabs/AboutTab';
 import PersonalTab from './tabs/PersonalTab';
-import ReferralTab from './tabs/ReferralTab';
-import PurchaseHistoryTab from './tabs/PurchaseHistoryTab';
-
 // TODO Fix here
 // import axios from 'axios';
 // axios.get('http://localhost:8000/api/profile')
@@ -21,11 +19,11 @@ import PurchaseHistoryTab from './tabs/PurchaseHistoryTab';
 
 const useStyles = makeStyles(theme => ({
 	layoutHeader: {
-		height: 240,
-		minHeight: 240,
+		height: 180,
+		minHeight: 180,
 		[theme.breakpoints.down('md')]: {
-			height: 300,
-			minHeight: 300
+			height: 200,
+			minHeight: 200
 		},
 		[theme.breakpoints.down('sm')]: {
 			height: 280,
@@ -34,13 +32,29 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function PersonalSettingsPage() {
-	const classes = useStyles();
-	const [selectedTab, setSelectedTab] = useState(0);
+function PersonalSettingsPage(props) {
+	const classes = useStyles(props);
+	const dispatch = useDispatch();
 	const user = useSelector(({ auth }) => auth.user);
+
+	const [selectedTab, setSelectedTab] = useState(0);
+	const [isEditMode, setIsEditMode] = useState(false);
+
+	useEffect(() => {
+		if (props.match.params.editMode === 'edit') {
+			handleEditMode();
+		}
+	}, [props.match.params.editMode])
+	useEffect(() => {
+		dispatch(Actions.syncUserAccessHistory())
+	}, [dispatch])
 
 	function handleTabChange(event, value) {
 		setSelectedTab(value);
+	}
+	function handleEditMode() {
+		setSelectedTab(1);
+		setIsEditMode(true);
 	}
 
 	return (
@@ -62,10 +76,11 @@ function PersonalSettingsPage() {
 
 					<div className="flex flex-col-reverse items-center py-12 md:py-0 md:flex-row md:justify-end">
 						{/* <Button className="mr-8 normal-case rounded-full" variant="contained" color="secondary" aria-label="Follow">Follow</Button> */}
-						<Typography className="md:ml-24" variant="h4" color="inherit">可用餘額 $ {user.data.balance ? user.data.balance['$numberDecimal'] : 0}</Typography>
-						<Link to="/pricing" role="button">
-							<Button className="normal-case rounded-full mx-12" variant="contained" color="secondary" aria-label="Send Message">存入資金</Button>
-						</Link>
+						{/* <Typography className="md:ml-24" variant="h4" color="inherit">可用餘額 $ {user.data.balance ? user.data.balance['$numberDecimal'] : 0}</Typography> */}
+						{/* <Link to="/" role="button">
+							<Button className="normal-case rounded-full mx-12" variant="contained" color="secondary" aria-label="更新個人資料">更新個人資料</Button>
+						</Link> */}
+						<Button className="normal-case rounded-full mx-12" variant="contained" color="secondary" aria-label="更新個人資料" onClick={handleEditMode}>更新個人資料</Button>
 					</div>
 				</div>
 			}
@@ -90,14 +105,6 @@ function PersonalSettingsPage() {
 						classes={{
 							root: "h-64 rounded-full"
 						}} label="個人資料" />
-					{/* <Tab
-						classes={{
-							root: "h-64 rounded-full"
-						}} label="推廣管理" />
-					<Tab
-						classes={{
-							root: "h-64 rounded-full"
-						}} label="投資紀錄" /> */}
 				</Tabs>
 			}
 			content={
@@ -106,13 +113,10 @@ function PersonalSettingsPage() {
 						<AboutTab />
 					)}
 					{selectedTab === 1 && (
-						<PersonalTab />
-					)}
-					{selectedTab === 2 && (
-						<ReferralTab />
-					)}
-					{selectedTab === 3 && (
-						<PurchaseHistoryTab />
+						<PersonalTab
+							isEditMode={isEditMode}
+							setIsEditMode={setIsEditMode}
+						/>
 					)}
 				</div>
 			}

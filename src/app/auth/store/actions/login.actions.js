@@ -18,13 +18,16 @@ export function submitLogin({ email, password }) {
 			}
 			)
 			.catch(({ response }) => {
-				// console.log('response.data.errors.msg ', response.data.errors.msg)
-				// dispatch(Actions.showMessage({ message: response.data.errors.msg }));
+				const message = response.data.errors.msg;
+				dispatch({
+					type: LOGIN_ERROR,
+					payload: (
+						(message && (message.email || message.password)) ?
+							message :
+							({ email: '帳號或密碼錯誤', password: '', })
+					)
+				})
 
-				// return dispatch({
-				//     type: LOGIN_ERROR,
-				//     payload: 'response.data.errors.msg.email',
-				// })
 				dispatch({
 					type: Actions.SHOW_MESSAGE,
 					options: { message: `帳號或密碼錯誤！` },
@@ -44,9 +47,6 @@ export function submitLoginGoogle(googleInfo) {
 			}
 			)
 			.catch(({ response }) => {
-				// console.log('response.data.errors.msg ', response.data.errors.msg)
-				// dispatch(Actions.showMessage({ message: response.data.errors.msg }));
-
 				if (response.data.errors.msg.includes('E11000')) {
 					dispatch({
 						type: Actions.SHOW_MESSAGE,
@@ -72,9 +72,6 @@ export function submitLoginFacebook(facebookInfo) {
 				});
 			})
 			.catch(({ response }) => {
-				// console.log('response.data.errors.msg ', response)
-				// dispatch(Actions.showMessage({ message: response.data.errors.msg }));
-
 				if (response.data.errors && response.data.errors.msg.includes('E11000')) {
 					dispatch({
 						type: Actions.SHOW_MESSAGE,

@@ -1,6 +1,6 @@
 const settingsConfig = {
 	layout: {
-		style: 'layout1', // layout-1 layout-2 layout-3
+		style: 'layout2', // layout-1 layout-2 layout-3
 		config: {
 			navbar: {
 				folded: true,

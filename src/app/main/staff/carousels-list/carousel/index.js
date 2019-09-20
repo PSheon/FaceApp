@@ -14,6 +14,7 @@ import _ from '@lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { imageNameToPathConverter } from 'app/utils';
+import ImageUploadDialog from 'app/main/shared/ImageUploadDialog';
 import * as Actions from 'app/store/actions';
 import eventBusService from 'app/services/eventBusService';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
@@ -201,7 +202,7 @@ function Carousel(props) {
                   <div>
                     <FuseAnimate animation="transition.slideRightIn" delay={300}>
                       <Button
-                        className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-lighter"
+                        className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-300"
                         variant="contained"
                         onClick={handleDeleteCarousel}
                         disabled={CAROUSEL.docs.length < 2}
@@ -308,7 +309,7 @@ function Carousel(props) {
             {tabValue === 1 && (
               <div>
                 <div className="flex justify-center sm:justify-start flex-wrap">
-                  <Link to="/staff/images-list" role="button">
+                  <ImageUploadDialog trigger={
                     <label
                       htmlFor="button-file"
                       className={
@@ -319,14 +320,14 @@ function Carousel(props) {
                     >
                       <Icon fontSize="large" color="action">cloud_upload</Icon>
                     </label>
-                  </Link>
+                  } />
                   {images.map((image, key) => (
                     <div
                       onClick={() => setCarouselImageName(image.imageName)}
                       className={
                         clsx(
                           classes.carouselImageItem,
-                          "flex items-center justify-center relative w-128 h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5",
+                          "flex items-center justify-center relative h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5",
                           (image.imageName === form.imageName) && 'featured')
                       }
                       key={key}

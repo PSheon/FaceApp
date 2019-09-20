@@ -69,13 +69,13 @@ function UserMenu(props) {
 							<ListItemIcon className="min-w-40">
 								<Icon>lock</Icon>
 							</ListItemIcon>
-							<ListItemText className="pl-0" primary="開始投資" />
+							<ListItemText className="pl-0" primary="登入 YS" />
 						</MenuItem>
 						<MenuItem component={Link} to="/register" className="rounded-full">
 							<ListItemIcon className="min-w-40">
 								<Icon>person_add</Icon>
 							</ListItemIcon>
-							<ListItemText className="pl-0" primary="加入會員" />
+							<ListItemText className="pl-0" primary="加入 YS" />
 						</MenuItem>
 					</React.Fragment>
 				) : (
@@ -86,11 +86,11 @@ function UserMenu(props) {
 								</ListItemIcon>
 								<ListItemText className="pl-0" primary="我的帳戶" />
 							</MenuItem>
-							<MenuItem component={Link} to="/apps/mail" onClick={userMenuClose} className="rounded-full">
+							<MenuItem component={Link} to="/ys-faq" onClick={userMenuClose} className="rounded-full">
 								<ListItemIcon className="min-w-40">
-									<Icon>mail</Icon>
+									<Icon>live_help</Icon>
 								</ListItemIcon>
-								<ListItemText className="pl-0" primary="Inbox" />
+								<ListItemText className="pl-0" primary="常見問答" />
 							</MenuItem>
 							<MenuItem
 								onClick={() => {

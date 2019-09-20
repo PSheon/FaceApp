@@ -5,12 +5,14 @@ import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
 import * as Actions from 'app/store/actions';
 import eventBusService from 'app/services/eventBusService';
 
+export const SET_NEWS_LIST_LOADING = '[HOMEPAGE] SET NEWS LIST LOADING';
 export const SYNC_HOMEPAGE_NEWS = '[HOMEPAGE] SYNC NEWS';
 export const APPEND_NEWS_TO_HOMEPAGE_NEWS_LIST = '[HOMEPAGE] APPEND NEWS TO NEWS LIST';
 export const APPEND_NEXT_PAGE_NEWS_LIST = '[HOMEPAGE] APPEND NEXT PAGE NEWS';
 
 export function syncHomePageNews() {
   return dispatch => {
+    dispatch({ type: SET_NEWS_LIST_LOADING })
     eventBusService.getHomePageNews()
       .then(response => {
         if (response.docs.length) {
@@ -24,18 +26,26 @@ export function syncHomePageNews() {
 }
 export function syncHomePageNewsById(newsId) {
   const request = axios.get(`${AUTH_REST_BASE_END_POINT}/api/news/${newsId}`);
-  return (dispatch) =>
-    request.then((response) => {
-      dispatch({
-        type: APPEND_NEWS_TO_HOMEPAGE_NEWS_LIST,
-        payload: response.data,
+  return (dispatch) => {
+    dispatch({ type: SET_NEWS_LIST_LOADING })
+    request
+      .then((response) => {
+        dispatch({
+          type: APPEND_NEWS_TO_HOMEPAGE_NEWS_LIST,
+          payload: response.data,
+        })
       })
-    }
-    );
+      .catch(err => {
+        history.push({
+          pathname: '/news-list'
+        })
+      });
+  }
 }
 
 export function saveNews(newsDetail) {
   return dispatch => {
+    dispatch({ type: SET_NEWS_LIST_LOADING })
     eventBusService.createOrUpdateNews(newsDetail)
       .then(payload => {
 
@@ -51,6 +61,7 @@ export function saveNews(newsDetail) {
 
 export function deleteNews(newsId) {
   return dispatch => {
+    dispatch({ type: SET_NEWS_LIST_LOADING })
     eventBusService.deleteNews(newsId)
       .then(payload => {
 

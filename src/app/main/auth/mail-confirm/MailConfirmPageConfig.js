@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 export const MailConfirmPageConfig = {
 	settings: {
@@ -24,8 +25,12 @@ export const MailConfirmPageConfig = {
 	},
 	routes: [
 		{
-			path: '/mail-confirm',
+			path: '/mail-confirm/:emailAddress',
 			component: React.lazy(() => import('./MailConfirmPage'))
+		},
+		{
+			path: '/mail-confirm',
+			component: <Redirect to="/login" />
 		}
 	]
 };

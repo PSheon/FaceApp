@@ -1,18 +1,12 @@
-import {useCallback, useState} from 'react';
+import { useCallback, useState } from 'react';
 import _ from '@lodash';
 
-function useForm(initialState, onSubmit)
-{
+function useForm(initialState, onSubmit) {
     const [form, setForm] = useState(initialState);
 
     const handleChange = useCallback((event) => {
         event.persist();
-        setForm(
-            form => ({
-                ...form,
-                [event.target.name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value
-            })
-        );
+        setForm(form => _.setIn({ ...form }, event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value));
     }, []);
 
     const resetForm = useCallback(() => {
@@ -24,12 +18,10 @@ function useForm(initialState, onSubmit)
     }, []);
 
     const handleSubmit = useCallback((event) => {
-        if ( event )
-        {
+        if (event) {
             event.preventDefault();
         }
-        if ( onSubmit )
-        {
+        if (onSubmit) {
             onSubmit();
         }
     }, [onSubmit]);

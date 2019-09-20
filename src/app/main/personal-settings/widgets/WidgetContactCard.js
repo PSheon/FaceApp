@@ -1,12 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { AppBar, Card, CardContent, Toolbar, Typography } from '@material-ui/core';
 
-function WidgetContactCard() {
-  const USER_PROFILE = useSelector(({ auth }) => auth.user);
-  const UserData = USER_PROFILE.data;
-
-  const { email, phone, city } = UserData;
+function WidgetContactCard(props) {
+  const { email, phone, city, postAddress } = props.UserData;
 
   return (
     <Card className="h-full rounded-16">
@@ -41,6 +37,7 @@ function WidgetContactCard() {
               <td>
                 <Typography className="flex items-center font-semibold">
                   {city ? city : '未提供'}
+                  {postAddress ? ' - ' + postAddress : null}
                 </Typography>
               </td>
             </tr>

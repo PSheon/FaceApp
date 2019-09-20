@@ -1,11 +1,9 @@
 import * as Actions from '../../actions/fuse/index';
 import DEFAULT_SECTION, {
-	HOME_SECTION,
+	// HOME_SECTION,
 	ADMIN_SECTION,
-	LEADER_SECTION,
 	STAFF_SECTION,
 	USER_DASHBOARD_SECTION,
-	CUSTOMER_SERVICE_SECTION,
 } from 'app/fuse-configs/navigationConfig';
 
 /* Guest Navigation View */
@@ -35,24 +33,17 @@ const navigation = function (state = initialState, action) {
 		/* Admin Navigation View */
 		case Actions.SET_NAVIGATION_ADMIN:
 			{
+				// return [
+				// 	ADMIN_SECTION,
+				// 	STAFF_SECTION,
+				// 	USER_DASHBOARD_SECTION,
+				// 	HOME_SECTION,
+				// ];
 				return [
 					ADMIN_SECTION,
-					LEADER_SECTION,
 					STAFF_SECTION,
+					...state,
 					USER_DASHBOARD_SECTION,
-					HOME_SECTION,
-					CUSTOMER_SERVICE_SECTION,
-				];
-			}
-		/* Leader Navigation View */
-		case Actions.SET_NAVIGATION_LEADER:
-			{
-				return [
-					LEADER_SECTION,
-					STAFF_SECTION,
-					USER_DASHBOARD_SECTION,
-					HOME_SECTION,
-					CUSTOMER_SERVICE_SECTION,
 				];
 			}
 		/* Staff Navigation View */
@@ -60,18 +51,16 @@ const navigation = function (state = initialState, action) {
 			{
 				return [
 					STAFF_SECTION,
+					...state,
 					USER_DASHBOARD_SECTION,
-					HOME_SECTION,
-					CUSTOMER_SERVICE_SECTION,
 				];
 			}
 		/* User Navigation View */
 		case Actions.SET_NAVIGATION_USER:
 			{
 				return [
+					...state,
 					USER_DASHBOARD_SECTION,
-					HOME_SECTION,
-					CUSTOMER_SERVICE_SECTION,
 				];
 			}
 		default:

@@ -3,39 +3,35 @@ import { Redirect } from 'react-router-dom';
 import { FuseUtils } from '@fuse';
 import { AuthConfig } from 'app/main/auth';
 import { HomePageConfig } from 'app/main/home';
-import { FaqPageConfig } from 'app/main/faq/FaqPageConfig';
+// import { ContactUsPageConfig } from 'app/main/about/contact-us/ContactUsPageConfig';
+import { AboutConfig } from 'app/main/about';
+// import { FaqPageConfig } from 'app/main/about/ys-faq/FaqPageConfig';
 import { ErrorsConfig } from 'app/main/errors';
 
 /* Admin */
 import { AdminConfig } from 'app/main/admin';
 
-/* Leader */
-// import { LeaderConfig } from 'app/main/leader';
-
 /* Staff */
 import { StaffConfig } from 'app/main/staff';
 
 /* User */
-import { CustomerServiceConfig } from 'app/main/customer-service';
+import { UserConfig } from 'app/main/user';
 import { PersonalSettingsPageConfig } from 'app/main/personal-settings/PersonalSettingsPageConfig';
 
 const routeConfigs = [
 	...HomePageConfig,
-	FaqPageConfig,
+	...AboutConfig,
 	...AuthConfig,
 	...ErrorsConfig,
 
 	/* Admin */
 	...AdminConfig,
 
-	/* Leader */
-	// ...LeaderConfig,
-
 	/* Staff */
 	...StaffConfig,
 
 	/* User */
-	...CustomerServiceConfig,
+	...UserConfig,
 	PersonalSettingsPageConfig,
 ];
 

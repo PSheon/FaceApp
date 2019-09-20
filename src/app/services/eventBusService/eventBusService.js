@@ -116,11 +116,81 @@ class eventBusService extends FuseUtils.EventEmitter {
       }
     });
   };
-
   /* Delete carousel */
   deleteCarousel = (carouselId) => {
     return new Promise((resolve, reject) => {
       axios.delete(AUTH_REST_BASE_END_POINT + '/api/carousel/' + carouselId)
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  /* Get Home Page Speakers */
+  getHomePageSpeakers = (routeParams = {
+    page: 1,
+    limit: 20,
+    sort: 'updatedAt',
+    order: -1
+  }) => {
+    return new Promise((resolve, reject) => {
+      axios.get(AUTH_REST_BASE_END_POINT + "/api/speaker", {
+        params: routeParams
+      })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  /* Create or Update Speaker */
+  createOrUpdateSpeaker = (speakerDetail) => {
+    return new Promise((resolve, reject) => {
+      if (speakerDetail._id === 'new') {
+        /* Create a news */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/speaker', formurlencoded(speakerDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      } else {
+        /* Update a news */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/speaker/update', formurlencoded(speakerDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      }
+    });
+  };
+  /* Delete Speaker */
+  deleteSpeaker = (speakerId) => {
+    return new Promise((resolve, reject) => {
+      axios.delete(AUTH_REST_BASE_END_POINT + '/api/speaker/' + speakerId)
         .then(response => {
           if (response.data) {
             resolve(response.data);
@@ -154,7 +224,6 @@ class eventBusService extends FuseUtils.EventEmitter {
         });
     });
   }
-
   /* Create or Update News */
   createOrUpdateNews = (newsDetail) => {
     return new Promise((resolve, reject) => {
@@ -189,7 +258,6 @@ class eventBusService extends FuseUtils.EventEmitter {
       }
     });
   };
-
   /* Delete news */
   deleteNews = (newsId) => {
     return new Promise((resolve, reject) => {
@@ -207,6 +275,182 @@ class eventBusService extends FuseUtils.EventEmitter {
         });
     });
   };
+
+  /* Get Home Page Information List */
+  getHomePageInformation = (routeParams = {
+    page: 1,
+    limit: 20,
+    sort: 'updatedAt',
+    order: -1
+  }) => {
+    return new Promise((resolve, reject) => {
+      axios.get(AUTH_REST_BASE_END_POINT + "/api/information", {
+        params: routeParams
+      })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  /* Create or Update Information */
+  createOrUpdateInformation = (informationDetail) => {
+    return new Promise((resolve, reject) => {
+      if (informationDetail._id === 'new') {
+        /* Create a Information */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/information', formurlencoded(informationDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      } else {
+        /* Update a Information */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/information/update', formurlencoded(informationDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      }
+    });
+  };
+  /* Delete Information by informationId */
+  deleteInformation = (informationId) => {
+    return new Promise((resolve, reject) => {
+      axios.delete(AUTH_REST_BASE_END_POINT + '/api/information/' + informationId)
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  /* Get Home Page Event List */
+  getHomePageEvents = (routeParams = {
+    page: 1,
+    limit: 20,
+    sort: 'updatedAt',
+    order: -1
+  }) => {
+    return new Promise((resolve, reject) => {
+      axios.get(AUTH_REST_BASE_END_POINT + "/api/event", {
+        params: routeParams
+      })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+  /* Create or Update Event */
+  createOrUpdateEvent = (eventDetail) => {
+    return new Promise((resolve, reject) => {
+      if (eventDetail._id === 'new') {
+        /* Create a Event */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/event', formurlencoded(eventDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      } else {
+        /* Update a Event */
+        axios.post(AUTH_REST_BASE_END_POINT + '/api/event/update', formurlencoded(eventDetail))
+          .then(response => {
+            if (response.data) {
+              resolve(response.data);
+            }
+            // else {
+            // 	reject(response.data.error);
+            // }
+          })
+          .catch(error => {
+            reject(error);
+          });
+      }
+    });
+  };
+  /* Delete Event by eventId */
+  deleteEvent = (eventId) => {
+    return new Promise((resolve, reject) => {
+      axios.delete(AUTH_REST_BASE_END_POINT + '/api/event/' + eventId)
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+  /* Apply a Event */
+  applyEvent = (applyDetail) => {
+    return new Promise((resolve, reject) => {
+      axios.post(AUTH_REST_BASE_END_POINT + '/api/activityLog', formurlencoded(applyDetail))
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        })
+    })
+  }
+  /* Leave a review */
+  updateEventReview = (reviewDetail) => {
+    return new Promise((resolve, reject) => {
+      axios.post(AUTH_REST_BASE_END_POINT + '/api/activityLog/update', formurlencoded(reviewDetail))
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        })
+    })
+  }
 
   /* Update User Profile */
   updateProfile = (userDetail) => {
