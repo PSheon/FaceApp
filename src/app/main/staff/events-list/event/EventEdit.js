@@ -20,8 +20,8 @@ import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 
 const useStyles = makeStyles(theme => ({
   evenlyWrapper: {
-    justifyContent: 'space-evenly',
-  },
+    justifyContent: 'space-evenly'
+  }
 }));
 
 function EventEdit(props) {
@@ -59,14 +59,14 @@ function EventEdit(props) {
           speaker: '',
           preQuestionList: [],
           published: false
-        })
+        });
       } else {
         if (EVENTS.docs.length) {
-          const event = EVENTS.docs.find(item => item._id === selectedEventId)
+          const event = EVENTS.docs.find(item => item._id === selectedEventId);
           if (!event) {
             history.push({
               pathname: '/staff/events-list'
-            })
+            });
           } else {
             // setForm(event);
             setForm({
@@ -77,7 +77,7 @@ function EventEdit(props) {
         } else {
           history.push({
             pathname: '/staff/events-list'
-          })
+          });
         }
       }
     }
@@ -94,11 +94,11 @@ function EventEdit(props) {
   }
   function handleDeleteEvent() {
     setIsLoadingDelete(true);
-    dispatch(Actions.deleteEvent(selectedEventId))
+    dispatch(Actions.deleteEvent(selectedEventId));
   }
   function handleSaveEvent() {
     setIsLoading(true);
-    dispatch(Actions.saveEvent(form))
+    dispatch(Actions.saveEvent(form));
   }
 
   function canBeSubmitted() {
@@ -118,15 +118,26 @@ function EventEdit(props) {
   return (
     <FusePageCarded
       classes={{
-        toolbar: "p-0",
-        header: "min-h-160 h-160 sm:h-136 sm:min-h-136"
+        toolbar: 'p-0',
+        header: 'min-h-160 h-160 sm:h-136 sm:min-h-136'
       }}
       header={
         form && (
-          <div className={clsx(classes.evenlyWrapper, "flex flex-1 flex-col md:flex-row w-full items-center md:justify-between")}>
+          <div
+            className={clsx(
+              classes.evenlyWrapper,
+              'flex flex-1 flex-col md:flex-row w-full items-center md:justify-between'
+            )}
+          >
             <div className="flex flex-col items-start max-w-full">
               <FuseAnimate animation="transition.slideRightIn" delay={300}>
-                <Typography className="normal-case flex items-center sm:mb-12" component={Link} role="button" to="/staff/events-list" color="inherit">
+                <Typography
+                  className="normal-case flex items-center sm:mb-12"
+                  component={Link}
+                  role="button"
+                  to="/staff/events-list"
+                  color="inherit"
+                >
                   <Icon className="mr-4 text-20">arrow_back</Icon>
                   返回 YS 活動列表
                 </Typography>
@@ -135,10 +146,18 @@ function EventEdit(props) {
               <div className="flex items-center max-w-full">
                 <FuseAnimate animation="transition.expandIn" delay={300}>
                   {form.coverImageName ? (
-                    <img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src={imageNameToPathConverter(form.coverImageName)} alt={form.title} />
+                    <img
+                      className="w-32 sm:w-48 mr-8 sm:mr-16 rounded"
+                      src={imageNameToPathConverter(form.coverImageName)}
+                      alt={form.title}
+                    />
                   ) : (
-                      <img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt='預設圖片' />
-                    )}
+                    <img
+                      className="w-32 sm:w-48 mr-8 sm:mr-16 rounded"
+                      src="assets/images/ecommerce/product-image-placeholder.png"
+                      alt="預設圖片"
+                    />
+                  )}
                 </FuseAnimate>
                 <div className="flex flex-col min-w-0">
                   <FuseAnimate animation="transition.slideLeftIn" delay={300}>
@@ -153,58 +172,72 @@ function EventEdit(props) {
               </div>
             </div>
 
-            {
-              selectedEventId === 'new' ? (
-                <FuseAnimate animation="transition.slideRightIn" delay={300}>
+            {selectedEventId === 'new' ? (
+              <FuseAnimate animation="transition.slideRightIn" delay={300}>
+                <Button
+                  className="whitespace-no-wrap mx-12 rounded-full"
+                  variant="contained"
+                  color="secondary"
+                  disabled={!canBeSubmitted()}
+                  onClick={handleSaveEvent}
+                >
+                  {isLoading ? (
+                    <span className="flex justify-center">
+                      新增活動中 <LoadingSpinner width="2em" height="2em" />
+                    </span>
+                  ) : (
+                    '新增活動'
+                  )}
+                </Button>
+              </FuseAnimate>
+            ) : (
+              <FuseAnimateGroup
+                enter={{
+                  animation: 'transition.slideRightIn'
+                }}
+                className="flex flex-no-wrap"
+              >
+                {selectedEventId !== 'new' && (
                   <Button
                     className="whitespace-no-wrap mx-12 rounded-full"
                     variant="contained"
                     color="secondary"
-                    disabled={!canBeSubmitted()}
-                    onClick={handleSaveEvent}
+                    onClick={() => props.setEditMode(false)}
                   >
-                    {isLoading ? <span className="flex justify-center">新增活動中 <LoadingSpinner width="2em" height="2em" /></span> : '新增活動'}
+                    <Icon className="mr-4 text-20">arrow_back</Icon> 分析資料
                   </Button>
-                </FuseAnimate>
-              ) : (
-                  <FuseAnimateGroup
-                    enter={{
-                      animation: "transition.slideRightIn"
-                    }}
-                    className="flex flex-no-wrap"
-                  >
-                    {
-                      selectedEventId !== 'new' && (
-                        <Button
-                          className="whitespace-no-wrap mx-12 rounded-full"
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => props.setEditMode(false)}
-                        >
-                          <Icon className="mr-4 text-20">arrow_back</Icon> 分析資料
-                        </Button>
-                      )
-                    }
-                    <Button
-                      className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-300"
-                      variant="contained"
-                      onClick={handleDeleteEvent}
-                      disabled={EVENTS.docs.length < 2}
-                    >
-                      {isLoadingDelete ? <span className="flex justify-center">刪除活動中 <LoadingSpinner width="2em" height="2em" /></span> : '刪除活動'}
-                    </Button>
-                    <Button
-                      className="whitespace-no-wrap mx-12 rounded-full"
-                      variant="contained"
-                      color="secondary"
-                      disabled={!canBeSubmitted()}
-                      onClick={handleSaveEvent}
-                    >
-                      {isLoading ? <span className="flex justify-center">更新活動中 <LoadingSpinner width="2em" height="2em" /></span> : '更新活動'}
-                    </Button>
-                  </FuseAnimateGroup>
-                )
-            }
+                )}
+                <Button
+                  className="whitespace-no-wrap px-12 rounded-full bg-red text-white hover:bg-red-300"
+                  variant="contained"
+                  onClick={handleDeleteEvent}
+                  disabled={EVENTS.docs.length < 2}
+                >
+                  {isLoadingDelete ? (
+                    <span className="flex justify-center">
+                      刪除活動中 <LoadingSpinner width="2em" height="2em" />
+                    </span>
+                  ) : (
+                    '刪除活動'
+                  )}
+                </Button>
+                <Button
+                  className="whitespace-no-wrap mx-12 rounded-full"
+                  variant="contained"
+                  color="secondary"
+                  disabled={!canBeSubmitted()}
+                  onClick={handleSaveEvent}
+                >
+                  {isLoading ? (
+                    <span className="flex justify-center">
+                      更新活動中 <LoadingSpinner width="2em" height="2em" />
+                    </span>
+                  ) : (
+                    '更新活動'
+                  )}
+                </Button>
+              </FuseAnimateGroup>
+            )}
           </div>
         )
       }
@@ -216,7 +249,7 @@ function EventEdit(props) {
           textColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
-          classes={{ root: "w-full h-64" }}
+          classes={{ root: 'w-full h-64' }}
         >
           <Tab className="h-64 normal-case" label="活動細節" />
           <Tab className="h-64 normal-case" label="活動問卷" />
@@ -248,14 +281,9 @@ function EventEdit(props) {
                 form={form}
               />
             )}
-            {tabValue === 3 &&
-              form && (
-                <ContentDetailEdit
-                  form={form}
-                  setForm={setForm}
-                />
-              )
-            }
+            {tabValue === 3 && form && (
+              <ContentDetailEdit form={form} setForm={setForm} />
+            )}
             {tabValue === 4 && (
               <CoverImageDetailEdit
                 setEventImageName={setEventImageName}
@@ -266,7 +294,7 @@ function EventEdit(props) {
         )
       }
     />
-  )
+  );
 }
 
 export default EventEdit;

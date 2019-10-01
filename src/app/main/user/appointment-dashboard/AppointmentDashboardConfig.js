@@ -5,7 +5,7 @@ export const AppointmentDashboardConfig = {
   settings: {
     layout: {
       config: {
-        mode: 'fullWidth',
+        mode: 'fullWidth'
         // footer: false,
       }
     }

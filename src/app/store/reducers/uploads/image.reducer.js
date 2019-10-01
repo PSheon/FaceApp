@@ -15,15 +15,15 @@ const initialState = {
   prevPage: null,
   totalDocs: 1,
   totalPages: 1,
-  selectedItemId: 0,
+  selectedItemId: 0
 };
 
-const image = function (state = initialState, action) {
+const image = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_IMAGE_LIST_LOADING: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
 
@@ -31,7 +31,7 @@ const image = function (state = initialState, action) {
       return {
         ...state,
         ...action.payload,
-        loading: false,
+        loading: false
       };
     }
 
@@ -39,57 +39,49 @@ const image = function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        docs: [
-          action.payload,
-          ...state.docs,
-        ]
+        docs: [action.payload, ...state.docs]
       };
     }
 
-    case Actions.UPDATE_IMAGE_LIST:
-      {
-        const { data, routeParams } = action.payload;
-        const imageIdSet = new Set(state.docs.map(item => item._id));
-        let tempImagesArr = [];
+    case Actions.UPDATE_IMAGE_LIST: {
+      const { data, routeParams } = action.payload;
+      const imageIdSet = new Set(state.docs.map(item => item._id));
+      let tempImagesArr = [];
 
-        data.docs.map((image) => !imageIdSet.has(image._id) ? tempImagesArr.push(image) : null)
+      data.docs.map(image =>
+        !imageIdSet.has(image._id) ? tempImagesArr.push(image) : null
+      );
 
-        // console.log('after state ', {
-        //   ...state,
-        //   ...data,
-        //   docs: [
-        //     ...state.docs,
-        //     ...tempImagesArr,
-        //   ],
-        //   routeParams: {
-        //     ...state.routeParams,
-        //     ...routeParams
-        //   },
-        // })
-        return {
-          ...state,
-          ...data,
-          loading: false,
-          docs: [
-            ...state.docs,
-            ...tempImagesArr,
-          ],
-          routeParams: {
-            ...state.routeParams,
-            ...routeParams
-          },
-        };
-      }
+      // console.log('after state ', {
+      //   ...state,
+      //   ...data,
+      //   docs: [
+      //     ...state.docs,
+      //     ...tempImagesArr,
+      //   ],
+      //   routeParams: {
+      //     ...state.routeParams,
+      //     ...routeParams
+      //   },
+      // })
+      return {
+        ...state,
+        ...data,
+        loading: false,
+        docs: [...state.docs, ...tempImagesArr],
+        routeParams: {
+          ...state.routeParams,
+          ...routeParams
+        }
+      };
+    }
 
     case Actions.APPEND_NEXT_PAGE_UPLOADED_IMAGES_LIST: {
       const { docs, hasNextPage, nextPage } = action.payload;
       return {
         ...state,
         loading: false,
-        docs: [
-          ...state.docs,
-          ...docs
-        ],
+        docs: [...state.docs, ...docs],
         hasNextPage,
         nextPage
       };
@@ -110,12 +102,12 @@ const image = function (state = initialState, action) {
           return {
             ...doc,
             imageCaption,
-            imageTags,
-          }
+            imageTags
+          };
         } else {
           return doc;
         }
-      })
+      });
       return {
         ...state,
         loading: false,
@@ -123,43 +115,38 @@ const image = function (state = initialState, action) {
       };
     }
 
-    case Actions.TOGGLE_IN_SELECTED_IMAGES:
-      {
+    case Actions.TOGGLE_IN_SELECTED_IMAGES: {
+      const { imageId } = action.payload;
 
-        const { imageId } = action.payload;
+      let selectedImageIds = [...state.selectedImageIds];
 
-        let selectedImageIds = [...state.selectedImageIds];
-
-        if (selectedImageIds.find(id => id === imageId) !== undefined) {
-          selectedImageIds = selectedImageIds.filter(id => id !== imageId);
-        }
-        else {
-          selectedImageIds = [...selectedImageIds, imageId];
-        }
-
-        return {
-          ...state,
-          selectedImageIds: selectedImageIds
-        };
+      if (selectedImageIds.find(id => id === imageId) !== undefined) {
+        selectedImageIds = selectedImageIds.filter(id => id !== imageId);
+      } else {
+        selectedImageIds = [...selectedImageIds, imageId];
       }
-    case Actions.SELECT_ALL_IMAGES:
-      {
-        const arr = Object.keys(state.docs).map(k => state.docs[k]);
 
-        const selectedImageIds = arr.map(image => image._id);
+      return {
+        ...state,
+        selectedImageIds: selectedImageIds
+      };
+    }
+    case Actions.SELECT_ALL_IMAGES: {
+      const arr = Object.keys(state.docs).map(k => state.docs[k]);
 
-        return {
-          ...state,
-          selectedImageIds
-        };
-      }
-    case Actions.DESELECT_ALL_IMAGES:
-      {
-        return {
-          ...state,
-          selectedImageIds: []
-        };
-      }
+      const selectedImageIds = arr.map(image => image._id);
+
+      return {
+        ...state,
+        selectedImageIds
+      };
+    }
+    case Actions.DESELECT_ALL_IMAGES: {
+      return {
+        ...state,
+        selectedImageIds: []
+      };
+    }
 
     case Actions.DELETE_IMAGE_BY_ID: {
       const { imageId } = action.payload;
@@ -170,10 +157,9 @@ const image = function (state = initialState, action) {
       };
     }
 
-    default:
-      {
-        return state;
-      }
+    default: {
+      return state;
+    }
   }
 };
 

@@ -11,52 +11,49 @@ import {
 import { FuseChipSelect } from '@fuse';
 import { withStyles } from '@material-ui/core/styles';
 import MomentUtils from '@date-io/moment';
-import {
-  MuiPickersUtilsProvider,
-  DateTimePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 
 const materialDatePickerTheme = createMuiTheme({
   /* TODO: Fix here */
   overrides: {
     MuiPaper: {
       root: {
-        borderRadius: '2.4rem',
+        borderRadius: '2.4rem'
       }
     },
     MuiPickersModal: {
       root: {
-        borderRadius: '2.4rem',
+        borderRadius: '2.4rem'
       },
       dialogAction: {
-        display: "none"
+        display: 'none'
       }
-    },
-  },
+    }
+  }
 });
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#3e3e3e',
+      color: '#3e3e3e'
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#fefefe',
+      borderBottomColor: '#fefefe'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#5e5e5e',
+        borderColor: '#5e5e5e'
       },
       '&:hover fieldset': {
-        borderColor: '#3e3e3e',
+        borderColor: '#3e3e3e'
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#3e3e3e',
-      },
+        borderColor: '#3e3e3e'
+      }
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderRadius: '2.4rem',
+      borderRadius: '2.4rem'
     }
-  },
+  }
 })(TextField);
 
 function EventDetailEdit(props) {
@@ -69,11 +66,15 @@ function EventDetailEdit(props) {
     setForm(form => _.set({ ...form }, 'tags', tags.map(tag => tag.value)));
   }
   function handleDateTimeChange(fields, datetime) {
-    setForm(form => _.setIn({ ...form }, fields, datetime))
+    setForm(form => _.setIn({ ...form }, fields, datetime));
   }
 
   return (
-    <MuiPickersUtilsProvider theme={materialDatePickerTheme} utils={MomentUtils} locale="zh-tw">
+    <MuiPickersUtilsProvider
+      theme={materialDatePickerTheme}
+      utils={MomentUtils}
+      locale="zh-tw"
+    >
       <div className="px-16">
         <CssTextField
           className="mt-8 mb-16"
@@ -88,7 +89,13 @@ function EventDetailEdit(props) {
           type="text"
           variant="outlined"
           InputProps={{
-            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">account_box</Icon></InputAdornment>
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icon className="text-20" color="action">
+                  account_box
+                </Icon>
+              </InputAdornment>
+            )
           }}
           fullWidth
         />
@@ -105,20 +112,24 @@ function EventDetailEdit(props) {
           type="text"
           variant="outlined"
           InputProps={{
-            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">account_box</Icon></InputAdornment>
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icon className="text-20" color="action">
+                  account_box
+                </Icon>
+              </InputAdornment>
+            )
           }}
           fullWidth
         />
 
         <FuseChipSelect
           className="mt-8 mb-16"
-          value={
-            form.tags.map(item => ({
-              value: item,
-              label: item
-            }))
-          }
-          onChange={(value) => handleChipChange(value)}
+          value={form.tags.map(item => ({
+            value: item,
+            label: item
+          }))}
+          onChange={value => handleChipChange(value)}
           placeholder="加個新聞標籤吧"
           textFieldProps={{
             label: '新聞標籤',
@@ -134,7 +145,13 @@ function EventDetailEdit(props) {
           <DateTimePicker
             className="mr-8"
             InputProps={{
-              endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">date_range</Icon></InputAdornment>
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Icon className="text-20" color="action">
+                    date_range
+                  </Icon>
+                </InputAdornment>
+              )
             }}
             DialogProps={{
               classes: {
@@ -152,7 +169,7 @@ function EventDetailEdit(props) {
             value={startDateTime}
             onChange={date => {
               setStartDateTime(date);
-              handleDateTimeChange('startDateTime', date.valueOf())
+              handleDateTimeChange('startDateTime', date.valueOf());
             }}
             cancelLabel="取消"
             okLabel="確認"
@@ -161,7 +178,13 @@ function EventDetailEdit(props) {
           <DateTimePicker
             className="ml-8"
             InputProps={{
-              endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">date_range</Icon></InputAdornment>
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Icon className="text-20" color="action">
+                    date_range
+                  </Icon>
+                </InputAdornment>
+              )
             }}
             DialogProps={{
               classes: {
@@ -180,7 +203,7 @@ function EventDetailEdit(props) {
             value={endDateTime}
             onChange={date => {
               setEndDateTime(date);
-              handleDateTimeChange('endDateTime', date.valueOf())
+              handleDateTimeChange('endDateTime', date.valueOf());
             }}
             cancelLabel="取消"
             okLabel="確認"
@@ -191,7 +214,13 @@ function EventDetailEdit(props) {
         <DateTimePicker
           className="my-12"
           InputProps={{
-            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">date_range</Icon></InputAdornment>
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icon className="text-20" color="action">
+                  date_range
+                </Icon>
+              </InputAdornment>
+            )
           }}
           DialogProps={{
             classes: {
@@ -210,7 +239,7 @@ function EventDetailEdit(props) {
           value={enrollDeadline}
           onChange={date => {
             setEnrollDeadline(date);
-            handleDateTimeChange('enrollDeadline', date.valueOf())
+            handleDateTimeChange('enrollDeadline', date.valueOf());
           }}
           cancelLabel="取消"
           okLabel="確認"
@@ -229,7 +258,13 @@ function EventDetailEdit(props) {
           type="number"
           variant="outlined"
           InputProps={{
-            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">account_box</Icon></InputAdornment>
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icon className="text-20" color="action">
+                  account_box
+                </Icon>
+              </InputAdornment>
+            )
           }}
           fullWidth
         />
@@ -246,7 +281,13 @@ function EventDetailEdit(props) {
           type="text"
           variant="outlined"
           InputProps={{
-            endAdornment: <InputAdornment position="end"><Icon className="text-20" color="action">location_on</Icon></InputAdornment>
+            endAdornment: (
+              <InputAdornment position="end">
+                <Icon className="text-20" color="action">
+                  location_on
+                </Icon>
+              </InputAdornment>
+            )
           }}
           fullWidth
         />
@@ -266,7 +307,7 @@ function EventDetailEdit(props) {
         />
       </div>
     </MuiPickersUtilsProvider>
-  )
+  );
 }
 
 export default EventDetailEdit;

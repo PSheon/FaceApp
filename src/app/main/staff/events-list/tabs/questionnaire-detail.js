@@ -17,9 +17,9 @@ function QuestionnaireDetailEdit(props) {
 
   useEffect(() => {
     if (!checked && form) {
-      setChecked(form.preQuestionList)
+      setChecked(form.preQuestionList);
     }
-  }, [checked, form])
+  }, [checked, form]);
 
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
@@ -32,106 +32,147 @@ function QuestionnaireDetailEdit(props) {
     }
 
     setChecked(newChecked);
-    setForm(form => _.setIn({ ...form }, 'preQuestionList', newChecked))
+    setForm(form => _.setIn({ ...form }, 'preQuestionList', newChecked));
   };
 
   return (
     checked && (
       <FuseAnimate animation="transition.slideRightIn" delay={300}>
-        <List subheader={<ListSubheader>活動報名前問卷 (本表單無法於活動建立後更改)</ListSubheader>}>
+        <List
+          subheader={
+            <ListSubheader>
+              活動報名前問卷 (本表單無法於活動建立後更改)
+            </ListSubheader>
+          }
+        >
           {/* participateReason */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participateReason" primary="想參加本次活動的原因？" />
+            <ListItemText
+              id="switch-list-label-question-participateReason"
+              primary="想參加本次活動的原因？"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participateReason')}
                 checked={checked.indexOf('participateReason') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participateReason' }}
+                inputProps={{
+                  'aria-labelledby':
+                    'switch-list-label-question-participateReason'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
           {/* participantHeardFrom */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participantHeardFrom" primary="如何得知本次活動訊息？" />
+            <ListItemText
+              id="switch-list-label-question-participantHeardFrom"
+              primary="如何得知本次活動訊息？"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participantHeardFrom')}
                 checked={checked.indexOf('participantHeardFrom') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participantHeardFrom' }}
+                inputProps={{
+                  'aria-labelledby':
+                    'switch-list-label-question-participantHeardFrom'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
           {/* participantExpectation */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participantExpectation" primary="學員期待？" />
+            <ListItemText
+              id="switch-list-label-question-participantExpectation"
+              primary="學員期待？"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participantExpectation')}
                 checked={checked.indexOf('participantExpectation') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participantExpectation' }}
+                inputProps={{
+                  'aria-labelledby':
+                    'switch-list-label-question-participantExpectation'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
           {/* participantID */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participantID" primary="身分證字號" />
+            <ListItemText
+              id="switch-list-label-question-participantID"
+              primary="身分證字號"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participantID')}
                 checked={checked.indexOf('participantID') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participantID' }}
+                inputProps={{
+                  'aria-labelledby': 'switch-list-label-question-participantID'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
           {/* participantIsManager */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participantIsManager" primary="是否有管理職" />
+            <ListItemText
+              id="switch-list-label-question-participantIsManager"
+              primary="是否有管理職"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participantIsManager')}
                 checked={checked.indexOf('participantIsManager') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participantIsManager' }}
+                inputProps={{
+                  'aria-labelledby':
+                    'switch-list-label-question-participantIsManager'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
           {/* participateLunch */}
-          <ListItem>
+          <ListItem className="border-b border-gray-600">
             <ListItemIcon>
               <FastfoodIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-participateLunch" primary="參加中午餐敘與否？" />
+            <ListItemText
+              id="switch-list-label-question-participateLunch"
+              primary="參加中午餐敘與否？"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('participateLunch')}
                 checked={checked.indexOf('participateLunch') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-participateLunch' }}
+                inputProps={{
+                  'aria-labelledby':
+                    'switch-list-label-question-participateLunch'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
@@ -140,21 +181,26 @@ function QuestionnaireDetailEdit(props) {
             <ListItemIcon>
               <FastfoodIcon />
             </ListItemIcon>
-            <ListItemText id="switch-list-label-question-lunchType" primary="葷素？" />
+            <ListItemText
+              id="switch-list-label-question-lunchType"
+              primary="葷素？"
+            />
             <ListItemSecondaryAction>
               <Switch
                 edge="end"
                 disabled={!isNew}
                 onChange={handleToggle('lunchType')}
                 checked={checked.indexOf('lunchType') !== -1}
-                inputProps={{ 'aria-labelledby': 'switch-list-label-question-lunchType' }}
+                inputProps={{
+                  'aria-labelledby': 'switch-list-label-question-lunchType'
+                }}
               />
             </ListItemSecondaryAction>
           </ListItem>
         </List>
       </FuseAnimate>
     )
-  )
+  );
 }
 
 export default QuestionnaireDetailEdit;

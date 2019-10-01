@@ -6,8 +6,12 @@ export * from './appointment';
 export * from './reduceState';
 export * from './stockChart';
 export * from './statisticChart';
+export * from './adminDashboard';
 
-export const exchangesExtractor = (EXCHANGES, { onlyTradable = false, onlyImportable = false }) => {
+export const exchangesExtractor = (
+  EXCHANGES,
+  { onlyTradable = false, onlyImportable = false }
+) => {
   let exchanges = Object.assign({}, EXCHANGES);
 
   if (_.isEmpty(exchanges)) return false;
@@ -25,9 +29,9 @@ export const exchangesExtractor = (EXCHANGES, { onlyTradable = false, onlyImport
   }
 
   return exchanges;
-}
+};
 
-export const userDetailChecker = (userDetail) => {
+export const userDetailChecker = userDetail => {
   return (
     !!userDetail.fullName &&
     !!userDetail.bob &&
@@ -40,20 +44,20 @@ export const userDetailChecker = (userDetail) => {
     !!userDetail.city &&
     !!userDetail.heardFrom &&
     !!userDetail.haveParticipated
-  )
-}
+  );
+};
 
 export const preQuestionFormChecker = (form, requiredList) => {
   if (!requiredList || requiredList.length === 0) {
-    return true
+    return true;
   } else {
     let tempStatus = true;
     requiredList.forEach(item => {
       if (!form[item]) {
-        tempStatus = false
+        tempStatus = false;
       }
-    })
+    });
 
     return tempStatus;
   }
-}
+};

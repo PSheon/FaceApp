@@ -18,7 +18,7 @@ function ContentetailEdit(props) {
     <FuseAnimate animation="transition.slideRightIn" delay={300}>
       <div className="mx-36 pb-128">
         <FroalaEditor
-          tag='div'
+          tag="div"
           model={form.content}
           config={{
             placeholderText: '寫點活動內容吧！',
@@ -29,13 +29,40 @@ function ContentetailEdit(props) {
             toolbarVisibleWithoutSelection: true,
             dragInline: false,
             pluginsEnabled: [
-              'align', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'embedly', 'emoticons', 'entities', 'fontAwesome', 'fontSize', 'image', 'imageManager', 'lineBreaker', 'lineHeight', 'link', 'lists', 'paragraphFormat', 'paragraphStyle', 'quote', 'save', 'url', 'video', 'wordPaste'
+              'align',
+              'codeBeautifier',
+              'colors',
+              'draggable',
+              'embedly',
+              'emoticons',
+              'entities',
+              'fontAwesome',
+              'fontSize',
+              'image',
+              'imageManager',
+              'lineBreaker',
+              'lineHeight',
+              'link',
+              'lists',
+              'paragraphFormat',
+              'paragraphStyle',
+              'quote',
+              'save',
+              'url',
+              'video',
+              'wordPaste'
             ],
-            imageInsertButtons: ['imageBack', '|', 'imageByURL', 'imageManager'],
+            imageInsertButtons: [
+              'imageBack',
+              '|',
+              'imageByURL',
+              'imageManager'
+            ],
             videoInsertButtons: ['videoBack', '|', 'videoByURL', 'videoEmbed'],
             linkInsertButtons: ['linkBack'],
             requestHeaders: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('jwt_access_token')
+              Authorization:
+                'Bearer ' + window.localStorage.getItem('jwt_access_token')
             },
             imageManagerLoadParams: {
               page: 1,
@@ -51,12 +78,12 @@ function ContentetailEdit(props) {
             imageUpload: false
           }}
           onModelChange={model => {
-            setForm(form => _.setIn({ ...form }, 'content', model))
+            setForm(form => _.setIn({ ...form }, 'content', model));
           }}
         />
       </div>
     </FuseAnimate>
-  )
+  );
 }
 
 export default ContentetailEdit;

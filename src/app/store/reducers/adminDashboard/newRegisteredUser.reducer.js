@@ -6,33 +6,33 @@ import * as Actions from 'app/store/actions/adminDashboard';
 const initialState = {
   loading: false,
   verified: [],
-  unVerified: [],
+  unVerified: []
 };
 
-const newRegisteredUser = function (state = initialState, action) {
+const newRegisteredUser = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_REGISTERED_USER_LOADING: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
 
-    case Actions.SYNC_DASHBOARD_REGISTERED_USER:
-      {
-        const { verified, unVerified } = registeredUsersExtracter(action.payload.registeredUserData);
+    case Actions.SYNC_DASHBOARD_REGISTERED_USER: {
+      const { verified, unVerified } = registeredUsersExtracter(
+        action.payload.registeredUserData
+      );
 
-        return {
-          ...state,
-          loading: false,
-          verified,
-          unVerified,
-        };
-      }
-    default:
-      {
-        return state;
-      }
+      return {
+        ...state,
+        loading: false,
+        verified,
+        unVerified
+      };
+    }
+    default: {
+      return state;
+    }
   }
 };
 

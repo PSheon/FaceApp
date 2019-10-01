@@ -124,7 +124,7 @@ function UserListDialog(props) {
 					</Typography>
 				</div>
 			</AppBar>
-			<form noValidate onSubmit={handleSubmit} className="flex flex-col overflow-hidden">
+			<form noValidate onSubmit={handleSubmit} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: "p-24" }}>
 					<Typography variant="h6" color="inherit" className="pb-24 text-center">
 						{form.id}

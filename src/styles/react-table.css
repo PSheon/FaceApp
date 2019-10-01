@@ -29,10 +29,12 @@ ReactTable Overrides
     padding: 16px 8px;
 }
 
-.ReactTable .rt-thead.-filters input, .ReactTable .rt-thead.-filters select {
+.ReactTable .rt-thead.-filters input,
+.ReactTable .rt-thead.-filters select {
     border: none;
     background: initial;
     padding: 6px 0 7px 0;
+    box-sizing: content-box;
 }
 
 .ReactTable .-pagination .-center {
@@ -40,7 +42,8 @@ ReactTable Overrides
     justify-content: flex-start;
 }
 
-.ReactTable .-pagination .-previous, .ReactTable .-pagination .-next {
+.ReactTable .-pagination .-previous,
+.ReactTable .-pagination .-next {
     max-width: 64px;
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "1788-react-app",
+  "name": "ys-main-web",
   "version": "3.2.1",
   "description": "目前已修正到 Aug 8, 2019 codebase improved.",
   "private": true,
@@ -19,6 +19,7 @@
     "downshift": "3.2.10",
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
+    "express-favicon": "^2.0.1",
     "filepond": "^4.4.12",
     "filepond-plugin-file-validate-size": "^2.2.0",
     "filepond-plugin-file-validate-type": "^1.2.4",
@@ -106,6 +107,8 @@
     "webpack-bundle-analyzer": "3.4.1"
   },
   "scripts": {
+    "prod": "node server",
+    "deploy:front": "pm2 start server --name FRONT-END",
     "start": "yarn run tailwind && PORT=8080 react-scripts start",
     "build": "yarn run tailwind && node ./purge-tailwindcss.js && cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "tailwind": "./node_modules/.bin/tailwind build ./src/styles/tailwind.base.css -c ./tailwind.js -o ./src/styles/tailwind.css",
