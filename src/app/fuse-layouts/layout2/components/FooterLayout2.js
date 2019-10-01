@@ -162,7 +162,7 @@ function FooterLayout2(props) {
           />
 
           <div className="flex flex-col sm:flex-row justify-start items-center w-full">
-            <div className="flex flex-col py-12 sm:py-0 sm:w-2/5">
+            <div className="flex flex-col py-12 sm:py-0 sm:w-1/3">
               <Typography variant="subtitle1">
                 地址 | 高雄市前金區五福三路21號8樓
               </Typography>
@@ -177,7 +177,7 @@ function FooterLayout2(props) {
               </Typography>
             </div>
 
-            <div className="flex flex-col justify-center items-center py-12 sm:py-0 sm:w-2/5">
+            <div className="flex flex-col justify-center items-center py-12 sm:py-0 sm:w-1/3">
               <Typography variant="subtitle1">
                 版權所有 © 勞動部勞動力發展署高屏澎東分署
               </Typography>

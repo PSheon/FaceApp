@@ -1,7 +1,7 @@
 /* 3-rd Party Auth Client ID */
 export const GOOGLE_CLIENT_ID =
-  '1076615757864-4770ptf0kcer98frkmi0jlk9lv7drl7e.apps.googleusercontent.com';
-export const FACEBOOK_CLIENT_ID = '2255681884500503';
+  '222816202592-r9hlvdj0sv3slbcq1tr7afttreun7fkm.apps.googleusercontent.com';
+export const FACEBOOK_CLIENT_ID = '373781656835655';
 
 /* Socket End-Point */
 // export const SOCKET_END_POINT = 'ws://localhost:3000/api/';

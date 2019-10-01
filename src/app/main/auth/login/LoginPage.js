@@ -137,7 +137,7 @@ function LoginPage() {
 
 				<Card className="w-full max-w-400 mx-auto m-16 md:m-0 rounded-12">
 
-					<CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128">
+					<CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-96">
 
 						<Typography variant="h6" className="md:w-full mb-32 text-center">登入您的帳號</Typography>
 
@@ -249,8 +249,6 @@ function LoginPage() {
 								{isLoading ? '登入中' : '登入'}
 								{isLoading && <LoadingSpinner width={32} height={32} />}
 							</Button>
-							<div className="relative m-4">
-							</div>
 
 						</Formsy>
 
