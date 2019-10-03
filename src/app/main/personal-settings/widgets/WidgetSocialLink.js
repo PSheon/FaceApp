@@ -1,18 +1,31 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBar, Card, CardContent, Toolbar, Typography, Icon, Chip, Avatar } from '@material-ui/core';
+import {
+  AppBar,
+  Card,
+  CardContent,
+  Toolbar,
+  Typography,
+  Icon,
+  Chip,
+  Avatar
+} from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 import * as Actions from 'app/store/actions';
 import * as authActions from 'app/auth/store/actions';
 import { socialLogoConverter } from 'app/utils';
-import { GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID } from 'app/fuse-configs/envsConfig';
+import {
+  GOOGLE_CLIENT_ID,
+  FACEBOOK_CLIENT_ID
+} from 'app/fuse-configs/envsConfig';
 
 function WidgetSocialLink() {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const USER_DATA = useSelector(({ auth }) => auth.user.data);
-  // console.log('USER_DATA ', USER_DATA)
 
   function handleSubmitLinkGoogle({ googleId, accessToken, profileObj }) {
     const googleInfo = {
@@ -25,13 +38,21 @@ function WidgetSocialLink() {
     dispatch(authActions.submitLinkGoogle(googleInfo));
   }
 
-  function handleSubmitLLinkFacebook({ userID, accessToken, name, email, picture }) {
+  function handleSubmitLLinkFacebook({
+    userID,
+    accessToken,
+    name,
+    email,
+    picture
+  }) {
     const fbInfo = {
       facebookID: userID,
       facebookAccessToken: accessToken,
       facebookDisplayName: name,
       facebookEmail: email,
-      facebookPhotoURL: picture.data ? picture.data.url : 'assets/images/avatars/penguin.png'
+      facebookPhotoURL: picture.data
+        ? picture.data.url
+        : 'assets/images/avatars/penguin.png'
     };
     dispatch(authActions.submitLinkFacebook(fbInfo));
   }
@@ -40,9 +61,16 @@ function WidgetSocialLink() {
     if (USER_DATA[provider]) {
       return (
         <div className="flex items-center">
-          <Chip avatar={<Avatar src={socialLogoConverter(provider)} className="p-2" />} label={USER_DATA[provider.toLowerCase()]['displayName']} className="px-8 bg-green-400 text-white" />
+          <Chip
+            avatar={
+              <Avatar src={socialLogoConverter(provider)} className="p-2" />
+            }
+            label={USER_DATA[provider.toLowerCase()]['displayName']}
+            className="px-8 text-white"
+            style={{ backgroundColor: theme.palette.secondary.main }}
+          />
         </div>
-      )
+      );
     } else {
       switch (provider) {
         case 'facebook':
@@ -51,17 +79,31 @@ function WidgetSocialLink() {
               appId={FACEBOOK_CLIENT_ID}
               fields="name,email,picture"
               render={renderProps => (
-                <div className="flex items-center" onClick={renderProps.onClick}>
-                  <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
+                <div
+                  className="flex items-center"
+                  onClick={renderProps.onClick}
+                >
+                  <div
+                    className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex"
+                    role="alert"
+                  >
                     <Icon className="text-white mx-6">link</Icon>
-                    <Typography className="font-semibold mr-2 text-left flex-auto">連接 {provider.toUpperCase()} 帳號</Typography>
+                    <Typography className="font-semibold mr-2 text-left flex-auto">
+                      連接 {provider.toUpperCase()} 帳號
+                    </Typography>
                   </div>
                 </div>
               )}
-              callback={facebookInfo => { handleSubmitLLinkFacebook(facebookInfo) }}
-              onFailure={response => { dispatch(Actions.showMessage({ message: '登入 Facebook 失敗' })) }}
+              callback={facebookInfo => {
+                handleSubmitLLinkFacebook(facebookInfo);
+              }}
+              onFailure={response => {
+                dispatch(
+                  Actions.showMessage({ message: '登入 Facebook 失敗' })
+                );
+              }}
             />
-          )
+          );
 
         case 'google':
         default:
@@ -69,17 +111,29 @@ function WidgetSocialLink() {
             <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
               render={renderProps => (
-                <div className="flex items-center" onClick={renderProps.onClick}>
-                  <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
+                <div
+                  className="flex items-center"
+                  onClick={renderProps.onClick}
+                >
+                  <div
+                    className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex"
+                    role="alert"
+                  >
                     <Icon className="text-white mx-6">link</Icon>
-                    <Typography className="font-semibold mr-2 text-left flex-auto">連接 {provider.toUpperCase()} 帳號</Typography>
+                    <Typography className="font-semibold mr-2 text-left flex-auto">
+                      連接 {provider.toUpperCase()} 帳號
+                    </Typography>
                   </div>
                 </div>
               )}
-              onSuccess={googleInfo => { handleSubmitLinkGoogle(googleInfo) }}
-              onFailure={response => { dispatch(Actions.showMessage({ message: '連接 Google 失敗' })) }}
+              onSuccess={googleInfo => {
+                handleSubmitLinkGoogle(googleInfo);
+              }}
+              onFailure={response => {
+                dispatch(Actions.showMessage({ message: '連接 Google 失敗' }));
+              }}
             />
-          )
+          );
       }
     }
   }
@@ -98,21 +152,17 @@ function WidgetSocialLink() {
           <tbody>
             <tr>
               <td>Facebook</td>
-              <td className="text-center">
-                {renderConnectStatus('facebook')}
-              </td>
+              <td className="text-center">{renderConnectStatus('facebook')}</td>
             </tr>
             <tr>
               <td>Google</td>
-              <td className="text-center">
-                {renderConnectStatus('google')}
-              </td>
+              <td className="text-center">{renderConnectStatus('google')}</td>
             </tr>
           </tbody>
         </table>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default WidgetSocialLink;

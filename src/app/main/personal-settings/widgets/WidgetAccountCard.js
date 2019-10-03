@@ -1,8 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AppBar, Card, CardContent, Toolbar, Typography, Icon } from '@material-ui/core';
+import {
+  AppBar,
+  Card,
+  CardContent,
+  Toolbar,
+  Typography,
+  Icon
+} from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 
 function WidgetAccountCard() {
+  const theme = useTheme();
   const USER_PROFILE = useSelector(({ auth }) => auth.user);
   const UserUID = USER_PROFILE.uuid;
   const UserData = USER_PROFILE.data;
@@ -43,26 +52,38 @@ function WidgetAccountCard() {
               <td className="text-right">
                 {verified ? (
                   <div className="flex items-center">
-                    <div className="p-2 bg-green items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
+                    <div
+                      className="p-2 items-center text-white leading-none rounded-full flex lg:inline-flex"
+                      style={{ backgroundColor: theme.palette.secondary.main }}
+                      role="alert"
+                    >
                       <Icon className="text-white pr-10">check_circle</Icon>
-                      <Typography className="font-semibold mr-2 text-left flex-auto text-white">已認證</Typography>
+                      <Typography className="font-semibold mr-2 text-left flex-auto text-white">
+                        已認證
+                      </Typography>
                     </div>
                   </div>
                 ) : (
-                    <div className="flex items-center">
-                      <div className="p-2 bg-orange items-center text-white leading-none rounded-full flex lg:inline-flex" role="alert">
-                        <Icon className="text-white pr-10">cancel</Icon>
-                        <Typography className="font-semibold mr-2 text-left flex-auto text-white">尚未認證</Typography>
-                      </div>
+                  <div className="flex items-center">
+                    <div
+                      className="p-2 items-center text-white leading-none rounded-full flex lg:inline-flex"
+                      style={{ backgroundColor: theme.palette.secondary.main }}
+                      role="alert"
+                    >
+                      <Icon className="text-white pr-10">cancel</Icon>
+                      <Typography className="font-semibold mr-2 text-left flex-auto text-white">
+                        尚未認證
+                      </Typography>
                     </div>
-                  )}
+                  </div>
+                )}
               </td>
             </tr>
           </tbody>
         </table>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default WidgetAccountCard;
