@@ -168,15 +168,15 @@ function EventActivityDialog(props) {
 													</Typography>
 												</td>
 												<td className="text-center">
-													{eventActivityDialog['eventStars'] ? (
+													{applicantReviews['eventStars'] ? (
 														<Rating
-															value={eventActivityDialog['eventStars']}
+															value={applicantReviews['eventStars']}
 															size="large"
 															readOnly
 														/>
 													) : (
 															<StyledRating
-																value={eventActivityDialog.eventStars || 3}
+																value={applicantReviews.eventStars || 3}
 																size="large"
 																precision={0.5}
 																readOnly
@@ -193,15 +193,15 @@ function EventActivityDialog(props) {
 													</Typography>
 												</td>
 												<td className="text-center">
-													{eventActivityDialog['speakerStars'] ? (
+													{applicantReviews['speakerStars'] ? (
 														<Rating
-															value={eventActivityDialog['speakerStars']}
+															value={applicantReviews['speakerStars']}
 															size="large"
 															readOnly
 														/>
 													) : (
 															<StyledRating
-																value={eventActivityDialog.eventStars || 3}
+																value={applicantReviews.eventStars || 3}
 																size="large"
 																precision={0.5}
 																readOnly
@@ -218,15 +218,15 @@ function EventActivityDialog(props) {
 													</Typography>
 												</td>
 												<td className="text-center">
-													{eventActivityDialog['speakerExpressionStars'] ? (
+													{applicantReviews['speakerExpressionStars'] ? (
 														<Rating
-															value={eventActivityDialog['speakerExpressionStars']}
+															value={applicantReviews['speakerExpressionStars']}
 															size="large"
 															readOnly
 														/>
 													) : (
 															<StyledRating
-																value={eventActivityDialog.eventStars || 3}
+																value={applicantReviews.eventStars || 3}
 																size="large"
 																precision={0.5}
 																readOnly
@@ -243,15 +243,15 @@ function EventActivityDialog(props) {
 													</Typography>
 												</td>
 												<td className="text-center">
-													{eventActivityDialog['speakerContentStars'] ? (
+													{applicantReviews['speakerContentStars'] ? (
 														<Rating
-															value={eventActivityDialog['speakerContentStars']}
+															value={applicantReviews['speakerContentStars']}
 															size="large"
 															readOnly
 														/>
 													) : (
 															<StyledRating
-																value={eventActivityDialog.eventStars || 3}
+																value={applicantReviews.eventStars || 3}
 																size="large"
 																precision={0.5}
 																readOnly
@@ -274,7 +274,7 @@ function EventActivityDialog(props) {
 											autoFocus
 											id="eventComments"
 											name="eventComments"
-											value={applicantInfos.eventComments || '尚未給予評論'}
+											value={applicantReviews.eventComments || '尚未給予評論'}
 											variant="outlined"
 											required
 											multiline

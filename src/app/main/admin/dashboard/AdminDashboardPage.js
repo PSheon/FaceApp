@@ -13,16 +13,16 @@ import WidgetEmploymentStatusChart from './widgets/WidgetEmploymentStatusChart';
 import WidgetAgePeriodChart from './widgets/WidgetAgePeriodChart';
 import WidgetEducationChart from './widgets/WidgetEducationChart';
 import WidgetHeardFromChart from './widgets/WidgetHeardFromChart';
+import WidgetReviewStarsSection from './widgets/WidgetReviewStarsSection';
+import WidgetEventReviewTable from './widgets/WidgetEventReviewTable';
 
 function AdminDashboardPage() {
   const dispatch = useDispatch();
   // const theme = useTheme();
   // const isNarrowView = useMediaQuery(theme.breakpoints.down('md'));
-  // const articles = useSelector(({ markets }) => isNarrowView ? markets.news.slice(0, 2) : markets.news.slice(0, 3));
 
   useEffect(() => {
-    // dispatch(Actions.syncCryptoNews());
-    // dispatch(Actions.syncCryptoMapLabels());
+    dispatch(Actions.syncAdminDashboardReviewStars());
     dispatch(Actions.syncAdminDashboardNewRegisteredUser());
     dispatch(Actions.syncAdminDashboardGenderStatistic());
     dispatch(Actions.syncAdminDashboardEmploymentStatusStatistic());
@@ -40,25 +40,10 @@ function AdminDashboardPage() {
           <div className="flex flex-1 flex-col min-w-0 order-last md:order-first">
             <FuseAnimate delay={600}>
               <Typography className="p-16 pb-8 text-18 font-600">
-                網站統計
+                活動滿意度統計
               </Typography>
             </FuseAnimate>
-
-            {/* Real-time Price */}
-            {/* <div className="flex flex-col sm:flex sm:flex-row pb-32">
-
-							<div className="widget flex w-full sm:w-1/3 p-16">
-								<WidgetBTCRealTimePrice />
-							</div>
-
-							<div className="widget flex w-full sm:w-1/3 p-16">
-								<WidgetETHRealTimePrice />
-							</div>
-
-							<div className="widget w-full sm:w-1/3 p-16">
-								<WidgetLTCRealTimePrice />
-							</div>
-						</div> */}
+            <WidgetReviewStarsSection />
 
             {/* Latest News */}
             {/* <FuseAnimate delay={600}>
@@ -83,13 +68,12 @@ function AdminDashboardPage() {
 
             <FuseAnimate delay={600}>
               <Typography className="px-16 pb-8 text-18 font-600">
-                可以使用虛擬貨幣的地點
+                最近的活動回饋
               </Typography>
             </FuseAnimate>
 
             <div className="widget w-full p-16 pb-32">
-              {/* <WidgetMaps /> */}
-              asdasd
+              <WidgetEventReviewTable />
             </div>
           </div>
 

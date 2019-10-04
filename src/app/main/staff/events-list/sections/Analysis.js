@@ -4,7 +4,10 @@ import { Typography, Avatar, Paper } from '@material-ui/core';
 import { FuseAnimate, FuseAnimateGroup } from '@fuse';
 import moment from 'moment';
 
-import { avatarNameToPathConverter } from 'app/utils';
+import {
+  avatarNameToPathConverter,
+  eventReviewStarsExtractot
+} from 'app/utils';
 import WidgetAreaChart from '../widgets/WidgetAreaChart';
 import WidgetEducationAreaChart from '../widgets/WidgetEducationAreaChart';
 import WidgetGenderPieChart from '../widgets/WidgetGenderPieChart';
@@ -36,7 +39,9 @@ function Analysis(props) {
     ({ activity }) => activity.eventLogs.queueingInfos[_id]
   );
 
-  // console.log('queueingInfos ', queueingInfos)
+  const { eventStarsAvg, speakerStarsAvg } = eventReviewStarsExtractot(
+    EVENT_ACTIVITY_LOGS
+  );
 
   return (
     <FuseAnimate animation="transition.slideUpIn" delay={200}>
@@ -97,9 +102,8 @@ function Analysis(props) {
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
                 <Typography className="text-72 leading-none text-blue flex justify-center items-end">
-                  {3.5}{' '}
+                  {eventStarsAvg}
                   <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
-                    {' '}
                     / 5
                   </span>
                 </Typography>
@@ -111,9 +115,8 @@ function Analysis(props) {
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
                 <Typography className="text-72 leading-none text-blue flex justify-center items-end">
-                  {2.5}{' '}
+                  {speakerStarsAvg}
                   <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
-                    {' '}
                     / 5
                   </span>
                 </Typography>

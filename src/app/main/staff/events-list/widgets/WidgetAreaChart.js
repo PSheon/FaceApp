@@ -7,7 +7,7 @@ import { useTheme } from '@material-ui/styles';
 const data = {
   chartType: 'line',
   datasets: {
-    'yesterday': [
+    yesterday: [
       {
         label: 'Visitors',
         data: [190, 300, 340, 220, 290, 390, 5500, 380, 410, 380, 320, 290],
@@ -15,11 +15,24 @@ const data = {
       },
       {
         label: 'Page views',
-        data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
+        data: [
+          2200,
+          2900,
+          3900,
+          2500,
+          3800,
+          3200,
+          2900,
+          1900,
+          3000,
+          3400,
+          4100,
+          3800
+        ],
         fill: 'start'
       }
     ],
-    'today': [
+    today: [
       {
         label: 'Visitors',
         data: [410, 380, 320, 290, 190, 390, 250, 380, 300, 340, 220, 290],
@@ -27,12 +40,38 @@ const data = {
       },
       {
         label: 'Page Views',
-        data: [3000, 3400, 4100, 3800, 2200, 3200, 2900, 1900, 2900, 3900, 2500, 3800],
+        data: [
+          3000,
+          3400,
+          4100,
+          3800,
+          2200,
+          3200,
+          2900,
+          1900,
+          2900,
+          3900,
+          2500,
+          3800
+        ],
         fill: 'start'
       }
     ]
   },
-  labels: ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+  labels: [
+    '12am',
+    '2am',
+    '4am',
+    '6am',
+    '8am',
+    '10am',
+    '12pm',
+    '2pm',
+    '4pm',
+    '6pm',
+    '8pm',
+    '10pm'
+  ],
   options: {
     spanGaps: false,
     legend: {
@@ -94,11 +133,11 @@ function WidgetAreaChart() {
   return (
     <FuseAnimate delay={600}>
       <Card className="w-full rounded-8 shadow-none border-none">
-
         <div className="relative p-24 flex flex-row items-center justify-between">
-
           <div className="flex flex-col">
-            <Typography className="h3 sm:h2">Visitors & Page views</Typography>
+            <Typography className="h3 sm:h2">
+              測試中報表 (will deprecated soon)
+            </Typography>
           </div>
 
           <div className="flex flex-row items-center">
@@ -109,10 +148,7 @@ function WidgetAreaChart() {
             >
               qw
             </Button>
-            <Button
-              className="py-8 px-12 rounded-12"
-              size="small"
-            >
+            <Button className="py-8 px-12 rounded-12" size="small">
               qw
             </Button>
           </div>
@@ -123,7 +159,8 @@ function WidgetAreaChart() {
             data={{
               labels: data.labels,
               datasets: data.datasets['yesterday'].map((obj, index) => {
-                const palette = theme.palette[index === 0 ? 'primary' : 'secondary'];
+                const palette =
+                  theme.palette[index === 0 ? 'primary' : 'secondary'];
                 return {
                   ...obj,
                   borderColor: palette.main,
@@ -134,7 +171,7 @@ function WidgetAreaChart() {
                   pointHoverBackgroundColor: palette.main,
                   pointBorderColor: palette.contrastText,
                   pointHoverBorderColor: palette.contrastText
-                }
+                };
               })
             }}
             options={data.options}
@@ -142,7 +179,7 @@ function WidgetAreaChart() {
         </Typography>
       </Card>
     </FuseAnimate>
-  )
+  );
 }
 
 export default WidgetAreaChart;

@@ -118,6 +118,43 @@ function Applicants(props) {
     );
   }
 
+  function renderCheckinCell(logDetail) {
+    if (logDetail.queueOrder >= 0) {
+      return (
+        <div className="flex justify-center items-center">
+          {logDetail.checkinStatus ? (
+            <CheckCircleIcon className="text-green" />
+          ) : isCheckinLoading ? (
+            <LoadingSpinner width={32} height={32} />
+          ) : (
+            <Tooltip
+              title={`簽到 ${logDetail.applicant.fullName}`}
+              placement="top"
+            >
+              <RemoveCircleOutlineIcon
+                className="text-gray-500"
+                onClick={e => {
+                  e.stopPropagation();
+                  handleCheckinSubmit(logDetail.applicant);
+                }}
+              />
+            </Tooltip>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex justify-center items-center">
+          <Tooltip
+            title={`${logDetail.applicant.fullName} 尚未報名成功，請先同意活動申請`}
+            placement="top"
+          >
+            <RemoveCircleOutlineIcon className="text-gray-500" />
+          </Tooltip>
+        </div>
+      );
+    }
+  }
   if (isSyncing && !eventLogs.length) {
     return (
       <div className="flex justify-center items-center w-full h-full">
@@ -125,7 +162,6 @@ function Applicants(props) {
       </div>
     );
   }
-
   return (
     <FuseAnimate animation="transition.slideUpIn" delay={200}>
       <Paper className="w-full rounded-8 shadow-none border-1">
@@ -280,26 +316,7 @@ function Applicants(props) {
                     scope="row"
                     className="truncate text-center"
                   >
-                    <div className="flex justify-center items-center">
-                      {logDetail.checkinStatus ? (
-                        <CheckCircleIcon className="text-green" />
-                      ) : isCheckinLoading ? (
-                        <LoadingSpinner width={32} height={32} />
-                      ) : (
-                        <Tooltip
-                          title={`簽到 ${logDetail.applicant.fullName}`}
-                          placement="top"
-                        >
-                          <RemoveCircleOutlineIcon
-                            className="text-gray-500"
-                            onClick={e => {
-                              e.stopPropagation();
-                              handleCheckinSubmit(logDetail.applicant);
-                            }}
-                          />
-                        </Tooltip>
-                      )}
-                    </div>
+                    {renderCheckinCell(logDetail)}
                   </TableCell>
                 </TableRow>
               ))}
