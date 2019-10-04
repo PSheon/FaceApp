@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FuseAnimateGroup } from '@fuse';
-import {
-  Box,
-  TextField,
-  Typography,
-  Button,
-} from '@material-ui/core';
+import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { useForm } from '@fuse/hooks';
 import { withStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -24,31 +19,33 @@ const defaultFormState = {
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#3e3e3e',
+      color: '#3e3e3e'
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#fefefe',
+      borderBottomColor: '#fefefe'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#5e5e5e',
+        borderColor: '#5e5e5e'
       },
       '&:hover fieldset': {
-        borderColor: '#3e3e3e',
+        borderColor: '#3e3e3e'
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#3e3e3e',
-      },
+        borderColor: '#3e3e3e'
+      }
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderRadius: '2.4rem',
+      borderRadius: '2.4rem'
     }
-  },
+  }
 })(TextField);
 function ReviewsSection(props) {
   const { eventDetail, selfEventActivityLog } = props;
   const dispatch = useDispatch();
-  const EVENTS_ACTIVITY_LOGS = useSelector(({ activity }) => activity.eventLogs);
+  const EVENTS_ACTIVITY_LOGS = useSelector(
+    ({ activity }) => activity.eventLogs
+  );
   const isUpdatingComment = EVENTS_ACTIVITY_LOGS.updating;
 
   const { form, handleChange, setForm } = useForm(defaultFormState);
@@ -56,10 +53,11 @@ function ReviewsSection(props) {
   useEffect(() => {
     if (selfEventActivityLog) {
       setForm({
-        speakerExpressionStars: selfEventActivityLog.speakerExpressionStars || 0,
+        speakerExpressionStars:
+          selfEventActivityLog.speakerExpressionStars || 0,
         speakerContentStars: selfEventActivityLog.speakerContentStars || 0,
         eventStars: selfEventActivityLog.eventStars || 0,
-        eventComments: selfEventActivityLog.eventComments || '',
+        eventComments: selfEventActivityLog.eventComments || ''
       });
     }
   }, [selfEventActivityLog, setForm]);
@@ -68,10 +66,12 @@ function ReviewsSection(props) {
     event.preventDefault();
 
     if (eventDetail) {
-      dispatch(Actions.updateEventReview({
-        eventId: eventDetail._id,
-        ...form
-      }))
+      dispatch(
+        Actions.updateEventReview({
+          eventId: eventDetail._id,
+          ...form
+        })
+      );
     }
   }
   function isFormValid() {
@@ -79,7 +79,7 @@ function ReviewsSection(props) {
       !!form.speakerExpressionStars &&
       !!form.speakerContentStars &&
       !!form.eventStars
-    )
+    );
   }
 
   // console.log('selfEventActivityLog ', selfEventActivityLog)
@@ -90,23 +90,31 @@ function ReviewsSection(props) {
       <div className="flex w-full h-full justify-center items-center">
         <LoadingSpinner width={128} height={128} />
       </div>
-    )
+    );
   }
   return (
     <FuseAnimateGroup
       enter={{
-        animation: "transition.expandIn"
+        animation: 'transition.expandIn'
       }}
       className="w-full flex flex-col my-8"
     >
-      <Typography variant="h2" className="mt-16 sm:mt-40 flex items-center sm:mb-12" color="inherit">
+      <Typography
+        variant="h2"
+        className="mt-16 sm:mt-40 flex items-center sm:mb-12"
+        color="inherit"
+      >
         課程評價
       </Typography>
 
       <div className="flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-1/3">
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <Typography variant="subtitle1" className="mt-12 sm:mt-16 flex items-center sm:mb-12" color="inherit">
+            <Typography
+              variant="subtitle1"
+              className="mt-12 sm:mt-16 flex items-center sm:mb-12"
+              color="inherit"
+            >
               講師的表達方式
             </Typography>
 
@@ -121,7 +129,11 @@ function ReviewsSection(props) {
           </Box>
 
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <Typography variant="subtitle1" className="mt-12 sm:mt-16 flex items-center sm:mb-12" color="inherit">
+            <Typography
+              variant="subtitle1"
+              className="mt-12 sm:mt-16 flex items-center sm:mb-12"
+              color="inherit"
+            >
               講師的教學內容
             </Typography>
 
@@ -136,7 +148,11 @@ function ReviewsSection(props) {
           </Box>
 
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <Typography variant="subtitle1" className="mt-12 sm:mt-16 flex items-center sm:mb-12" color="inherit">
+            <Typography
+              variant="subtitle1"
+              className="mt-12 sm:mt-16 flex items-center sm:mb-12"
+              color="inherit"
+            >
               活動整體評價
             </Typography>
 
@@ -152,7 +168,11 @@ function ReviewsSection(props) {
         </div>
 
         <div className="w-full md:w-2/3 flex flex-col">
-          <Typography variant="subtitle1" className="mt-12 sm:mt-16 flex items-center sm:mb-12" color="inherit">
+          <Typography
+            variant="subtitle1"
+            className="mt-12 sm:mt-16 flex items-center sm:mb-12"
+            color="inherit"
+          >
             給講師或活動承辦人一些鼓勵吧！
           </Typography>
 
@@ -176,21 +196,28 @@ function ReviewsSection(props) {
               disabled={isUpdatingComment}
               onClick={handleSubmit}
             >
-              {isUpdatingComment ? <span className="flex justify-center">給予評價中 <LoadingSpinner width="2em" height="2em" /></span> : '給予評價'}
+              {isUpdatingComment ? (
+                <span className="flex justify-center">
+                  給予評價中 <LoadingSpinner width="2em" height="2em" />
+                </span>
+              ) : (
+                '給予評價'
+              )}
             </Button>
           ) : (
-              <Button
-                className="rounded-full max-w-200 self-center"
-                variant="contained"
-                color="primary"
-                disabled
-              >
-                請填寫活動評價
-              </Button>
-            )}
+            <Button
+              className="rounded-full max-w-200 self-center"
+              variant="contained"
+              color="primary"
+              disabled
+            >
+              請填寫活動評價
+            </Button>
+          )}
         </div>
       </div>
-    </FuseAnimateGroup>)
+    </FuseAnimateGroup>
+  );
 }
 
 export default ReviewsSection;

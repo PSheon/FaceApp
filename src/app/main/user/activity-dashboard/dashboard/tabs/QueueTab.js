@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Link } from 'react-router-dom';
-import { Typography, Paper, Avatar } from '@material-ui/core';
+import { Typography, Avatar } from '@material-ui/core';
 import clsx from 'clsx';
 import { FuseAnimateGroup } from '@fuse';
 import moment from 'moment';
@@ -113,8 +113,8 @@ function QueueTab() {
         animation: 'transition.slideUpBigIn'
       }}
     >
-      <div className="widget flex w-1/2 md:w-1/4 p-12">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-28">
+      {/* <div className="widget flex justify-center items-center w-1/4 p-12">
+        <Paper className="px-12 rounded-8 shadow-lg border-none text-center pt-12 pb-28">
           <Typography className="text-72 leading-none text-red">
             {200}
           </Typography>
@@ -123,28 +123,8 @@ function QueueTab() {
           </Typography>
         </Paper>
       </div>
-      <div className="widget flex w-1/2 md:w-1/4 p-12">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-28">
-          <Typography className="text-72 leading-none text-green">
-            {200}
-          </Typography>
-          <Typography className="text-16" color="textSecondary">
-            報名人數
-          </Typography>
-        </Paper>
-      </div>
-      <div className="widget flex w-1/2 md:w-1/4 p-12">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-28">
-          <Typography className="text-72 leading-none text-blue">
-            {200}
-          </Typography>
-          <Typography className="text-16" color="textSecondary">
-            報名人數
-          </Typography>
-        </Paper>
-      </div>
-      <div className="widget flex w-1/2 md:w-1/4 p-12">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-28">
+      <div className="widget flex justify-center items-center w-1/4 p-12">
+        <Paper className="px-12 rounded-8 shadow-lg border-none text-center pt-12 pb-28">
           <Typography className="text-72 leading-none text-orange">
             {200}
           </Typography>
@@ -152,10 +132,9 @@ function QueueTab() {
             報名人數
           </Typography>
         </Paper>
-      </div>
+      </div> */}
 
       {/* Event has applied */}
-      {console.log('selfLogs, ', selfLogs)}
       {selfLogs.map(({ event, speaker }) => (
         <Link
           to={`/events-list/${event._id}`}

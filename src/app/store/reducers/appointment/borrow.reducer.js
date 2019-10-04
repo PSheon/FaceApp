@@ -52,6 +52,26 @@ const borrow = function(state = initialState, action) {
       };
     }
 
+    case Actions.CHECKIN_BORROW_APPOINTMENT_BY_ID: {
+      const { borrowId } = action.payload;
+      const updatedDocs = state.docs.map(item => {
+        if (item._id === borrowId) {
+          return {
+            ...item,
+            checkinStatus: true
+          };
+        } else {
+          return item;
+        }
+      });
+
+      return {
+        ...state,
+        loading: false,
+        docs: updatedDocs
+      };
+    }
+
     case Actions.REJECT_BORROW_APPOINTMENT_BY_ID: {
       const { borrowId } = action.payload;
       const updatedDocs = state.docs.map(item => {

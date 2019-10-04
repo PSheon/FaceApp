@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import {
   TextField,
   Tooltip,
@@ -79,7 +81,9 @@ function ConsultingAppointmentTab() {
   const isSyncingAppointmentLogs = CONSULTING_APPOINTMENT_LOGS.loading;
   const consultingAppointmentList = CONSULTING_APPOINTMENT_LOGS['docs'];
 
+  const [isInitialized, setIsInitialized] = useState(false);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
+  const [isCheckinLoading, setIsCheckinLoading] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [isRejecting, setIsRejecting] = useState(false);
   const [isAgreeing, setIsAgreeing] = useState(false);
@@ -109,16 +113,26 @@ function ConsultingAppointmentTab() {
   }
 
   useEffect(() => {
-    if (!consultingAppointmentList.length && !isSyncingAppointmentLogs) {
+    if (
+      !isInitialized &&
+      !consultingAppointmentList.length &&
+      !isSyncingAppointmentLogs
+    ) {
       dispatch(Actions.syncSecretConsultingAppointments());
+      setIsInitialized(true);
     }
     // eslint-disable-next-line
   }, [isSyncingAppointmentLogs]);
   useEffect(() => {
     setIsRejecting(false);
     setIsAgreeing(false);
+    setIsCheckinLoading(false);
   }, [consultingAppointmentList]);
 
+  function handleCheckinSubmit(consultingId) {
+    setIsCheckinLoading(true);
+    dispatch(Actions.checkinConsulting({ consultingId }));
+  }
   function handleRejectConsultingById(consultingId) {
     setIsRejecting(true);
     dispatch(Actions.rejectConsulting({ consultingId }));
@@ -168,7 +182,7 @@ function ConsultingAppointmentTab() {
         );
     }
   }
-  function renderCancelButton(consultingLog) {
+  function renderButtonSection(consultingLog) {
     if (consultingLog.appointmentStatus !== 'canceled') {
       return (
         <div className="w-full flex justify-around py-12">
@@ -191,25 +205,43 @@ function ConsultingAppointmentTab() {
               '拒絕申請'
             )}
           </Button>
-          <Button
-            variant="contained"
-            className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
-            aria-label="同意申請"
-            disabled={
-              isAgreeing || consultingLog.appointmentStatus === 'succeeded'
-            }
-            onClick={() => handleAgreeConsultingById(consultingLog._id)}
-            value="legacy"
-          >
-            <CheckCircleOutlineIcon className={classes.extendedIcon} />
-            {isAgreeing ? (
-              <span className="flex justify-center">
-                同意申請中 <LoadingSpinner width="2em" height="2em" />
-              </span>
-            ) : (
-              '同意申請'
-            )}
-          </Button>
+          {consultingLog.appointmentStatus === 'succeeded' ? (
+            <Button
+              variant="contained"
+              className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
+              aria-label="簽到"
+              disabled={isCheckinLoading || consultingLog.checkinStatus}
+              onClick={() => handleCheckinSubmit(consultingLog._id)}
+              value="legacy"
+            >
+              <CheckCircleOutlineIcon className={classes.extendedIcon} />
+              {isCheckinLoading ? (
+                <span className="flex justify-center">
+                  簽到中 <LoadingSpinner width="2em" height="2em" />
+                </span>
+              ) : (
+                `簽到 ${consultingLog.applicant.displayName}`
+              )}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
+              aria-label="同意申請"
+              disabled={isAgreeing}
+              onClick={() => handleAgreeConsultingById(consultingLog._id)}
+              value="legacy"
+            >
+              <CheckCircleOutlineIcon className={classes.extendedIcon} />
+              {isAgreeing ? (
+                <span className="flex justify-center">
+                  同意申請中 <LoadingSpinner width="2em" height="2em" />
+                </span>
+              ) : (
+                '同意申請'
+              )}
+            </Button>
+          )}
         </div>
       );
     } else {
@@ -331,7 +363,11 @@ function ConsultingAppointmentTab() {
                     <td>簽到狀況</td>
                     <td>
                       <Typography className="flex items-center font-semibold">
-                        {consultingLog.checkinStatus ? '已簽到' : '未簽到'}
+                        {consultingLog.checkinStatus ? (
+                          <CheckCircleIcon className="text-green" />
+                        ) : (
+                          <RemoveCircleOutlineIcon className="text-gray-500" />
+                        )}
                       </Typography>
                     </td>
                   </tr>
@@ -376,7 +412,7 @@ function ConsultingAppointmentTab() {
             </div>
           </ExpansionPanelDetails>
 
-          {renderCancelButton(consultingLog)}
+          {renderButtonSection(consultingLog)}
         </ExpansionPanel>
       ))}
       <VisibilitySensor>

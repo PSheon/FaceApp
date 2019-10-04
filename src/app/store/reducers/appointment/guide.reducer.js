@@ -52,6 +52,25 @@ const guide = function(state = initialState, action) {
       };
     }
 
+    case Actions.CHECKIN_GUIDE_APPOINTMENT_BY_ID: {
+      const { guideId } = action.payload;
+      const updatedDocs = state.docs.map(item => {
+        if (item._id === guideId) {
+          return {
+            ...item,
+            checkinStatus: true
+          };
+        } else {
+          return item;
+        }
+      });
+
+      return {
+        ...state,
+        loading: false,
+        docs: updatedDocs
+      };
+    }
     case Actions.REJECT_GUIDE_APPOINTMENT_BY_ID: {
       const { guideId } = action.payload;
       const updatedDocs = state.docs.map(item => {

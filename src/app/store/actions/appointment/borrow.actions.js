@@ -14,6 +14,8 @@ export const APPEND_NEXT_PAGE_BORROW_APPOINTMENT_LOGS =
   '[APPOINTMENT] APPEND NEXT PAGE BORROW APPOINTMENT LOGS';
 export const CANCEL_SELF_BORROW_APPOINTMENT_BY_ID =
   '[APPOINTMENT] CANCEL BORROW APPOINTMENT BY ID';
+export const CHECKIN_BORROW_APPOINTMENT_BY_ID =
+  '[APPOINTMENT] CHECKIN BORROW APPOINTMENT BY ID';
 export const REJECT_BORROW_APPOINTMENT_BY_ID =
   '[APPOINTMENT] REJECT BORROW APPOINTMENT BY ID';
 export const AGREE_BORROW_APPOINTMENT_BY_ID =
@@ -60,6 +62,25 @@ export function selfCancelBorrow(borrowDetail) {
 
       history.push({
         pathname: '/user/dashboard/borrow'
+      });
+    });
+  };
+}
+
+export function checkinBorrow({ borrowId }) {
+  const request = axios.post(
+    `${AUTH_REST_BASE_END_POINT}/api/borrowLog/checkin`,
+    formurlencoded({ borrowId })
+  );
+  return dispatch => {
+    dispatch({ type: SET_BORROW_APPOINTMENT_LOADING });
+    request.then(response => {
+      dispatch(Actions.showMessage({ message: '已簽到' }));
+      dispatch({
+        type: CHECKIN_BORROW_APPOINTMENT_BY_ID,
+        payload: {
+          borrowId
+        }
       });
     });
   };

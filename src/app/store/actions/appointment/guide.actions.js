@@ -14,6 +14,8 @@ export const APPEND_NEXT_PAGE_GUIDE_APPOINTMENT_LOGS =
   '[APPOINTMENT] APPEND NEXT PAGE GUIDE APPOINTMENT LOGS';
 export const CANCEL_SELF_GUIDE_APPOINTMENT_BY_ID =
   '[APPOINTMENT] CANCEL GUIDE APPOINTMENT BY ID';
+export const CHECKIN_GUIDE_APPOINTMENT_BY_ID =
+  '[APPOINTMENT] CHECKIN GUIDE APPOINTMENT BY ID';
 export const REJECT_GUIDE_APPOINTMENT_BY_ID =
   '[APPOINTMENT] REJECT GUIDE APPOINTMENT BY ID';
 export const AGREE_GUIDE_APPOINTMENT_BY_ID =
@@ -55,6 +57,25 @@ export function selfCancelGuide(guideDetail) {
 
       history.push({
         pathname: '/user/dashboard/guide'
+      });
+    });
+  };
+}
+
+export function checkinGuide({ guideId }) {
+  const request = axios.post(
+    `${AUTH_REST_BASE_END_POINT}/api/guideLog/checkin`,
+    formurlencoded({ guideId })
+  );
+  return dispatch => {
+    dispatch({ type: SET_GUIDE_APPOINTMENT_LOADING });
+    request.then(response => {
+      dispatch(Actions.showMessage({ message: '已簽到' }));
+      dispatch({
+        type: CHECKIN_GUIDE_APPOINTMENT_BY_ID,
+        payload: {
+          guideId
+        }
       });
     });
   };

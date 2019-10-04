@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import {
   TextField,
   Tooltip,
@@ -79,7 +81,9 @@ function GuideAppointmentTab() {
   const isSyncingAppointmentLogs = GUIDE_APPOINTMENT_LOGS.loading;
   const guideAppointmentList = GUIDE_APPOINTMENT_LOGS['docs'];
 
+  const [isInitialized, setIsInitialized] = useState(false);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
+  const [isCheckinLoading, setIsCheckinLoading] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [isRejecting, setIsRejecting] = useState(false);
   const [isAgreeing, setIsAgreeing] = useState(false);
@@ -109,16 +113,26 @@ function GuideAppointmentTab() {
   }
 
   useEffect(() => {
-    if (!guideAppointmentList.length && !isSyncingAppointmentLogs) {
+    if (
+      !isInitialized &&
+      !guideAppointmentList.length &&
+      !isSyncingAppointmentLogs
+    ) {
       dispatch(Actions.syncGuideAppointments());
+      setIsInitialized(true);
     }
     // eslint-disable-next-line
   }, [dispatch, isSyncingAppointmentLogs]);
   useEffect(() => {
     setIsRejecting(false);
     setIsAgreeing(false);
+    setIsCheckinLoading(false);
   }, [guideAppointmentList]);
 
+  function handleCheckinSubmit(guideId) {
+    setIsCheckinLoading(true);
+    dispatch(Actions.checkinGuide({ guideId }));
+  }
   function handleRejectGuideById(guideId) {
     setIsRejecting(true);
     dispatch(Actions.rejectGuide({ guideId }));
@@ -168,7 +182,7 @@ function GuideAppointmentTab() {
         );
     }
   }
-  function renderCancelButton(guideLog) {
+  function renderButtonSection(guideLog) {
     if (guideLog.appointmentStatus !== 'canceled') {
       return (
         <div className="w-full flex justify-around py-12">
@@ -189,23 +203,43 @@ function GuideAppointmentTab() {
               '拒絕申請'
             )}
           </Button>
-          <Button
-            variant="contained"
-            className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
-            aria-label="同意申請"
-            disabled={isAgreeing || guideLog.appointmentStatus === 'succeeded'}
-            onClick={() => handleAgreeGuideById(guideLog._id)}
-            value="legacy"
-          >
-            <CheckCircleOutlineIcon className={classes.extendedIcon} />
-            {isAgreeing ? (
-              <span className="flex justify-center">
-                同意申請中 <LoadingSpinner width="2em" height="2em" />
-              </span>
-            ) : (
-              '同意申請'
-            )}
-          </Button>
+          {guideLog.appointmentStatus === 'succeeded' ? (
+            <Button
+              variant="contained"
+              className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
+              aria-label="簽到"
+              disabled={isCheckinLoading || guideLog.checkinStatus}
+              onClick={() => handleCheckinSubmit(guideLog._id)}
+              value="legacy"
+            >
+              <CheckCircleOutlineIcon className={classes.extendedIcon} />
+              {isCheckinLoading ? (
+                <span className="flex justify-center">
+                  簽到中 <LoadingSpinner width="2em" height="2em" />
+                </span>
+              ) : (
+                `簽到 ${guideLog.applicant.displayName}`
+              )}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              className="md:w-200 rounded-full bg-green-300 text-white hover:bg-green-400 hover:shadow-lg"
+              aria-label="同意申請"
+              disabled={isAgreeing}
+              onClick={() => handleAgreeGuideById(guideLog._id)}
+              value="legacy"
+            >
+              <CheckCircleOutlineIcon className={classes.extendedIcon} />
+              {isAgreeing ? (
+                <span className="flex justify-center">
+                  同意申請中 <LoadingSpinner width="2em" height="2em" />
+                </span>
+              ) : (
+                '同意申請'
+              )}
+            </Button>
+          )}
         </div>
       );
     } else {
@@ -337,7 +371,11 @@ function GuideAppointmentTab() {
                     <td>簽到狀況</td>
                     <td>
                       <Typography className="flex items-center font-semibold">
-                        {guideLog.checkinStatus ? '已簽到' : '未簽到'}
+                        {guideLog.checkinStatus ? (
+                          <CheckCircleIcon className="text-green" />
+                        ) : (
+                          <RemoveCircleOutlineIcon className="text-gray-500" />
+                        )}
                       </Typography>
                     </td>
                   </tr>
@@ -364,7 +402,7 @@ function GuideAppointmentTab() {
             </div>
           </ExpansionPanelDetails>
 
-          {renderCancelButton(guideLog)}
+          {renderButtonSection(guideLog)}
         </ExpansionPanel>
       ))}
       <VisibilitySensor>

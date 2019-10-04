@@ -86,7 +86,7 @@ function FooterLayout2(props) {
         color="default"
       >
         {/* <Toolbar className="px-16 py-24 flex flex-col items-center justify-between sm:py-0 container"> */}
-        <div className="px-16 py-24 flex flex-col items-start justify-between sm:py-0 container">
+        <div className="px-16 pt-24 flex flex-col items-center sm:items-start justify-between sm:py-0 container">
           {/* Social */}
           <div className="flex justify-start items-center w-full md:w-400">
             <div
@@ -170,15 +170,18 @@ function FooterLayout2(props) {
                 電話 | <a href="tel:072313232">(07)-2313232</a>
               </Typography>
               <Typography variant="subtitle1" component="p">
-                服務時間 | 週二至週日 09:00-18:00 (周一休息)
+                信箱 | info.youthsalon@gmail.com
               </Typography>
               <Typography variant="subtitle1" component="p">
-                信箱 | info.youthsalon@gmail.com
+                服務時間 | 週二至週日 09:00-18:00
+              </Typography>
+              <Typography variant="subtitle1" component="p">
+                休息時間 | 固定周一休館
               </Typography>
             </div>
 
             <div className="flex flex-col justify-center items-center py-12 sm:py-0 sm:w-1/3">
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" className="whitespace-no-wrap">
                 版權所有 © 勞動部勞動力發展署高屏澎東分署
               </Typography>
 
@@ -186,7 +189,8 @@ function FooterLayout2(props) {
                 {data.map(article => (
                   <Typography
                     key={article.id}
-                    variant="subtitle2"
+                    variant="caption"
+                    color="textSecondary"
                     className="px-8 cursor-pointer"
                     onClick={() => handleOpenDialog(article)}
                   >

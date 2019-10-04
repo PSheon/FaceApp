@@ -16,8 +16,8 @@ import EventActivityDialog from './EventActivityDialog';
 
 const useStyles = makeStyles(theme => ({
   evenlyWrapper: {
-    justifyContent: 'space-evenly',
-  },
+    justifyContent: 'space-evenly'
+  }
 }));
 
 function EventAnalysis(props) {
@@ -36,11 +36,11 @@ function EventAnalysis(props) {
 
   useEffect(() => {
     if (EVENTS.docs.length) {
-      const event = EVENTS.docs.find(item => item._id === selectedEventId)
+      const event = EVENTS.docs.find(item => item._id === selectedEventId);
       if (!event) {
         history.push({
           pathname: '/staff/events-list'
-        })
+        });
       } else {
         setEventDetil(event);
         setIsLoading(false);
@@ -51,39 +51,58 @@ function EventAnalysis(props) {
   }, [EVENTS.docs, dispatch, selectedEventId]);
   useEffect(() => {
     dispatch(Actions.syncEventActivityLogs(selectedEventId));
-  }, [dispatch, selectedEventId])
+  }, [dispatch, selectedEventId]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full">
         <LoadingSpinner width={128} height={128} />
       </div>
-    )
+    );
   }
 
   return (
     <FusePageCarded
       classes={{
-        toolbar: "p-0",
-        header: "min-h-160 h-160 sm:h-136 sm:min-h-136"
+        toolbar: 'p-0',
+        header: 'min-h-160 h-160 sm:h-136 sm:min-h-136'
       }}
       header={
-        <div className={clsx(classes.evenlyWrapper, "flex flex-1 flex-col md:flex-row w-full items-center md:justify-between")}>
+        <div
+          className={clsx(
+            classes.evenlyWrapper,
+            'flex flex-1 flex-col md:flex-row w-full items-center md:justify-between'
+          )}
+        >
           <div className="flex flex-col items-start max-w-full">
             <FuseAnimate animation="transition.slideRightIn" delay={300}>
-              <Typography className="normal-case flex items-center sm:mb-12" component={Link} role="button" to="/staff/events-list" color="inherit">
+              <Typography
+                className="normal-case flex items-center sm:mb-12"
+                component={Link}
+                role="button"
+                to="/staff/events-list"
+                color="inherit"
+              >
                 <Icon className="mr-4 text-20">arrow_back</Icon>
                 返回 YS 活動列表
-                </Typography>
+              </Typography>
             </FuseAnimate>
 
             <div className="flex items-center max-w-full">
               <FuseAnimate animation="transition.expandIn" delay={300}>
                 {eventDetail.coverImageName ? (
-                  <img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src={imageNameToPathConverter(eventDetail.coverImageName)} alt={eventDetail.title} />
+                  <img
+                    className="w-32 sm:w-48 mr-8 sm:mr-16 rounded"
+                    src={imageNameToPathConverter(eventDetail.coverImageName)}
+                    alt={eventDetail.title}
+                  />
                 ) : (
-                    <img className="w-32 sm:w-48 mr-8 sm:mr-16 rounded" src="assets/images/ecommerce/product-image-placeholder.png" alt='預設圖片' />
-                  )}
+                  <img
+                    className="w-32 sm:w-48 mr-8 sm:mr-16 rounded"
+                    src="assets/images/ecommerce/product-image-placeholder.png"
+                    alt="預設圖片"
+                  />
+                )}
               </FuseAnimate>
               <div className="flex flex-col min-w-0">
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
@@ -92,13 +111,25 @@ function EventAnalysis(props) {
                   </Typography>
                 </FuseAnimate>
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                  <Typography variant="caption">{eventDateStatus(eventDetail.enrollDeadline, eventDetail.startDateTime, eventDetail.endDateTime)['humanize']}</Typography>
+                  <Typography variant="caption">
+                    {
+                      eventDateStatus(
+                        eventDetail.enrollDeadline,
+                        eventDetail.startDateTime,
+                        eventDetail.endDateTime
+                      )['humanize']
+                    }
+                  </Typography>
                 </FuseAnimate>
               </div>
             </div>
           </div>
           {/* If event not finished */}
-          {eventDateStatus(eventDetail.enrollDeadline, eventDetail.startDateTime, eventDetail.endDateTime)['statusCode'] !== 3 && (
+          {eventDateStatus(
+            eventDetail.enrollDeadline,
+            eventDetail.startDateTime,
+            eventDetail.endDateTime
+          )['statusCode'] !== 3 && (
             <FuseAnimate animation="transition.slideRightIn" delay={300}>
               <Button
                 className="whitespace-no-wrap mx-12 rounded-full"
@@ -120,7 +151,7 @@ function EventAnalysis(props) {
           textColor="secondary"
           variant="scrollable"
           scrollButtons="auto"
-          classes={{ root: "w-full h-64" }}
+          classes={{ root: 'w-full h-64' }}
         >
           <Tab className="h-64 normal-case" label="活動統計" />
           <Tab className="h-64 normal-case" label="人員名單" />
@@ -130,9 +161,7 @@ function EventAnalysis(props) {
         <div className="max-h-screen">
           {tabValue === 0 && eventDetail && (
             <div className="px-16 sm:px-24">
-              <AnalysisSection
-                eventDetail={eventDetail}
-              />
+              <AnalysisSection eventDetail={eventDetail} />
             </div>
           )}
           {tabValue === 1 && eventDetail && (
@@ -145,7 +174,7 @@ function EventAnalysis(props) {
       }
       innerScroll
     />
-  )
+  );
 }
 
 export default EventAnalysis;

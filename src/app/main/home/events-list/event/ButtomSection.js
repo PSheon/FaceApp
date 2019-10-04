@@ -48,6 +48,7 @@ function ButtomSection(props) {
   const EVENTS_ACTIVITY_LOGS = useSelector(
     ({ activity }) => activity.eventLogs
   );
+  // const eventActivityLogs = EVENTS_ACTIVITY_LOGS.docs[selectedEventId] || [];
   const eventActivityLogs = EVENTS_ACTIVITY_LOGS.docs[selectedEventId];
   const eventQueueingInfos =
     EVENTS_ACTIVITY_LOGS.queueingInfos[selectedEventId];

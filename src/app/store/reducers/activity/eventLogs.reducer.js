@@ -13,210 +13,264 @@ const initialState = {
   }
 };
 
-const EventLogs = function (state = initialState, action) {
+const EventLogs = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_EVENT_ACTIVITY_LOGS_LIST_LOADING: {
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     }
     case Actions.SET_EVENT_ACTIVITY_LOGS_LIST_UPDATING: {
       return {
         ...state,
-        updating: true,
+        updating: true
       };
     }
 
-    case Actions.SYNC_ACTIVITY_LOGS_WITH_EVENT_ID:
-      {
-        const { eventId, activityLogs } = action.payload;
+    case Actions.SYNC_ACTIVITY_LOGS_WITH_EVENT_ID: {
+      const { eventId, activityLogs } = action.payload;
 
-        let queueOrderIndex = 0;
-        let canceledCount = 0;
-        let queueingCount = 0;
-        let rejectedCount = 0;
-        let succeededCount = 0;
-        const newEventActivityLogs = activityLogs.map(activityLog => {
-          const registrationStatus = activityLog.registrationStatus;
+      let queueOrderIndex = 0;
+      let canceledCount = 0;
+      let queueingCount = 0;
+      let rejectedCount = 0;
+      let succeededCount = 0;
+      const newEventActivityLogs = activityLogs.map(activityLog => {
+        const registrationStatus = activityLog.registrationStatus;
 
-          switch (registrationStatus) {
-            case 'canceled': canceledCount++; break;
-            case 'queueing': queueingCount++; break;
-            case 'rejected': rejectedCount++; break;
-            case 'succeeded': succeededCount++; break;
-            case 'pending':
-            default: break;
+        switch (registrationStatus) {
+          case 'canceled':
+            canceledCount++;
+            break;
+          case 'queueing':
+            queueingCount++;
+            break;
+          case 'rejected':
+            rejectedCount++;
+            break;
+          case 'succeeded':
+            succeededCount++;
+            break;
+          case 'pending':
+          default:
+            break;
+        }
+        if (activityLog.registrationStatus === 'succeeded') {
+          return {
+            ...activityLog,
+            queueOrder: ++queueOrderIndex
+          };
+        } else if (activityLog.registrationStatus === 'queueing') {
+          return {
+            ...activityLog,
+            queueOrder: 0
+          };
+        } else {
+          return {
+            ...activityLog,
+            queueOrder: -1
+          };
+        }
+      });
+
+      return {
+        ...state,
+        loading: false,
+        queueingInfos: {
+          ...state.queueingInfos,
+          [eventId]: {
+            canceledCount,
+            queueingCount,
+            rejectedCount,
+            succeededCount
           }
-          if (activityLog.registrationStatus === 'succeeded') {
+        },
+        docs: {
+          ...state.docs,
+          [eventId]: newEventActivityLogs
+        }
+      };
+    }
+    case Actions.OPEN_EVENT_ACTIVITY_INFO_DIALOG: {
+      return {
+        ...state,
+        eventActivityDialog: {
+          props: {
+            open: true
+          },
+          data: action.payload.data
+        }
+      };
+    }
+    case Actions.CLOSE_EVENT_ACTIVITY_INFO_DIALOG: {
+      return {
+        ...state,
+        eventActivityDialog: {
+          props: {
+            open: false
+          },
+          data: null
+        }
+      };
+    }
+
+    case Actions.UPDATE_APPLICANT_ACTIVITY_CHECKIN_STATUS: {
+      const { eventId, applicantId, checkinStatus } = action.payload;
+      const originalEventLogs = state.docs[eventId];
+
+      const newEventLogs = originalEventLogs.map(eventLog => {
+        if (eventLog.applicant._id === applicantId) {
+          return {
+            ...eventLog,
+            checkinStatus
+          };
+        } else {
+          return eventLog;
+        }
+      });
+
+      return {
+        ...state,
+        loading: false,
+        docs: {
+          ...state.docs,
+          [eventId]: newEventLogs
+        }
+      };
+    }
+    case Actions.UPDATE_APPLICANT_ACTIVITY_REGISTRATION_STATUS: {
+      const { eventId, applicantId, registrationStatus } = action.payload;
+      const originalEventLogs = state.docs[eventId];
+
+      let queueOrderIndex = 0;
+      let canceledCount = 0;
+      let queueingCount = 0;
+      let rejectedCount = 0;
+      let succeededCount = 0;
+      const newEventLogs = originalEventLogs
+        .map(eventLog => {
+          if (eventLog.applicant._id === applicantId) {
             return {
-              ...activityLog,
-              queueOrder: ++queueOrderIndex
-            }
-          } else if (activityLog.registrationStatus === 'queueing') {
-            return {
-              ...activityLog,
-              queueOrder: 0
-            }
+              ...eventLog,
+              registrationStatus
+            };
           } else {
-            return {
-              ...activityLog,
-              queueOrder: -1
-            }
+            return eventLog;
           }
         })
+        .map(eventLog => {
+          switch (eventLog.registrationStatus) {
+            case 'canceled':
+              canceledCount++;
+              break;
+            case 'queueing':
+              queueingCount++;
+              break;
+            case 'rejected':
+              rejectedCount++;
+              break;
+            case 'succeeded':
+              succeededCount++;
+              break;
+            case 'pending':
+            default:
+              break;
+          }
+          if (eventLog.registrationStatus === 'succeeded') {
+            return {
+              ...eventLog,
+              queueOrder: ++queueOrderIndex
+            };
+          } else if (eventLog.registrationStatus === 'queueing') {
+            return {
+              ...eventLog,
+              queueOrder: 0
+            };
+          } else {
+            return {
+              ...eventLog,
+              queueOrder: -1
+            };
+          }
+        });
 
-        return {
-          ...state,
-          loading: false,
-          queueingInfos: {
-            ...state.queueingInfos,
-            [eventId]: {
-              canceledCount,
-              queueingCount,
-              rejectedCount,
-              succeededCount,
-            },
-          },
-          docs: {
-            ...state.docs,
-            [eventId]: newEventActivityLogs
+      return {
+        ...state,
+        loading: false,
+        queueingInfos: {
+          ...state.queueingInfos,
+          [eventId]: {
+            canceledCount,
+            queueingCount,
+            rejectedCount,
+            succeededCount
           }
-        };
-      }
-    case Actions.OPEN_EVENT_ACTIVITY_INFO_DIALOG:
-      {
-        return {
-          ...state,
-          eventActivityDialog: {
-            props: {
-              open: true
-            },
-            data: action.payload.data
-          }
-        };
-      }
-    case Actions.CLOSE_EVENT_ACTIVITY_INFO_DIALOG:
-      {
-        return {
-          ...state,
-          eventActivityDialog: {
-            props: {
-              open: false
-            },
-            data: null
-          }
-        };
-      }
-    case Actions.UPDATE_APPLICANT_ACTIVITY_REGISTRATION_STATUS:
-      {
-        const { eventId, applicantId, registrationStatus } = action.payload;
-        const originalEventLogs = state.docs[eventId];
+        },
+        docs: {
+          ...state.docs,
+          [eventId]: newEventLogs
+        }
+      };
+    }
 
-        let queueOrderIndex = 0;
-        let canceledCount = 0;
-        let queueingCount = 0;
-        let rejectedCount = 0;
-        let succeededCount = 0;
-        const newEventLogs = originalEventLogs
-          .map(eventLog => {
-            if (eventLog.applicant._id === applicantId) {
-              return {
-                ...eventLog,
-                registrationStatus
-              }
-            } else {
-              return eventLog
+    case Actions.UPDATE_APPLICANT_PREQUESTION: {
+      const { eventId, ...otherProperty } = action.payload;
+
+      return {
+        ...state,
+        updating: false,
+        docs: {
+          ...state.docs,
+          [eventId]: [
+            ...state.docs[eventId],
+            {
+              ...otherProperty
             }
-          })
-          .map(eventLog => {
-            switch (eventLog.registrationStatus) {
-              case 'canceled': canceledCount++; break;
-              case 'queueing': queueingCount++; break;
-              case 'rejected': rejectedCount++; break;
-              case 'succeeded': succeededCount++; break;
-              case 'pending':
-              default: break;
-            }
-            if (eventLog.registrationStatus === 'succeeded') {
-              return {
-                ...eventLog,
-                queueOrder: ++queueOrderIndex
-              }
-            } else if (eventLog.registrationStatus === 'queueing') {
-              return {
-                ...eventLog,
-                queueOrder: 0
-              }
-            } else {
-              return {
-                ...eventLog,
-                queueOrder: -1
-              }
-            }
-          })
+          ]
+        }
+      };
+    }
+    case Actions.UPDATE_APPLICANT_REVIEWS: {
+      const {
+        applicantId,
+        eventId,
+        eventComments,
+        eventStars,
+        speakerContentStars,
+        speakerExpressionStars,
+        speakerStars
+      } = action.payload;
 
-        return {
-          ...state,
-          loading: false,
-          queueingInfos: {
-            ...state.queueingInfos,
-            [eventId]: {
-              canceledCount,
-              queueingCount,
-              rejectedCount,
-              succeededCount,
-            },
-          },
-          docs: {
-            ...state.docs,
-            [eventId]: newEventLogs
-          }
-        };
-      }
+      const oldDoc = state.docs[eventId];
 
-    case Actions.UPDATE_APPLICANT_PREQUESTION:
-      {
-        const { eventId, ...otherProperty } = action.payload;
+      const newDoc = oldDoc.map(doc => {
+        if (doc.applicant._id === applicantId) {
+          return {
+            ...doc,
+            eventComments,
+            eventStars,
+            speakerContentStars,
+            speakerExpressionStars,
+            speakerStars
+          };
+        } else {
+          return doc;
+        }
+      });
 
-        return {
-          ...state,
-          updating: false,
-          docs: {
-            ...state.docs,
-            [eventId]: [
-              ...state.docs[eventId],
-              {
-                ...otherProperty
-              },
-            ]
-          }
-        };
-      }
-    case Actions.UPDATE_APPLICANT_REVIEWS:
-      {
-        const { eventId, eventComments, eventStars, speakerContentStars, speakerExpressionStars, speakerStars } = action.payload;
-
-        return {
-          ...state,
-          updating: false,
-          docs: {
-            ...state.docs,
-            [eventId]: {
-              ...state.docs[eventId],
-              eventComments,
-              eventStars,
-              speakerContentStars,
-              speakerExpressionStars,
-              speakerStars
-            }
-          }
-        };
-      }
-    default:
-      {
-        return state;
-      }
+      return {
+        ...state,
+        updating: false,
+        docs: {
+          ...state.docs,
+          [eventId]: newDoc
+        }
+      };
+    }
+    default: {
+      return state;
+    }
   }
 };
 

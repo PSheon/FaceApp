@@ -29,25 +29,33 @@ function Analysis(props) {
   } = props.eventDetail;
   /* eslint-enable */
   // console.log('props.eventDetail ', props.eventDetail)
-  const EVENT_ACTIVITY_LOGS = useSelector(({ activity }) => activity.eventLogs.docs[_id]);
-  const queueingInfos = useSelector(({ activity }) => activity.eventLogs.queueingInfos[_id]);
+  const EVENT_ACTIVITY_LOGS = useSelector(
+    ({ activity }) => activity.eventLogs.docs[_id]
+  );
+  const queueingInfos = useSelector(
+    ({ activity }) => activity.eventLogs.queueingInfos[_id]
+  );
 
   // console.log('queueingInfos ', queueingInfos)
 
   return (
     <FuseAnimate animation="transition.slideUpIn" delay={200}>
-
       <div className="flex flex-col md:flex-row sm:p-8 container">
-
         <div className="flex flex-1 flex-col min-w-0">
           {/* Speaker Info */}
           <FuseAnimate delay={600}>
             <div className="flex justify-start items-center rounded-b-lg w-full pb-8">
-              <Avatar src={avatarNameToPathConverter(author.photoURL)} className="mr-10 my-5" alt={author.displayName} />
+              <Avatar
+                src={avatarNameToPathConverter(author.photoURL)}
+                className="mr-10 my-5"
+                alt={author.displayName}
+              />
               <div className="flex flex-col justify-start overflow-hidden pr-12">
                 <Typography className="text-16 font-700 whitespace-no-wrap overflow-hidden truncate">{`${speaker.title}-${speaker.displayName}`}</Typography>
                 <Typography className="text-16 font-300 text-gray-700 pr-32">
-                  {`${moment(startDateTime).format('YYYY/MM/DD hh:mm')} - ${moment(endDateTime).format('YYYY/MM/DD hh:mm')}`}
+                  {`${moment(startDateTime).format(
+                    'YYYY/MM/DD hh:mm'
+                  )} - ${moment(endDateTime).format('YYYY/MM/DD hh:mm')}`}
                 </Typography>
               </div>
             </div>
@@ -57,42 +65,61 @@ function Analysis(props) {
           <FuseAnimateGroup
             className="flex flex-wrap"
             enter={{
-              animation: "transition.slideUpBigIn"
+              animation: 'transition.slideUpBigIn'
             }}
           >
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
                 {queueingInfos ? (
-                  <Typography
-                    className="text-72 leading-none text-blue">{queueingInfos['succeededCount']}</Typography>
+                  <Typography className="text-72 leading-none text-blue">
+                    {queueingInfos['succeededCount']}
+                  </Typography>
                 ) : (
-                    <Typography
-                      className="text-72 leading-none text-blue">100</Typography>
-                  )}
-                <Typography className="text-16" color="textSecondary">報名人數</Typography>
+                  <Typography className="text-72 leading-none text-blue">
+                    100
+                  </Typography>
+                )}
+                <Typography className="text-16" color="textSecondary">
+                  報名人數
+                </Typography>
               </Paper>
             </div>
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
-                <Typography
-                  className="text-72 leading-none text-blue">{maximumOfApplicants}</Typography>
-                <Typography className="text-16" color="textSecondary">人數限制</Typography>
+                <Typography className="text-72 leading-none text-blue">
+                  {maximumOfApplicants}
+                </Typography>
+                <Typography className="text-16" color="textSecondary">
+                  人數限制
+                </Typography>
               </Paper>
             </div>
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
                 <Typography className="text-72 leading-none text-blue flex justify-center items-end">
-                  {3.5} <span className="text-gray-500 text-16 whitespace-no-wrap text-bold"> / 5</span>
+                  {3.5}{' '}
+                  <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
+                    {' '}
+                    / 5
+                  </span>
                 </Typography>
-                <Typography className="text-16" color="textSecondary">活動滿意度</Typography>
+                <Typography className="text-16" color="textSecondary">
+                  活動滿意度
+                </Typography>
               </Paper>
             </div>
             <div className="widget flex w-full sm:w-1/2 md:w-1/4 p-12">
               <Paper className="w-full rounded-8 shadow-none border-none text-center pt-12 pb-28">
                 <Typography className="text-72 leading-none text-blue flex justify-center items-end">
-                  {2.5} <span className="text-gray-500 text-16 whitespace-no-wrap text-bold"> / 5</span>
+                  {2.5}{' '}
+                  <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
+                    {' '}
+                    / 5
+                  </span>
                 </Typography>
-                <Typography className="text-16" color="textSecondary">講師滿意度</Typography>
+                <Typography className="text-16" color="textSecondary">
+                  講師滿意度
+                </Typography>
               </Paper>
             </div>
           </FuseAnimateGroup>
@@ -116,7 +143,7 @@ function Analysis(props) {
         </div>
       </div>
     </FuseAnimate>
-  )
+  );
 }
 
 export default Analysis;

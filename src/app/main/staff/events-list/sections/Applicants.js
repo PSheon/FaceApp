@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Paper,
@@ -10,7 +10,7 @@ import {
   TableCell,
   Typography,
   TableBody,
-  Avatar,
+  Avatar
 } from '@material-ui/core';
 import CsvDownload from 'react-json-to-csv';
 import Rating from '@material-ui/lab/Rating';
@@ -73,17 +73,26 @@ const useStyles = makeStyles(theme => ({
 
     '&.pending': {
       backgroundColor: '#646464'
-    },
+    }
   }
 }));
 function Applicants(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const EVENT_DETAIL = props.eventDetail;
-  const EVENTS_ACTIVITY_LOGS = useSelector(({ activity }) => activity.eventLogs);
+  const EVENTS_ACTIVITY_LOGS = useSelector(
+    ({ activity }) => activity.eventLogs
+  );
   const eventLogs = EVENTS_ACTIVITY_LOGS.docs[EVENT_DETAIL._id];
-  const eventQueueingInfos = EVENTS_ACTIVITY_LOGS.queueingInfos[EVENT_DETAIL._id];
+  const eventQueueingInfos =
+    EVENTS_ACTIVITY_LOGS.queueingInfos[EVENT_DETAIL._id];
   const isSyncing = EVENTS_ACTIVITY_LOGS.loading;
+
+  const [isCheckinLoading, setIsCheckinLoading] = useState(false);
+
+  useEffect(() => {
+    setIsCheckinLoading(false);
+  }, [eventLogs]);
 
   function tooltipTitle(logDetail) {
     const orderIndex = logDetail.queueOrder;
@@ -94,8 +103,19 @@ function Applicants(props) {
     } else if (orderIndex <= limit) {
       return '活動編號 ' + orderIndex;
     } else {
-      return '候補編號 ' + orderIndex - limit
+      return '候補編號 ' + orderIndex - limit;
     }
+  }
+
+  function handleCheckinSubmit(applicantInfos) {
+    setIsCheckinLoading(true);
+    dispatch(
+      Actions.updateApplicantCheckinStatus({
+        event: EVENT_DETAIL._id,
+        applicant: applicantInfos._id,
+        action: true
+      })
+    );
   }
 
   if (isSyncing && !eventLogs.length) {
@@ -103,7 +123,7 @@ function Applicants(props) {
       <div className="flex justify-center items-center w-full h-full">
         <LoadingSpinner width="128" height="128" />
       </div>
-    )
+    );
   }
 
   return (
@@ -113,30 +133,35 @@ function Applicants(props) {
           <Typography className="text-16">報名名單</Typography>
           <div className="flex justify-center items-center">
             <Typography className="text-11 font-500 rounded-4 text-white bg-red px-8 py-4 mx-4">
-              {eventQueueingInfos && eventQueueingInfos['canceledCount'] + " 人已取消"}
+              {eventQueueingInfos &&
+                eventQueueingInfos['canceledCount'] + ' 人已取消'}
             </Typography>
             <Typography className="text-11 font-500 rounded-4 text-white bg-orange px-8 py-4 mx-4">
-              {eventQueueingInfos && eventQueueingInfos['queueingCount'] + " 人候補中"}
+              {eventQueueingInfos &&
+                eventQueueingInfos['queueingCount'] + ' 人候補中'}
             </Typography>
             <Typography className="text-11 font-500 rounded-4 text-white bg-green px-8 py-4 mx-4">
-              {eventQueueingInfos && eventQueueingInfos['succeededCount'] + " 人已報名"}
+              {eventQueueingInfos &&
+                eventQueueingInfos['succeededCount'] + ' 人已報名'}
             </Typography>
             <CsvDownload
               data={jsonToCsvConverter(eventLogs)}
               filename={`${EVENT_DETAIL.title}.csv`}
               style={{
-                boxShadow: "inset 0px 1px 0px 0px #e184f3",
-                background: "linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)",
-                backgroundColor: "#c123de",
-                borderRadius: "6px",
-                border: "1px solid #a511c0",
-                display: "inline-block",
-                cursor: "pointer", "color": "#ffffff",
-                fontSize: "15px",
-                fontWeight: "bold",
-                padding: "6px 24px",
-                textDecoration: "none",
-                textShadow: "0px 1px 0px #9b14b3"
+                boxShadow: 'inset 0px 1px 0px 0px #e184f3',
+                background:
+                  'linear-gradient(to bottom, #c123de 5%, #a20dbd 100%)',
+                backgroundColor: '#c123de',
+                borderRadius: '6px',
+                border: '1px solid #a511c0',
+                display: 'inline-block',
+                cursor: 'pointer',
+                color: '#ffffff',
+                fontSize: '15px',
+                fontWeight: 'bold',
+                padding: '6px 24px',
+                textDecoration: 'none',
+                textShadow: '0px 1px 0px #9b14b3'
               }}
             >
               匯出資料
@@ -149,12 +174,24 @@ function Applicants(props) {
             <TableHead>
               <TableRow>
                 <TableCell className="whitespace-no-wrap p-8 pl-16"></TableCell>
-                <TableCell className="text-center whitespace-no-wrap">全名</TableCell>
-                <TableCell className="text-center whitespace-no-wrap">信箱</TableCell>
-                <TableCell className="text-center whitespace-no-wrap">手機</TableCell>
-                <TableCell className="text-center whitespace-no-wrap">給予講師評價</TableCell>
-                <TableCell className="text-center whitespace-no-wrap">給予活動評價</TableCell>
-                <TableCell className="text-center whitespace-no-wrap">簽到狀況</TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  全名
+                </TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  信箱
+                </TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  手機
+                </TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  給予講師的評價
+                </TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  給予活動的評價
+                </TableCell>
+                <TableCell className="text-center whitespace-no-wrap">
+                  簽到狀況
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -169,15 +206,20 @@ function Applicants(props) {
                     }
                   }}
                 >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    className="pl-16 pr-0"
-                  >
+                  <TableCell component="th" scope="row" className="pl-16 pr-0">
                     <Tooltip title={tooltipTitle(logDetail)} placement="top">
                       <Button className={clsx(classes.contactButton)}>
-                        <div className={clsx(logDetail.registrationStatus, classes.status)} />
-                        <Avatar src={avatarNameToPathConverter(logDetail.applicant.photoURL)} />
+                        <div
+                          className={clsx(
+                            logDetail.registrationStatus,
+                            classes.status
+                          )}
+                        />
+                        <Avatar
+                          src={avatarNameToPathConverter(
+                            logDetail.applicant.photoURL
+                          )}
+                        />
                       </Button>
                     </Tooltip>
                   </TableCell>
@@ -203,23 +245,17 @@ function Applicants(props) {
                   >
                     {logDetail.applicant.phone}
                   </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    className="truncate"
-                  >
+                  <TableCell component="th" scope="row" className="truncate">
                     <div className="flex justify-center items-center">
-                      {eventLogs['eventStars'] ? (
+                      {logDetail['eventStars'] ? (
                         <Rating
-                          value={eventLogs['eventStars']}
+                          value={logDetail['eventStars']}
                           size="small"
                           readOnly
                         />
                       ) : (
-                          <RemoveCircleOutlineIcon
-                            className="text-gray-500"
-                          />
-                        )}
+                        <RemoveCircleOutlineIcon className="text-gray-500" />
+                      )}
                     </div>
                   </TableCell>
                   <TableCell
@@ -228,37 +264,41 @@ function Applicants(props) {
                     className="truncate text-center"
                   >
                     <div className="flex justify-center items-center">
-                      {eventLogs['speakerStars'] ? (
+                      {logDetail['speakerStars'] ? (
                         <Rating
-                          value={eventLogs['speakerStars']}
+                          value={logDetail['speakerStars']}
                           size="small"
                           readOnly
                         />
                       ) : (
-                          <RemoveCircleOutlineIcon
-                            className="text-gray-500"
-                          />
-                        )}
+                        <RemoveCircleOutlineIcon className="text-gray-500" />
+                      )}
                     </div>
                   </TableCell>
                   <TableCell
                     component="th"
                     scope="row"
                     className="truncate text-center"
-                    onClick={(e) => { e.stopPropagation(); }}
                   >
                     <div className="flex justify-center items-center">
-                      {eventLogs.checkinStatus ? (
+                      {logDetail.checkinStatus ? (
                         <CheckCircleIcon className="text-green" />
+                      ) : isCheckinLoading ? (
+                        <LoadingSpinner width={32} height={32} />
                       ) : (
-                          <Tooltip title={`簽到 ${logDetail.applicant.fullName}`} placement="top">
-                            <RemoveCircleOutlineIcon
-                              className="text-gray-500"
-                            />
-                            {/* <Button className={clsx(classes.contactButton)}>
-                            </Button> */}
-                          </Tooltip>
-                        )}
+                        <Tooltip
+                          title={`簽到 ${logDetail.applicant.fullName}`}
+                          placement="top"
+                        >
+                          <RemoveCircleOutlineIcon
+                            className="text-gray-500"
+                            onClick={e => {
+                              e.stopPropagation();
+                              handleCheckinSubmit(logDetail.applicant);
+                            }}
+                          />
+                        </Tooltip>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -268,7 +308,7 @@ function Applicants(props) {
         </div>
       </Paper>
     </FuseAnimate>
-  )
+  );
 }
 
 export default Applicants;

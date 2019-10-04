@@ -15,6 +15,8 @@ export const APPEND_NEXT_PAGE_CONSULTING_APPOINTMENT_LOGS =
   '[APPOINTMENT] APPEND NEXT PAGE CONSULTING APPOINTMENT LOGS';
 export const CANCEL_SELF_CONSULTING_APPOINTMENT_BY_ID =
   '[APPOINTMENT] CANCEL CONSULTING APPOINTMENT BY ID';
+export const CHECKIN_CONSULTING_APPOINTMENT_BY_ID =
+  '[APPOINTMENT] CHECKIN CONSULTING APPOINTMENT BY ID';
 export const REJECT_CONSULTING_APPOINTMENT_BY_ID =
   '[APPOINTMENT] REJECT CONSULTING APPOINTMENT BY ID';
 export const AGREE_CONSULTING_APPOINTMENT_BY_ID =
@@ -81,6 +83,25 @@ export function selfCancelConsulting(consultingDetail) {
 
       history.push({
         pathname: '/user/dashboard/consulting'
+      });
+    });
+  };
+}
+
+export function checkinConsulting({ consultingId }) {
+  const request = axios.post(
+    `${AUTH_REST_BASE_END_POINT}/api/consultingLog/checkin`,
+    formurlencoded({ consultingId })
+  );
+  return dispatch => {
+    dispatch({ type: SET_CONSULTING_APPOINTMENT_LOADING });
+    request.then(response => {
+      dispatch(Actions.showMessage({ message: '已簽到' }));
+      dispatch({
+        type: CHECKIN_CONSULTING_APPOINTMENT_BY_ID,
+        payload: {
+          consultingId
+        }
       });
     });
   };
