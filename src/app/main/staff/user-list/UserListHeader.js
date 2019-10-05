@@ -43,10 +43,14 @@ function UserListHeader(props) {
                   fullWidth
                   value={searchText}
                   inputProps={{
-                    'aria-label': 'Search'
+                    'aria-label': '搜尋會員 (名稱、信箱)'
                   }}
                   onChange={ev => dispatch(Actions.setSearchText(ev))}
                 />
+
+                <Icon className="ml-8" color="action">
+                  search
+                </Icon>
               </Paper>
             </FuseAnimate>
           </ThemeProvider>

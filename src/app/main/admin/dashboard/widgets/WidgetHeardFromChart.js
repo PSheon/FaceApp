@@ -60,7 +60,7 @@ function WidgetHeardFromChart() {
 
   return (
     <FuseAnimate delay={600}>
-      <Card className="w-full rounded-12 shadow-lg border-none relative min-h-128">
+      <Card className="w-full rounded-12 shadow-md hover:shadow-lg border-none relative min-h-128">
         {isLoading || chartLoading ? (
           <LoadingSpinnerOverlay width={64} height={64} />
         ) : (

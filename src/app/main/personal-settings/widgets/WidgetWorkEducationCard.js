@@ -1,10 +1,25 @@
 import React from 'react';
-import { AppBar, Card, CardContent, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Card,
+  CardContent,
+  Toolbar,
+  Typography
+} from '@material-ui/core';
 
-import { educationConverter, departmentNameConverter, statusConverter } from 'app/utils';
+import {
+  educationConverter,
+  departmentNameConverter,
+  statusConverter
+} from 'app/utils';
 
 function WidgetWorkEducationCard(props) {
-  const { education, schoolName, departmentName, employmentStatus } = props.UserData;
+  const {
+    education,
+    schoolName,
+    departmentName,
+    employmentStatus
+  } = props.UserData;
 
   return (
     <Card className="h-full rounded-16">
@@ -35,10 +50,12 @@ function WidgetWorkEducationCard(props) {
               </td>
             </tr>
             <tr>
-              <td>科系名稱</td>
+              <td>科系類別</td>
               <td className="text-right">
                 <Typography className="flex items-center font-semibold">
-                  {departmentName ? departmentNameConverter(departmentName) : '未提供'}
+                  {departmentName
+                    ? departmentNameConverter(departmentName)
+                    : '未提供'}
                 </Typography>
               </td>
             </tr>
@@ -46,7 +63,9 @@ function WidgetWorkEducationCard(props) {
               <td>現職工作</td>
               <td className="text-right">
                 <Typography className="flex items-center font-semibold">
-                  {employmentStatus ? statusConverter(employmentStatus) : '未提供'}
+                  {employmentStatus
+                    ? statusConverter(employmentStatus)
+                    : '未提供'}
                 </Typography>
               </td>
             </tr>
@@ -54,7 +73,7 @@ function WidgetWorkEducationCard(props) {
         </table>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default WidgetWorkEducationCard;

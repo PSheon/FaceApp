@@ -98,16 +98,16 @@ export const userGenderExtractor = originList => {
 /* Extract employment status stastic datasets for admin dashboard */
 export const userEmploymentStatusExtractor = originList => {
   const DEFAULT_EMPLOYMENT_STATUS_DATASETS = {
-    /* 國中 > 高中 > 大專 > 大學 > 研究所 > 未提供 */
-    /* 'middle', 'high', 'faculty', 'bachelor', 'institute' */
+    /* 學生 > 在職中 > 創業中 > 待業中 */
+    /* 'student', 'employed', 'self-employed', 'unemployed' */
     verified: [
       {
-        data: [50, 50, 50, 50, 50, 50, 50]
+        data: [50, 50, 50, 50, 50]
       }
     ],
     unVerified: [
       {
-        data: [50, 50, 50, 50, 50, 50, 50]
+        data: [50, 50, 50, 50, 50]
       }
     ]
   };
@@ -116,37 +116,34 @@ export const userEmploymentStatusExtractor = originList => {
     return DEFAULT_EMPLOYMENT_STATUS_DATASETS;
   } else {
     // verified
-    let verifiedCountArray = [0, 0, 0, 0, 0, 0, 0];
+    let verifiedCountArray = [0, 0, 0, 0, 0];
     // unVerified
-    let unVerifiedCountArray = [0, 0, 0, 0, 0, 0, 0];
+    let unVerifiedCountArray = [0, 0, 0, 0, 0];
 
     originList.forEach(list => {
       const applicantEmploymentStatus = list._id.employmentStatus;
 
       switch (applicantEmploymentStatus) {
-        case 'middle':
+        case 'student':
           verifiedCountArray[0]++;
           break;
-        case 'high':
+        case 'employed':
           verifiedCountArray[1]++;
           break;
-        case 'faculty':
+        case 'self-employed':
           verifiedCountArray[2]++;
           break;
-        case 'bachelor':
+        case 'unemployed':
           verifiedCountArray[3]++;
           break;
-        case 'institute':
-          verifiedCountArray[4]++;
-          break;
         default:
-          verifiedCountArray[5]++;
+          verifiedCountArray[4]++;
           break;
       }
     });
 
     return {
-      /* 國中 > 高中 > 大專 > 大學 > 研究所 > 未提供 */
+      /* 學生 > 在職中 > 創業中 > 待業中 */
       verified: [
         {
           data: verifiedCountArray
@@ -186,9 +183,9 @@ export const userAgePeriodExtractor = originList => {
     let unVerifiedCountArray = [0, 0, 0, 0, 0];
 
     originList.forEach(list => {
-      const applicantEmploymentStatus = list._id.employmentStatus;
+      const applicantAgePeriod = list._id;
 
-      switch (applicantEmploymentStatus) {
+      switch (applicantAgePeriod) {
         case 15:
           verifiedCountArray[0]++;
           break;
@@ -327,9 +324,9 @@ export const userHeardFromExtractor = originList => {
     let unVerifiedCountArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     originList.forEach(list => {
-      const applicantEducation = list._id.education;
+      const applicantHeardFrom = list._id.heardFrom;
 
-      switch (applicantEducation) {
+      switch (applicantHeardFrom) {
         case '新聞報導':
           verifiedCountArray[0]++;
           break;

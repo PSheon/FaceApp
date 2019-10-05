@@ -1,7 +1,6 @@
 import moment from 'moment';
 
-export const eventReviewStarsExtractot = eventActivityLogs => {
-  console.log('eventActivityLogs, ', eventActivityLogs);
+export const eventReviewStarsExtractot = (eventActivityLogs = []) => {
   let validCount = 0;
   let eventStarsCount = 0;
   let speakerStarsCount = 0;
@@ -13,6 +12,8 @@ export const eventReviewStarsExtractot = eventActivityLogs => {
       speakerStarsCount += log.speakerStars;
     }
   });
+
+  if (validCount === 0) validCount = 1;
 
   return {
     eventStarsAvg: (eventStarsCount / validCount).toFixed(1),
@@ -63,7 +64,7 @@ export const permitToSelfCancel = eventDetail => {
   return start.diff(now, 'days', true) >= 3;
 };
 
-export const jsonToCsvConverter = originalJson =>
+export const eventLogToCsvConverter = originalJson =>
   originalJson.map(userEventLog => {
     return {
       隊列編號:

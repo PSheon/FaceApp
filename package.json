@@ -47,6 +47,7 @@
     "react-autosuggest": "9.4.3",
     "react-big-calendar": "^0.22.1",
     "react-chartjs-2": "2.7.6",
+    "react-countdown-now": "^2.1.1",
     "react-dom": "16.8.6",
     "react-facebook-login": "^4.1.1",
     "react-filepond": "^7.0.1",

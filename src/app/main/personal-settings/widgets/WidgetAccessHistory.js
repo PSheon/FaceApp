@@ -74,7 +74,7 @@ function WidgetAccessHistory() {
             variant="subtitle1"
             color="inherit"
             className="rounded-full text-white px-12"
-            style={{ backgroundColor: theme.palette.secondary.main }}
+            style={{ backgroundColor: theme.palette.primary.dark }}
           >
             沒有異常警示
           </Typography>

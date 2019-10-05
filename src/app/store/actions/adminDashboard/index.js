@@ -1,4 +1,5 @@
 export * from './reviewStars.actions';
+export * from './reviewLogs.actions';
 export * from './newRegisteredUser.actions';
 export * from './genderStastic.actions';
 export * from './employmentStatusStastic.actions';

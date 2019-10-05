@@ -1,6 +1,50 @@
+import moment from 'moment';
+
 import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
 
-export const exchangeIconConverter = (exchange) => {
+export const userListToCsvConverter = originalJson =>
+  originalJson.map(userDetail => ({
+    會員編號: userDetail['_id'],
+    顯示名稱: userDetail['displayName'],
+    全名: userDetail['fullName'] || '未填寫',
+    性別: userDetail['gender']
+      ? genderConverter(userDetail['gender'])
+      : '未填寫',
+    生日: userDetail['bob']
+      ? moment(userDetail['bob']).format('YYYY-MM-DD')
+      : '未填寫',
+    信箱: userDetail['email'],
+    電話: userDetail['phone'] || '未填寫',
+    居住地: userDetail['city'] || '未填寫',
+    地址: userDetail['postAddress'] || '未填寫',
+
+    '連結 Google 帳號': userDetail['google']
+      ? userDetail.google['displayName']
+      : '未綁定',
+    '連結 Facebook 帳號': userDetail['facebook']
+      ? userDetail.facebook['displayName']
+      : '未綁定',
+
+    教育程度: userDetail['education']
+      ? educationConverter(userDetail['education'])
+      : '未填寫',
+    學校名稱: userDetail['schoolName'] || '未填寫',
+    科系類別: userDetail['departmentName']
+      ? departmentNameConverter(userDetail['departmentName'])
+      : '未填寫',
+    身分狀態: userDetail['employmentStatus']
+      ? statusConverter(userDetail['employmentStatus'])
+      : '未填寫',
+
+    任職企業: userDetail['companyName'] || '未填寫',
+    任職部門: userDetail['serviceDepartment'] || '未填寫',
+    職稱: userDetail['jobTitle'] || '未填寫',
+
+    啟用狀態: userDetail['active'] ? '啟用中' : '未啟用',
+    身分驗證: userDetail['verified'] ? '通過' : '未通過'
+  }));
+
+export const exchangeIconConverter = exchange => {
   switch (exchange) {
     case 'binance':
       return 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI2LjYxIDEyNi42MSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZjNiYTJmIj48cGF0aCBkPSJtMzguNzMgNTMuMiAyNC41OS0yNC41OCAyNC42IDI0LjYgMTQuMy0xNC4zMS0zOC45LTM4LjkxLTM4LjkgMzguOXoiLz48cGF0aCBkPSJtMCA2My4zMSAxNC4zLTE0LjMxIDE0LjMxIDE0LjMxLTE0LjMxIDE0LjN6Ii8+PHBhdGggZD0ibTM4LjczIDczLjQxIDI0LjU5IDI0LjU5IDI0LjYtMjQuNiAxNC4zMSAxNC4yOS0zOC45IDM4LjkxLTM4LjkxLTM4Ljg4eiIvPjxwYXRoIGQ9Im05OCA2My4zMSAxNC4zLTE0LjMxIDE0LjMxIDE0LjMtMTQuMzEgMTQuMzJ6Ii8+PHBhdGggZD0ibTc3LjgzIDYzLjMtMTQuNTEtMTQuNTItMTAuNzMgMTAuNzMtMS4yNCAxLjIzLTIuNTQgMi41NCAxNC41MSAxNC41IDE0LjUxLTE0LjQ3eiIvPjwvZz48L3N2Zz4=';
@@ -22,9 +66,9 @@ export const exchangeIconConverter = (exchange) => {
     default:
       return 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI2LjYxIDEyNi42MSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjZjNiYTJmIj48cGF0aCBkPSJtMzguNzMgNTMuMiAyNC41OS0yNC41OCAyNC42IDI0LjYgMTQuMy0xNC4zMS0zOC45LTM4LjkxLTM4LjkgMzguOXoiLz48cGF0aCBkPSJtMCA2My4zMSAxNC4zLTE0LjMxIDE0LjMxIDE0LjMxLTE0LjMxIDE0LjN6Ii8+PHBhdGggZD0ibTM4LjczIDczLjQxIDI0LjU5IDI0LjU5IDI0LjYtMjQuNiAxNC4zMSAxNC4yOS0zOC45IDM4LjkxLTM4LjkxLTM4Ljg4eiIvPjxwYXRoIGQ9Im05OCA2My4zMSAxNC4zLTE0LjMxIDE0LjMxIDE0LjMtMTQuMzEgMTQuMzJ6Ii8+PHBhdGggZD0ibTc3LjgzIDYzLjMtMTQuNTEtMTQuNTItMTAuNzMgMTAuNzMtMS4yNCAxLjIzLTIuNTQgMi41NCAxNC41MSAxNC41IDE0LjUxLTE0LjQ3eiIvPjwvZz48L3N2Zz4=';
   }
-}
+};
 
-export const socialLogoConverter = (provider) => {
+export const socialLogoConverter = provider => {
   switch (provider.toLowerCase()) {
     case 'facebook':
       // return 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZwogICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiCiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiCiAgIHhtbG5zOmlua3NjYXBlPSJodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy9uYW1lc3BhY2VzL2lua3NjYXBlIgogICB3aWR0aD0iMzk5IgogICBoZWlnaHQ9IjM5OSIKICAgaWQ9InN2ZzIiCiAgIHZlcnNpb249IjEuMSIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMC40OC4zLjEgcjk4ODYiCiAgIHNvZGlwb2RpOmRvY25hbWU9IkZhY2Vib29rIEhvbWUgKENsZWFyKS5zdmciCiAgIGlua3NjYXBlOmV4cG9ydC1maWxlbmFtZT0iUjpcTWVkaWFcUGljdHVyZXNcTG9nb3NcRmFjZWJvb2sgSG9tZSAoQ2xlYXIpLnBuZyIKICAgaW5rc2NhcGU6ZXhwb3J0LXhkcGk9IjIzMC45Nzc0NSIKICAgaW5rc2NhcGU6ZXhwb3J0LXlkcGk9IjIzMC45Nzc0NSI+CiAgPHRpdGxlCiAgICAgaWQ9InRpdGxlNDQ4MSI+RmFjZWJvb2sgSG9tZTwvdGl0bGU+CiAgPGRlZnMKICAgICBpZD0iZGVmczQiIC8+CiAgPHNvZGlwb2RpOm5hbWVkdmlldwogICAgIGlkPSJiYXNlIgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJjb2xvcj0iIzY2NjY2NiIKICAgICBib3JkZXJvcGFjaXR5PSIxLjAiCiAgICAgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAuMCIKICAgICBpbmtzY2FwZTpwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOnpvb209IjEiCiAgICAgaW5rc2NhcGU6Y3g9Ii0xOC41Mzg5OTciCiAgICAgaW5rc2NhcGU6Y3k9IjE2MS4yMDAzMiIKICAgICBpbmtzY2FwZTpkb2N1bWVudC11bml0cz0icHgiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ibGF5ZXI5IgogICAgIHNob3dncmlkPSJmYWxzZSIKICAgICBpbmtzY2FwZTp3aW5kb3ctd2lkdGg9IjE0NDAiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iODM3IgogICAgIGlua3NjYXBlOndpbmRvdy14PSItOCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iLTgiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIKICAgICBmaXQtbWFyZ2luLXRvcD0iMCIKICAgICBmaXQtbWFyZ2luLWxlZnQ9IjAiCiAgICAgZml0LW1hcmdpbi1yaWdodD0iMCIKICAgICBmaXQtbWFyZ2luLWJvdHRvbT0iMCIgLz4KICA8bWV0YWRhdGEKICAgICBpZD0ibWV0YWRhdGE3Ij4KICAgIDxyZGY6UkRGPgogICAgICA8Y2M6V29yawogICAgICAgICByZGY6YWJvdXQ9IiI+CiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICAgICAgPGRjOnR5cGUKICAgICAgICAgICByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPgogICAgICAgIDxkYzp0aXRsZT5GYWNlYm9vayBIb21lPC9kYzp0aXRsZT4KICAgICAgICA8ZGM6ZGF0ZT4yMDEzLTA0LTA0PC9kYzpkYXRlPgogICAgICAgIDxkYzpjcmVhdG9yPgogICAgICAgICAgPGNjOkFnZW50PgogICAgICAgICAgICA8ZGM6dGl0bGU+aHR0cDovL3d3dy5yZWRkaXQuY29tL3VzZXIvbS1wLTMvPC9kYzp0aXRsZT4KICAgICAgICAgIDwvY2M6QWdlbnQ+CiAgICAgICAgPC9kYzpjcmVhdG9yPgogICAgICAgIDxkYzpyaWdodHM+CiAgICAgICAgICA8Y2M6QWdlbnQ+CiAgICAgICAgICAgIDxkYzp0aXRsZT5GYWNlYm9vayDCqTwvZGM6dGl0bGU+CiAgICAgICAgICA8L2NjOkFnZW50PgogICAgICAgIDwvZGM6cmlnaHRzPgogICAgICAgIDxkYzpzdWJqZWN0PgogICAgICAgICAgPHJkZjpCYWc+CiAgICAgICAgICAgIDxyZGY6bGk+ZmFjZWJvb2sgaG9tZTwvcmRmOmxpPgogICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgIDwvZGM6c3ViamVjdD4KICAgICAgICA8Y2M6bGljZW5zZQogICAgICAgICAgIHJkZjpyZXNvdXJjZT0iaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2JyYW5kcGVybWlzc2lvbnMvZmFxLnBocCIgLz4KICAgICAgICA8ZGM6c291cmNlPmh0dHBzOi8vd3d3LmZhY2Vib29rLmNvbS9GYWNlYm9va01vYmlsZTwvZGM6c291cmNlPgogICAgICA8L2NjOldvcms+CiAgICA8L3JkZjpSREY+CiAgPC9tZXRhZGF0YT4KICA8ZwogICAgIGlua3NjYXBlOmdyb3VwbW9kZT0ibGF5ZXIiCiAgICAgaWQ9ImxheWVyOSIKICAgICBpbmtzY2FwZTpsYWJlbD0iRmFjZWJvb2sgSG9tZSIKICAgICBzdHlsZT0iZGlzcGxheTppbmxpbmUiCiAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE5NC45Njg3NSwtMjc2LjU2MjUpIj4KICAgIDxnCiAgICAgICBpZD0iZzQ0NjkiPgogICAgICA8cGF0aAogICAgICAgICBpZD0icGF0aDM4NTciCiAgICAgICAgIGQ9Im0gMzk0LjQ2ODc1LDI3Ni41NjI1IGMgLTExMC4xODM2NCwwIC0xOTkuNSw4OS4zMTYzNiAtMTk5LjUsMTk5LjUgMCwxMTAuMTgzNjQgODkuMzE2MzYsMTk5LjUgMTk5LjUsMTk5LjUgMi44MzA2OSwwIDUuNjM1NTEsLTAuMDcwNyA4LjQzNzUsLTAuMTg3NSBsIDAsLTE0NS42MjUgLTMwLjA5Mzc1LDAgMCwtNTAuMTg3NSAzMC4wOTM3NSwwIDAsLTMwLjEyNSBjIDAsLTQwLjk0NTEyIDE2Ljk1NzUyLC02NS4zMTI1IDY1LjE4NzUsLTY1LjMxMjUgbCA0MC4xNTYyNSwwIDAsNTAuMjE4NzUgLTI1LjA5Mzc1LDAgYyAtMTguNzc4MTIsMCAtMjAuMDMxMjUsNy4wMDE4IC0yMC4wMzEyNSwyMC4wOTM3NSBsIC0wLjA2MjUsMjUuMTI1IDQ1LjQ2ODc1LDAgLTUuMzEyNSw1MC4xODc1IC00MC4xNTYyNSwwIDAsMTMzLjcxODc1IGMgNzYuMzkxMDYsLTI3Ljk3MDUyIDEzMC45MDYyNSwtMTAxLjMyNTI4IDEzMC45MDYyNSwtMTg3LjQwNjI1IDAsLTExMC4xODM2NCAtODkuMzE2MzYsLTE5OS41IC0xOTkuNSwtMTk5LjUgeiIKICAgICAgICAgbWFzaz0ibm9uZSIKICAgICAgICAgc3R5bGU9ImZpbGw6IzNiNTk5ODtmaWxsLW9wYWNpdHk6MSIKICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz4KICAgICAgPHBhdGgKICAgICAgICAgaWQ9InBhdGgzODU3LTQiCiAgICAgICAgIGQ9Im0gNDY4LjA5ODk4LDM4NC4xNDEzOCBjIC00OC4yMjk5OCwwIC02NS4xODc1LDI0LjM2NzM4IC02NS4xODc1LDY1LjMxMjUgbCAwLDMwLjEyNSAtMzAuMDkzNzUsMCAwLDUwLjE4NzUgMzAuMDkzNzUsMCAwLDE0NS42MjUgYyAyMS4wNTYzMSwtMC44NzczMSA0MS4yNzg4LC00Ljk5NDI5IDYwLjE1NjI1LC0xMS45MDYyNSBsIDAsLTEzMy43MTg3NSA0MC4xNTYyNSwwIDUuMzEyNSwtNTAuMTg3NSAtNDUuNDY4NzUsMCAwLjA2MjUsLTI1LjEyNSBjIDAsLTEzLjA5MTk1IDEuMjUzMTMsLTIwLjA5Mzc1IDIwLjAzMTI1LC0yMC4wOTM3NSBsIDI1LjA5Mzc1LDAgMCwtNTAuMjE4NzUgLTQwLjE1NjI1LDAgeiIKICAgICAgICAgbWFzaz0ibm9uZSIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MSIKICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo=';
@@ -42,79 +86,90 @@ export const socialLogoConverter = (provider) => {
     default:
       return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNDggNDgiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNNDQuNSAyMEgyNHY4LjVoMTEuOEMzNC43IDMzLjkgMzAuMSAzNyAyNCAzN2MtNy4yIDAtMTMtNS44LTEzLTEzczUuOC0xMyAxMy0xM2MzLjEgMCA1LjkgMS4xIDguMSAyLjlsNi40LTYuNEMzNC42IDQuMSAyOS42IDIgMjQgMiAxMS44IDIgMiAxMS44IDIgMjRzOS44IDIyIDIyIDIyYzExIDAgMjEtOCAyMS0yMiAwLTEuMy0uMi0yLjctLjUtNHoiLz48L2RlZnM+PGNsaXBQYXRoIGlkPSJiIj48dXNlIHhsaW5rOmhyZWY9IiNhIiBvdmVyZmxvdz0idmlzaWJsZSIvPjwvY2xpcFBhdGg+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2IpIiBmaWxsPSIjRkJCQzA1IiBkPSJNMCAzN1YxMWwxNyAxM3oiLz48cGF0aCBjbGlwLXBhdGg9InVybCgjYikiIGZpbGw9IiNFQTQzMzUiIGQ9Ik0wIDExbDE3IDEzIDctNi4xTDQ4IDE0VjBIMHoiLz48cGF0aCBjbGlwLXBhdGg9InVybCgjYikiIGZpbGw9IiMzNEE4NTMiIGQ9Ik0wIDM3bDMwLTIzIDcuOSAxTDQ4IDB2NDhIMHoiLz48cGF0aCBjbGlwLXBhdGg9InVybCgjYikiIGZpbGw9IiM0Mjg1RjQiIGQ9Ik00OCA0OEwxNyAyNGwtNC0zIDM1LTEweiIvPjwvc3ZnPg==';
   }
-}
+};
 
-export const imageNameToPathConverter = (imageName) => {
-  return `${AUTH_REST_BASE_END_POINT}/uploads/image/${imageName}`
-}
-export const avatarNameToPathConverter = (imageName) => {
-  if (imageName.startsWith('assets/images/avatars') || imageName.startsWith('http')) {
-    return imageName
+export const imageNameToPathConverter = imageName => {
+  return `${AUTH_REST_BASE_END_POINT}/uploads/image/${imageName}`;
+};
+export const avatarNameToPathConverter = imageName => {
+  if (
+    imageName.startsWith('assets/images/avatars') ||
+    imageName.startsWith('http')
+  ) {
+    return imageName;
   } else {
-    return `${AUTH_REST_BASE_END_POINT}/uploads/avatar/${imageName}`
+    return `${AUTH_REST_BASE_END_POINT}/uploads/avatar/${imageName}`;
   }
-}
+};
 
-export const userRoleTitleConverter = (userRole) => {
+export const userRoleTitleConverter = userRole => {
   switch (userRole) {
     case 'staff':
-      return '專員'
+      return '專員';
     case 'admin':
-      return '主任'
+      return '主任';
     case 'user':
-      return '好青年'
+      return '好青年';
     default:
-      return '職崖發展'
+      return '職崖發展';
   }
-}
+};
 
-export const spaceConverter = (spaceTitle) => {
+export const spaceConverter = spaceTitle => {
   switch (spaceTitle) {
     case 'openSpace':
       return {
         title: '開放空間',
-        description: 'YS 青年職涯發展中心的空間裡皆以coworking space 的概念，讓青年朋友共聚一堂，隨時交流討論，一起激盪創意',
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/6ea3c151-df19-8ca2-2490-b23533c0b49b.jpg'
-      }
+        description:
+          'YS 青年職涯發展中心的空間裡皆以coworking space 的概念，讓青年朋友共聚一堂，隨時交流討論，一起激盪創意',
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/6ea3c151-df19-8ca2-2490-b23533c0b49b.jpg'
+      };
     case 'groupConsultationRoom':
       return {
         title: '團體諮詢室',
         description: `● 就業諮詢：提供會員就業相關問題諮詢服務。
 		●職涯探索：多種的職涯測評工具可供選擇，有職 涯諮詢師協助您釐清職涯。
 		● 創業亮點：創業不該是用想像，而是要更多的實質經驗，找出 您獨樹一格的亮點！邀請成功創業素人分享經驗。`,
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/d2d6b911-adca-6091-fffb-a863c699bf21.jpg'
-      }
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/d2d6b911-adca-6091-fffb-a863c699bf21.jpg'
+      };
     case 'capitalCenter':
       return {
         title: '圖資中心',
         description: `● 電影賞析：看電影也可以為找工作做準備!由精彩的影片賞析探索職涯定位、工作體驗、人際關係與職場倫理。
 		● 閱讀分享：閱讀帶來新動力，為你開啟就業力!透過閱讀，吸收前人的智慧，讓知識與心靈碰撞出嶄新的火花。
 		● 圖書借閱：會員可借閱圖資中心之書籍及報章雜誌。`,
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/a60cbb48-b95c-3342-d0ea-9e97bf2ac9c0.jpg'
-      }
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/a60cbb48-b95c-3342-d0ea-9e97bf2ac9c0.jpg'
+      };
     case 'groupTestingRoom':
       return {
         title: '團體施測室',
-        description: '履歷建置:透過網站會員可自助建置自我的履歷並於直接寄送給欲應徵之廠商。 職涯探索:多種的職涯測評工具可供選擇，有職 涯諮詢師協助您釐清職涯。 WIFI：透過「iTaiwan」的無線網路會員可使用自身之可攜式裝置上網。',
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/3227acae-a312-53cc-6bed-73d1b991c2dc.jpg'
-      }
+        description:
+          '履歷建置:透過網站會員可自助建置自我的履歷並於直接寄送給欲應徵之廠商。 職涯探索:多種的職涯測評工具可供選擇，有職 涯諮詢師協助您釐清職涯。 WIFI：透過「iTaiwan」的無線網路會員可使用自身之可攜式裝置上網。',
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/3227acae-a312-53cc-6bed-73d1b991c2dc.jpg'
+      };
     case 'businessSpace':
       return {
         title: '商務空間',
         description: `● 創業亮點：創業不該是用想像，而是要更多的實質經驗，找出 您獨樹一格的亮點！YS定期邀請成功創業素人分享經驗。
 		● ˙菁英面談會：邀請企業與您在此進行面談會，讓您可以從面談中更貼近企業文化。
 		● 各項活動請查詢「線上報名活動」。`,
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/aa6796d7-daac-f4fa-e5b4-72dd69332b80.jpg'
-      }
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/aa6796d7-daac-f4fa-e5b4-72dd69332b80.jpg'
+      };
     case 'highlightStudio':
     default:
       return {
         title: '亮點工作室',
         description: '此空間適合研習講座、教育訓練、腦力激盪、中型會議',
-        coverImgUrl: 'https://ys.nat.gov.tw/uploads/space/fb8c2bae-e8fc-e14a-7fcd-1781eef89d20.jpg'
-      }
+        coverImgUrl:
+          'https://ys.nat.gov.tw/uploads/space/fb8c2bae-e8fc-e14a-7fcd-1781eef89d20.jpg'
+      };
   }
-}
+};
 
 export const genderConverter = gender => {
   switch (gender) {
@@ -126,7 +181,7 @@ export const genderConverter = gender => {
     default:
       return '多元性別';
   }
-}
+};
 
 export const educationConverter = education => {
   switch (education) {
@@ -142,7 +197,7 @@ export const educationConverter = education => {
     default:
       return '研究所';
   }
-}
+};
 
 export const departmentNameConverter = departmentName => {
   switch (departmentName) {
@@ -174,7 +229,7 @@ export const departmentNameConverter = departmentName => {
     default:
       return '其他學群';
   }
-}
+};
 
 export const statusConverter = statsu => {
   switch (statsu) {
@@ -188,7 +243,7 @@ export const statusConverter = statsu => {
     default:
       return '待業中';
   }
-}
+};
 
 export const informationTagConverter = statsu => {
   switch (statsu) {
@@ -202,7 +257,7 @@ export const informationTagConverter = statsu => {
     default:
       return '達人訪談';
   }
-}
+};
 
 export const gekkoTypeConverter = TYPE => {
   switch (TYPE) {
@@ -210,7 +265,7 @@ export const gekkoTypeConverter = TYPE => {
     default:
       return '市場紀錄';
   }
-}
+};
 
 export const mimnTypeConverter = mime => {
   switch (mime) {
@@ -225,15 +280,15 @@ export const mimnTypeConverter = mime => {
     case 'application/msword':
     case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
     default:
-      return 'Word'
+      return 'Word';
   }
-}
+};
 
 export const documentNameConverter = originName => {
-  const [name, extend] = originName.split('.')
+  const [name, extend] = originName.split('.');
 
-  return `···${name.slice(-5)}.${extend}`
-}
+  return `···${name.slice(-5)}.${extend}`;
+};
 
 export const bytesToSizeConverter = bytes => {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -242,4 +297,4 @@ export const bytesToSizeConverter = bytes => {
   if (i === 0) return bytes + ' ' + sizes[i];
 
   return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-}
+};

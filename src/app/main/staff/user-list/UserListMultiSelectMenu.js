@@ -1,60 +1,66 @@
 import React, { useState } from 'react';
-import { Icon, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from '@material-ui/core';
-import { json2csv } from 'json-2-csv';
-
+import {
+  Icon,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  MenuList
+} from '@material-ui/core';
+import CsvDownload from 'react-json-to-csv';
 import { useSelector } from 'react-redux';
 
-function UserListMultiSelectMenu(props) {
-	const USERS = useSelector(({ userList }) => userList.docs);
-	const selectedUserIds = useSelector(({ userList }) => userList.selectedUserIds);
-	const csvSource = USERS.filter(user => selectedUserIds.includes(user._id))
+import { userListToCsvConverter } from 'app/utils';
 
-	const [anchorEl, setAnchorEl] = useState(null);
+function UserListMultiSelectMenu() {
+  const USERS = useSelector(({ userList }) => userList.docs);
+  const selectedUserIds = useSelector(
+    ({ userList }) => userList.selectedUserIds
+  );
+  const csvSource = USERS.filter(user => selectedUserIds.includes(user._id));
 
-	function openSelectedUserMenu(event) {
-		setAnchorEl(event.currentTarget);
-	}
+  const [anchorEl, setAnchorEl] = useState(null);
 
-	function closeSelectedUsersMenu() {
-		setAnchorEl(null);
-	}
+  function openSelectedUserMenu(event) {
+    setAnchorEl(event.currentTarget);
+  }
 
-	return (
-		<React.Fragment>
-			<IconButton
-				className="p-0"
-				aria-owns={anchorEl ? 'selectedUsersMenu' : null}
-				aria-haspopup="true"
-				onClick={openSelectedUserMenu}
-			>
-				<Icon>more_horiz</Icon>
-			</IconButton>
-			<Menu
-				id="selectedUsersMenu"
-				anchorEl={anchorEl}
-				open={Boolean(anchorEl)}
-				onClose={closeSelectedUsersMenu}
-			>
-				<MenuList>
-					<MenuItem
-						onClick={() => {
-							// dispatch(Actions.deactiveUsers(selectedUserIds));
-							json2csv(csvSource, () => {
-								console.log('sucess')
-							})
-							closeSelectedUsersMenu();
-						}}
-					>
-						<ListItemIcon className="min-w-40">
-							<Icon>cloud_download</Icon>
-						</ListItemIcon>
-						<ListItemText primary="匯出 CSV" />
-					</MenuItem>
-				</MenuList>
-			</Menu>
-		</React.Fragment>
-	);
+  function closeSelectedUsersMenu() {
+    setAnchorEl(null);
+  }
+
+  return (
+    <React.Fragment>
+      <IconButton
+        className="p-0"
+        aria-owns={anchorEl ? 'selectedUsersMenu' : null}
+        aria-haspopup="true"
+        onClick={openSelectedUserMenu}
+      >
+        <Icon>more_horiz</Icon>
+      </IconButton>
+      <Menu
+        id="selectedUsersMenu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={closeSelectedUsersMenu}
+      >
+        <MenuList>
+          <MenuItem>
+            <ListItemIcon className="min-w-40">
+              <Icon>cloud_download</Icon>
+            </ListItemIcon>
+            <CsvDownload
+              data={userListToCsvConverter(csvSource)}
+              filename="會員列表.csv"
+            >
+              匯出 CSV
+            </CsvDownload>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    </React.Fragment>
+  );
 }
 
 export default UserListMultiSelectMenu;
-

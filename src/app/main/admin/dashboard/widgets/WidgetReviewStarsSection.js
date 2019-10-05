@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Paper } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +10,15 @@ function WidgetReviewStarsSection() {
   );
   const isStarsLoading = REVIEW_STARS.loading;
 
-  if (isStarsLoading) {
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      if (isStarsLoading) setIsInitialized(true);
+    }
+  }, [isInitialized, isStarsLoading]);
+
+  if (!isInitialized && isStarsLoading) {
     return (
       <div className="flex justify-center items-center w-full h-full">
         <LoadingSpinner width="128" height="128" />
@@ -18,9 +26,9 @@ function WidgetReviewStarsSection() {
     );
   }
   return (
-    <div className="flex flex-col sm:flex sm:flex-row pb-32">
+    <div className="flex flex-col sm:flex sm:flex-row pb-12">
       <div className="widget flex w-full sm:w-1/3 p-16">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-16">
+        <Paper className="w-full rounded-8 shadow-md hover:shadow-lg border-none text-center pt-12 pb-16">
           <Typography className="text-72 leading-none text-blue flex justify-center items-end">
             {REVIEW_STARS['eventStars']}
             <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
@@ -34,7 +42,7 @@ function WidgetReviewStarsSection() {
       </div>
 
       <div className="widget flex w-full sm:w-1/3 p-16">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-16">
+        <Paper className="w-full rounded-8 shadow-md hover:shadow-lg border-none text-center pt-12 pb-16">
           <Typography className="text-72 leading-none text-blue flex justify-center items-end">
             {REVIEW_STARS['speakerContentStars']}
             <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">
@@ -48,7 +56,7 @@ function WidgetReviewStarsSection() {
       </div>
 
       <div className="widget w-full sm:w-1/3 p-16">
-        <Paper className="w-full rounded-8 shadow-lg border-none text-center pt-12 pb-16">
+        <Paper className="w-full rounded-8 shadow-md hover:shadow-lg border-none text-center pt-12 pb-16">
           <Typography className="text-72 leading-none text-blue flex justify-center items-end">
             {REVIEW_STARS['speakerExpressionStars']}
             <span className="text-gray-500 text-16 whitespace-no-wrap text-bold">

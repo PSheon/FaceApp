@@ -79,6 +79,7 @@ function EventActivityDialog(props) {
 	}
 
 	function renderRegistrationStatus() {
+		if (applicantReviews.checkinStatus) return null;
 		switch (applicantReviews.registrationStatus) {
 			case 'rejected':
 				return (
@@ -548,7 +549,7 @@ function EventActivityDialog(props) {
 										</div>
 										<CssTextField
 											className="mb-24"
-											label="科系名稱"
+											label="科系類別"
 											id="departmentName"
 											name="departmentName"
 											value={applicantInfos.departmentName}

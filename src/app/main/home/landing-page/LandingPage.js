@@ -115,12 +115,8 @@ function LandingPage() {
                 role="button"
                 className={clsx(
                   classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange hover:shadow-lg'
+                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
                 )}
-                // style={{
-                //   backgroundImage:
-                //     'url(https://ys.nat.gov.tw/img/index-btn-bg.png)'
-                // }}
               >
                 <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
                   關於 YS
@@ -133,12 +129,8 @@ function LandingPage() {
                 role="button"
                 className={clsx(
                   classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange hover:shadow-lg'
+                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
                 )}
-                // style={{
-                // 	backgroundImage:
-                // 		'url(https://ys.nat.gov.tw/img/index-btn-bg.png)'
-                // }}
               >
                 <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
                   空間介紹
@@ -151,12 +143,8 @@ function LandingPage() {
                 role="button"
                 className={clsx(
                   classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange hover:shadow-lg'
+                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
                 )}
-                // style={{
-                // 	backgroundImage:
-                // 		'url(https://ys.nat.gov.tw/img/index-btn-bg.png)'
-                // }}
               >
                 <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
                   常見 Q & A
@@ -169,12 +157,8 @@ function LandingPage() {
                 role="button"
                 className={clsx(
                   classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange hover:shadow-lg'
+                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
                 )}
-                // style={{
-                //   backgroundImage:
-                //     'url(https://ys.nat.gov.tw/img/index-btn-bg.png)'
-                // }}
               >
                 <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
                   聯絡我們

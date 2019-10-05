@@ -23,6 +23,7 @@ function AdminDashboardPage() {
 
   useEffect(() => {
     dispatch(Actions.syncAdminDashboardReviewStars());
+    dispatch(Actions.syncAdminDashboardReviewLogs());
     dispatch(Actions.syncAdminDashboardNewRegisteredUser());
     dispatch(Actions.syncAdminDashboardGenderStatistic());
     dispatch(Actions.syncAdminDashboardEmploymentStatusStatistic());
@@ -66,14 +67,13 @@ function AdminDashboardPage() {
 								)}
 						</div> */}
 
-            <FuseAnimate delay={600}>
-              <Typography className="px-16 pb-8 text-18 font-600">
-                最近的活動回饋
-              </Typography>
-            </FuseAnimate>
-
+            {/* <Typography className="px-16 pb-8 text-18 font-600">
+              最近的活動回饋
+            </Typography> */}
             <div className="widget w-full p-16 pb-32">
-              <WidgetEventReviewTable />
+              <FuseAnimate delay={600}>
+                <WidgetEventReviewTable />
+              </FuseAnimate>
             </div>
           </div>
 

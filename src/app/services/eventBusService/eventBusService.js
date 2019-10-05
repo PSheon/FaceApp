@@ -661,6 +661,25 @@ class eventBusService extends FuseUtils.EventEmitter {
     });
   };
 
+  /* Auth resend verify email */
+  resendVerifyEmail = () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(AUTH_REST_BASE_END_POINT + '/auth/resend-verify')
+        .then(response => {
+          if (response.data) {
+            resolve(response.data);
+          }
+          // else {
+          // 	reject(response.data.error);
+          // }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
   getAccessToken = () => {
     return window.localStorage.getItem('jwt_access_token');
   };

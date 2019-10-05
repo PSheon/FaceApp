@@ -357,7 +357,7 @@ function WidgetEditProfileCard(props) {
 
                 {/* <CssTextField
                     className="mt-8 mb-16"
-                    label="科系名稱"
+                    label="科系類別"
                     id="departmentName"
                     name="departmentName"
                     value={form.departmentName}

@@ -99,7 +99,7 @@ function WidgetSocialLink() {
               }}
               onFailure={response => {
                 dispatch(
-                  Actions.showMessage({ message: '登入 Facebook 失敗' })
+                  Actions.showMessage({ message: '連接 Facebook 失敗' })
                 );
               }}
             />

@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as Actions from 'app/store/actions';
-import { genderConverter, educationConverter, statusConverter } from 'app/utils';
+import { genderConverter, educationConverter, statusConverter, departmentNameConverter } from 'app/utils';
 
 const defaultFormState = {
 	id: '',
@@ -280,10 +280,10 @@ function UserListDialog(props) {
 						</div>
 						<CssTextField
 							className="mb-24"
-							label="科系名稱"
+							label="科系類別"
 							id="departmentName"
 							name="departmentName"
-							value={form.departmentName}
+							value={form.departmentName && departmentNameConverter(form.departmentName)}
 							// onChange={handleChange}
 							variant="outlined"
 							InputProps={{

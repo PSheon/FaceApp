@@ -77,7 +77,7 @@ function StaffListTable(props) {
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions className="justify-center">
-						<Button onClick={() => dispatch(Actions.closeDialog())} autoFocus className="text-white rounded-full">
+						<Button onClick={() => dispatch(Actions.closeDialog())} autoFocus className="text-gray-700 rounded-full">
 							取消
             </Button>
 						<Button onClick={() => dispatch(Actions.toggleStaffActivation({ userId: _id, email, active: !active }))} className={clsx(active ? "text-red" : "text-green", "rounded-full")}>

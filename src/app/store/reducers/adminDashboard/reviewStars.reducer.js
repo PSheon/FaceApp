@@ -9,7 +9,7 @@ const initialState = {
   speakerExpressionStars: 0
 };
 
-const newRegisteredUser = function(state = initialState, action) {
+const reviewStars = function(state = initialState, action) {
   switch (action.type) {
     case Actions.SET_REVIEW_STARS_LOADING: {
       return {
@@ -42,4 +42,4 @@ const newRegisteredUser = function(state = initialState, action) {
   }
 };
 
-export default newRegisteredUser;
+export default reviewStars;
