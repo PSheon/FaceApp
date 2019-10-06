@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 // See https://developers.google.com/web/tools/workbox/guides/configure-workbox
-workbox.core.setLogLevel(workbox.core.LOG_LEVELS.debug);
 
 self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate', event =>
