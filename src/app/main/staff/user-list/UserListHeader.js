@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Input, Paper, Typography } from '@material-ui/core';
+import { IconButton, Icon, Input, Paper, Typography } from '@material-ui/core';
+import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import { ThemeProvider } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,9 +49,15 @@ function UserListHeader(props) {
                   onChange={ev => dispatch(Actions.setSearchText(ev))}
                 />
 
-                <Icon className="ml-8" color="action">
-                  search
-                </Icon>
+                <IconButton
+                  key="FilterList"
+                  aria-label="FilterList"
+                  color="inherit"
+                  className="p-0"
+                  // onClick={() => dispatch(Actions.hideMessage())}
+                >
+                  <FilterListOutlinedIcon color="action" />
+                </IconButton>
               </Paper>
             </FuseAnimate>
           </ThemeProvider>

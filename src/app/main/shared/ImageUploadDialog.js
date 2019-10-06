@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import { FilePond, registerPlugin } from 'react-filepond';
 
-import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig'
+import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
 import * as Actions from 'app/store/actions';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
@@ -30,95 +30,104 @@ registerPlugin(
   FilePondPluginFileValidateSize,
   FilePondPluginFileValidateType,
   FilePondPluginImageCrop,
-  FilePondPluginImageSizeMetadata,
+  FilePondPluginImageSizeMetadata
 );
 
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: '#000000',
+      color: '#000000'
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#2e2e2e',
+      borderBottomColor: '#2e2e2e'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#2e2e2e',
+        borderColor: '#2e2e2e'
       },
       '&:hover fieldset': {
-        borderColor: '#000000',
+        borderColor: '#000000'
       },
       '&.Mui-focused fieldset': {
-        borderColor: '#000000',
-      },
+        borderColor: '#000000'
+      }
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderRadius: '2.4rem',
+      borderRadius: '2.4rem'
     }
-  },
+  }
 })(TextField);
 const useStyles = makeStyles(theme => ({
   tag: {
-    transition: 'transform .3s, filter .3s',
-    filter: 'grayscale(85%)',
-    '&:hover': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
-    }
+    transition: 'background-color .3s, transform .3s'
   },
   red: {
-    backgroundColor: '#ef7c71',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #ef7c71',
+    '&.active, &:hover': {
+      backgroundColor: '#ef7c71',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   orange: {
-    backgroundColor: '#f5bb67',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #f5bb67',
+    '&.active, &:hover': {
+      backgroundColor: '#f5bb67',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   yellow: {
-    backgroundColor: '#fbe571',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #fbe571',
+    '&.active, &:hover': {
+      backgroundColor: '#fbe571',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   green: {
-    backgroundColor: '#80db7b',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #80db7b',
+    '&.active, &:hover': {
+      backgroundColor: '#80db7b',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   blue: {
-    backgroundColor: '#63a5f8',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #63a5f8',
+    '&.active, &:hover': {
+      backgroundColor: '#63a5f8',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   purple: {
-    backgroundColor: '#cb8cf8',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #cb8cf8',
+    '&.active, &:hover': {
+      backgroundColor: '#cb8cf8',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   gray: {
-    backgroundColor: '#b4b4b8',
-    '&.active': {
-      transform: 'scale(1.1)',
-      filter: 'grayscale(0%)',
+    backgroundColor: 'transparent',
+    border: '2.5px solid #b4b4b8',
+    '&.active, &:hover': {
+      backgroundColor: '#b4b4b8',
+      transform: 'scale(1.3)',
+      boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
     }
   },
   closeButton: {
     position: 'absolute',
     right: 5,
-    top: '5px',
+    top: '5px'
   },
   filePondWrapper: {
     opacity: '.6',
@@ -130,32 +139,32 @@ const useStyles = makeStyles(theme => ({
       '& .filepond--drop-label': {
         color: '#2e2e2e',
         fontSize: '2em',
-        fontWeight: '600',
+        fontWeight: '600'
       },
 
       '& .filepond--file-status': {
-        fontSize: '2em',
+        fontSize: '2em'
       },
       '& .filepond--file-action-button': {
-        fontSize: '2em',
+        fontSize: '2em'
       },
 
       '& .filepond--file-info-main': {
-        fontSize: '2em',
+        fontSize: '2em'
       },
 
       '& .filepond--file-info-sub': {
-        fontSize: '1.5em',
-      },
+        fontSize: '1.5em'
+      }
     },
     '& .filepond--panel-root': {
       fontSize: '1.75em',
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     },
     '&:hover, &.active': {
       opacity: '1',
-      cursor: 'pointer',
-    },
+      cursor: 'pointer'
+    }
   }
 }));
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -192,30 +201,46 @@ function ImageUploadDialog(props) {
 
   return (
     <React.Fragment>
-      <div onClick={handleOpenUploader}>
-        {props.trigger}
-      </div>
+      <div onClick={handleOpenUploader}>{props.trigger}</div>
 
-      <Dialog classes={{ paper: 'rounded-12' }} fullWidth fullScreen={false} open={dialogOpen} onClose={handleClose} TransitionComponent={Transition}>
-        <DialogTitle disableTypography className="text-center text-20 sm:text-24 font-semibold">
+      <Dialog
+        classes={{ paper: 'rounded-12' }}
+        fullWidth
+        fullScreen={false}
+        open={dialogOpen}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <DialogTitle
+          disableTypography
+          className="text-center text-20 sm:text-24 font-semibold"
+        >
           上傳我的圖片
-          <IconButton aria-label="Close" className={classes.closeButton} onClick={handleClose}>
+          <IconButton
+            aria-label="Close"
+            className={classes.closeButton}
+            onClick={handleClose}
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent className="-mt-10">
           <FuseAnimate>
-            <Typography className="mt-22 sm:mt-22 sm:py-12 text-14 sm:text-20 font-600 text-center pb-10" color="inherit">
+            <Typography
+              className="mt-22 sm:mt-22 sm:py-12 text-14 sm:text-20 font-600 text-center pb-10"
+              color="inherit"
+            >
               目前僅支援類型
-                <br />
-              <span className="text-blue">JPG、PNG</span> 和 <span className="text-blue">SVG</span> 的圖片
+              <br />
+              <span className="text-blue">JPG、PNG</span> 和{' '}
+              <span className="text-blue">SVG</span> 的圖片
             </Typography>
           </FuseAnimate>
 
           {imageCaption !== null && (
             <FuseAnimateGroup
               enter={{
-                animation: "transition.expandIn"
+                animation: 'transition.expandIn'
               }}
             >
               <CssTextField
@@ -230,13 +255,69 @@ function ImageUploadDialog(props) {
               />
 
               <div className="flex justify-around items-center mb-24">
-                <div onClick={() => handleChangeTag('red')} className={clsx(classes.tag, classes.red, imageTags.includes('red') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('orange')} className={clsx(classes.tag, classes.orange, imageTags.includes('orange') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('yellow')} className={clsx(classes.tag, classes.yellow, imageTags.includes('yellow') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('green')} className={clsx(classes.tag, classes.green, imageTags.includes('green') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('blue')} className={clsx(classes.tag, classes.blue, imageTags.includes('blue') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('purple')} className={clsx(classes.tag, classes.purple, imageTags.includes('purple') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
-                <div onClick={() => handleChangeTag('gray')} className={clsx(classes.tag, classes.gray, imageTags.includes('gray') && "active", "cursor-pointer w-24 h-24 rounded-full hover:shadow-xl")}></div>
+                <div
+                  onClick={() => handleChangeTag('red')}
+                  className={clsx(
+                    classes.tag,
+                    classes.red,
+                    imageTags.includes('red') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('orange')}
+                  className={clsx(
+                    classes.tag,
+                    classes.orange,
+                    imageTags.includes('orange') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('yellow')}
+                  className={clsx(
+                    classes.tag,
+                    classes.yellow,
+                    imageTags.includes('yellow') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('green')}
+                  className={clsx(
+                    classes.tag,
+                    classes.green,
+                    imageTags.includes('green') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('blue')}
+                  className={clsx(
+                    classes.tag,
+                    classes.blue,
+                    imageTags.includes('blue') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('purple')}
+                  className={clsx(
+                    classes.tag,
+                    classes.purple,
+                    imageTags.includes('purple') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
+                <div
+                  onClick={() => handleChangeTag('gray')}
+                  className={clsx(
+                    classes.tag,
+                    classes.gray,
+                    imageTags.includes('gray') && 'active',
+                    'cursor-pointer w-24 h-24 rounded-full hover:shadow-xl'
+                  )}
+                ></div>
               </div>
               {/* <FuseAnimate>
               <CssTextField
@@ -252,7 +333,12 @@ function ImageUploadDialog(props) {
             </FuseAnimate> */}
             </FuseAnimateGroup>
           )}
-          <div className={clsx(classes.filePondWrapper, "mb-12 rounded-12 border-3 border-dotted")}>
+          <div
+            className={clsx(
+              classes.filePondWrapper,
+              'mb-12 rounded-12 border-3 border-dotted'
+            )}
+          >
             <FilePond
               labelIdle="點擊 或 拖曳來 <span class='filepond--label-action'>上傳圖片 </span>"
               labelInvalidField="請上傳圖片"
@@ -274,14 +360,26 @@ function ImageUploadDialog(props) {
               maxFileSize="12MB"
               imageCropAspectRatio="1:1"
               instantUpload={false}
-              fileValidateTypeLabelExpectedTypesMap={{ 'image/jpeg': '.jpg', 'image/png': '.png', 'image/svg+xml': '.svg' }}
+              fileValidateTypeLabelExpectedTypesMap={{
+                'image/jpeg': '.jpg',
+                'image/png': '.png',
+                'image/svg+xml': '.svg'
+              }}
               onupdatefiles={async fileItems => {
                 await setImageCaption(`${USER_NAME}_${fileItems[0].file.name}`);
               }}
               server={{
                 url: `${AUTH_REST_BASE_END_POINT}/api/image`,
                 timeout: 7000,
-                process: (fieldName, file, metadata, load, error, progress, abort) => {
+                process: (
+                  fieldName,
+                  file,
+                  metadata,
+                  load,
+                  error,
+                  progress,
+                  abort
+                ) => {
                   const formData = new FormData();
                   formData.append('imageData', file, file.name);
                   formData.append('imageName', file.name);
@@ -294,13 +392,16 @@ function ImageUploadDialog(props) {
 
                   const request = new XMLHttpRequest();
                   request.open('POST', `${AUTH_REST_BASE_END_POINT}/api/image`);
-                  request.setRequestHeader('Authorization', 'Bearer ' + window.localStorage.getItem('jwt_access_token'));
+                  request.setRequestHeader(
+                    'Authorization',
+                    'Bearer ' + window.localStorage.getItem('jwt_access_token')
+                  );
 
-                  request.upload.onprogress = (e) => {
+                  request.upload.onprogress = e => {
                     progress(e.lengthComputable, e.loaded, e.total);
                   };
 
-                  request.onload = function () {
+                  request.onload = function() {
                     if (request.status >= 200 && request.status < 300) {
                       // the load method accepts either a string (id) or an object
                       load(request.responseText);
@@ -309,15 +410,14 @@ function ImageUploadDialog(props) {
 
                       dispatch({
                         type: Actions.ADD_IMAGE_TO_UPLOADED_IMAGES_LIST,
-                        payload: (JSON.parse(request.responseText))
-                      })
+                        payload: JSON.parse(request.responseText)
+                      });
                       dispatch({
                         type: Actions.SHOW_MESSAGE,
-                        options: { message: '圖片件上傳成功' },
-                      })
-                      setDialogOpen(false)
-                    }
-                    else {
+                        options: { message: '圖片件上傳成功' }
+                      });
+                      setDialogOpen(false);
+                    } else {
                       // Can call the error method if something is wrong, should exit after
                       error('oh no');
                     }
@@ -341,14 +441,17 @@ function ImageUploadDialog(props) {
           </div>
 
           <FuseAnimate>
-            <Typography className="mt-22 sm:mt-22 sm:py-12 text-14 sm:text-20 font-600 text-center pb-10" color="inherit">
-              大小限制  <span className="text-blue">12 MB</span>
+            <Typography
+              className="mt-22 sm:mt-22 sm:py-12 text-14 sm:text-20 font-600 text-center pb-10"
+              color="inherit"
+            >
+              大小限制 <span className="text-blue">12 MB</span>
             </Typography>
           </FuseAnimate>
         </DialogContent>
       </Dialog>
     </React.Fragment>
-  )
+  );
 }
 
 export default ImageUploadDialog;

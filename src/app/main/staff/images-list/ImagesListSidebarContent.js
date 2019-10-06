@@ -27,60 +27,69 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 const useStyles = makeStyles({
 	tag: {
-		transition: 'transform .3s, filter .3s',
-		filter: 'grayscale(85%)',
-		'&:hover': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
-		}
+		transition: 'background-color .3s, transform .3s'
 	},
 	red: {
-		backgroundColor: '#ef7c71',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #ef7c71',
+		'&.active, &:hover': {
+			backgroundColor: '#ef7c71',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	orange: {
-		backgroundColor: '#f5bb67',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #f5bb67',
+		'&.active, &:hover': {
+			backgroundColor: '#f5bb67',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	yellow: {
-		backgroundColor: '#fbe571',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #fbe571',
+		'&.active, &:hover': {
+			backgroundColor: '#fbe571',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	green: {
-		backgroundColor: '#80db7b',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #80db7b',
+		'&.active, &:hover': {
+			backgroundColor: '#80db7b',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	blue: {
-		backgroundColor: '#63a5f8',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #63a5f8',
+		'&.active, &:hover': {
+			backgroundColor: '#63a5f8',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	purple: {
-		backgroundColor: '#cb8cf8',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #cb8cf8',
+		'&.active, &:hover': {
+			backgroundColor: '#cb8cf8',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	gray: {
-		backgroundColor: '#b4b4b8',
-		'&.active': {
-			transform: 'scale(1.1)',
-			filter: 'grayscale(0%)',
+		backgroundColor: 'transparent',
+		border: '2.5px solid #b4b4b8',
+		'&.active, &:hover': {
+			backgroundColor: '#b4b4b8',
+			transform: 'scale(1.3)',
+			boxShadow: '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)'
 		}
 	},
 	noContent: {
