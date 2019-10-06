@@ -7,6 +7,19 @@ self.addEventListener('activate', event =>
 );
 
 workbox.routing.registerRoute(
+  new RegExp('.html$'),
+  workbox.strategies.cacheFirst({
+    cacheName: 'poc-cache-html',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+        maxEntries: 20, // only cache 20 request
+        purgeOnQuotaError: true
+      })
+    ]
+  })
+);
+workbox.routing.registerRoute(
   new RegExp('.css$'),
   workbox.strategies.cacheFirst({
     cacheName: 'poc-cache-Stylesheets',
@@ -34,9 +47,9 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  new RegExp('https://stage.ys.nat.gov.te/api/'),
+  new RegExp('https://stage.ys.nat.gov.tw/api/'),
   workbox.strategies.staleWhileRevalidate({
-    cacheName: 'poc-cache-employees',
+    cacheName: 'poc-cache-api',
     cacheExpiration: {
       maxAgeSeconds: 60 * 30 //cache the news content for 30mn
     }

@@ -1,27 +1,28 @@
 import React from 'react';
 import ReactMapboxGl, { Layer, Marker, Popup } from 'react-mapbox-gl';
 
-import './styles/mapbox.css';
+// NOTE
+// import './styles/mapbox.css';
 
 const paintLayer = {
   'fill-extrusion-color': '#aaa',
   'fill-extrusion-height': {
     type: 'identity',
-    property: 'height',
+    property: 'height'
   },
   'fill-extrusion-base': {
     type: 'identity',
-    property: 'min_height',
+    property: 'min_height'
   },
   'fill-extrusion-opacity': 0.6
 };
 const styles = {
-  "londonCycle": "mapbox://styles/mapbox/light-v9",
-  "light": "mapbox://styles/mapbox/light-v9",
-  "dark": "mapbox://styles/mapbox/dark-v9",
-  "basic": "mapbox://styles/mapbox/basic-v9",
-  "outdoor": "mapbox://styles/mapbox/outdoors-v10"
-}
+  londonCycle: 'mapbox://styles/mapbox/light-v9',
+  light: 'mapbox://styles/mapbox/light-v9',
+  dark: 'mapbox://styles/mapbox/dark-v9',
+  basic: 'mapbox://styles/mapbox/basic-v9',
+  outdoor: 'mapbox://styles/mapbox/outdoors-v10'
+};
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -39,26 +40,27 @@ function YSMap({ width = '100vw', height = '100%' }) {
       center={[120.299384, 22.624167]}
     >
       {/* <Feature coordinates={[120.299384, 22.624167]} /> */}
-      <Marker
-        coordinates={[120.299747, 22.622389]}
-        anchor="top"
-      >
-        <div style={{
-          backgroundColor: '#e74c3c',
-          borderRadius: '50%',
-          width: '20px',
-          height: '20px',
-          border: '4px solid #eaa29b',
-        }} />
+      <Marker coordinates={[120.299747, 22.622389]} anchor="top">
+        <div
+          style={{
+            backgroundColor: '#e74c3c',
+            borderRadius: '50%',
+            width: '20px',
+            height: '20px',
+            border: '4px solid #eaa29b'
+          }}
+        />
       </Marker>
       <Popup key="120.299747" coordinates={[120.299747, 22.622389]}>
-        <div style={{
-          background: 'white',
-          color: '#3f618c',
-          fontWeight: 400,
-          padding: '5px',
-          borderRadius: '2px',
-        }}>
+        <div
+          style={{
+            background: 'white',
+            color: '#3f618c',
+            fontWeight: 400,
+            padding: '5px',
+            borderRadius: '2px'
+          }}
+        >
           <div>YS 青年職涯發展中心</div>
           <div>高雄市前金區五福三路21號</div>
         </div>
@@ -74,7 +76,7 @@ function YSMap({ width = '100vw', height = '100%' }) {
         paint={paintLayer}
       />
     </Map>
-  )
+  );
 }
 
 export default YSMap;

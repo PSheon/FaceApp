@@ -157,7 +157,7 @@ function FooterLayout2(props) {
 
           <img
             className="w-256 p-12"
-            src="assets/images/logos/logo.png"
+            src="assets/images/logos/logo.svg"
             alt="logo"
           />
 

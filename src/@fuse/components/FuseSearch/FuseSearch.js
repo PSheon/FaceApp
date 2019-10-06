@@ -423,7 +423,7 @@ function FuseSearch(props) {
 												</Popper>
 											)}
 										/>
-										<IconButton onClick={hideSearch} className="mx-8">
+										<IconButton onClick={hideSearch} className="mx-8" aria-label="close">
 											<Icon>close</Icon>
 										</IconButton>
 									</div>
@@ -442,7 +442,7 @@ function FuseSearch(props) {
 
 FuseSearch.propTypes = {};
 FuseSearch.defaultProps = {
-	trigger: (<IconButton className="w-64 h-64"><Icon>search</Icon></IconButton>),
+	trigger: (<IconButton className="w-64 h-64" aria-label="search"><Icon>search</Icon></IconButton>),
 	variant: 'full'// basic, full
 };
 
