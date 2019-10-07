@@ -45,7 +45,7 @@ function WidgetAccessHistory() {
             'inline text-11 font-500 px-8 py-4 rounded-4 whitespace-no-wrap flex items-center'
           )}
         >
-          <Icon className="mr-12 text-base">phone_iphone</Icon>{' '}
+          <Icon className="mr-12 text-base">phone_iphone</Icon>
           {`${device.vendor} ${device.model}`}
         </Typography>
       );
@@ -56,7 +56,7 @@ function WidgetAccessHistory() {
             'inline text-11 font-500 px-8 py-4 rounded-4 whitespace-no-wrap flex items-center'
           )}
         >
-          <Icon className="mr-12 text-base">desktop_mac</Icon>{' '}
+          <Icon className="mr-12 text-base">desktop_mac</Icon>
           {`${browser.name} V${browser.version} (${os.name} ${os.version})`}
         </Typography>
       );

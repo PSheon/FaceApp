@@ -5,11 +5,11 @@ import { Line } from 'react-chartjs-2';
 import { useTheme } from '@material-ui/styles';
 
 import { applicantEducationExtractor } from 'app/utils';
-import LoadingSpinnerOverlay from 'app/main/shared/LoadingSpinnerOverlay';;
+import LoadingSpinnerOverlay from 'app/main/shared/LoadingSpinnerOverlay';
 
 const labels = ['國中', '高中', '專科', '大學', '研究所'];
 const DEFAULT_EDUCATION_DATASETS = {
-  '活動參與者': [
+  活動參與者: [
     {
       label: '男性',
       data: [190, 300, 340, 220, 290],
@@ -26,7 +26,7 @@ const DEFAULT_EDUCATION_DATASETS = {
       fill: 'start'
     }
   ],
-  '所有報名者': [
+  所有報名者: [
     {
       label: '男性',
       data: [410, 380, 320, 290, 190],
@@ -43,26 +43,26 @@ const DEFAULT_EDUCATION_DATASETS = {
       fill: 'start'
     }
   ]
-}
+};
 function WidgetEducationAreaChart(props) {
   const EVENT_ACTIVITY_LOGS = props.EVENT_ACTIVITY_LOGS;
   const theme = useTheme();
   const paletteSet = {
-    '男性': theme.palette['primary'],
-    '多元性別': theme.palette['secondary'],
-    '女性': theme.palette['tertiary'],
-  }
+    男性: theme.palette['primary'],
+    多元性別: theme.palette['secondary'],
+    女性: theme.palette['tertiary']
+  };
 
   const [datasetId, setDatasetId] = useState('活動參與者');
   const [isLoading, setIsLoading] = useState(true);
-  const [chartDatasets, setChartDatasets] = useState(DEFAULT_EDUCATION_DATASETS);
+  const [chartDatasets, setChartDatasets] = useState(
+    DEFAULT_EDUCATION_DATASETS
+  );
 
   useEffect(() => {
-    setChartDatasets(applicantEducationExtractor(EVENT_ACTIVITY_LOGS))
-    setIsLoading(false)
-  }, [EVENT_ACTIVITY_LOGS])
-
-  // console.log('chartDatasets ', chartDatasets)
+    setChartDatasets(applicantEducationExtractor(EVENT_ACTIVITY_LOGS));
+    setIsLoading(false);
+  }, [EVENT_ACTIVITY_LOGS]);
 
   return (
     <FuseAnimate delay={600}>
@@ -98,37 +98,41 @@ function WidgetEducationAreaChart(props) {
           <Line
             data={{
               labels,
-              datasets: [{
-                label: chartDatasets[datasetId][0].label,
-                data: chartDatasets[datasetId][0].data,
-                fill: 'start',
-                borderColor: paletteSet['男性'].main,
-                backgroundColor: paletteSet['男性'].opacity,
-                pointBackgroundColor: paletteSet['男性'].dark,
-                pointHoverBackgroundColor: paletteSet['男性'].main,
-                pointBorderColor: paletteSet['男性'].contrastText,
-                pointHoverBorderColor: paletteSet['男性'].contrastText
-              }, {
-                label: chartDatasets[datasetId][1].label,
-                data: chartDatasets[datasetId][1].data,
-                fill: 'start',
-                borderColor: paletteSet['多元性別'].main,
-                backgroundColor: paletteSet['多元性別'].opacity,
-                pointBackgroundColor: paletteSet['多元性別'].dark,
-                pointHoverBackgroundColor: paletteSet['多元性別'].main,
-                pointBorderColor: paletteSet['多元性別'].contrastText,
-                pointHoverBorderColor: paletteSet['多元性別'].contrastText
-              }, {
-                label: chartDatasets[datasetId][2].label,
-                data: chartDatasets[datasetId][2].data,
-                fill: 'start',
-                borderColor: paletteSet['女性'].main,
-                backgroundColor: paletteSet['女性'].opacity,
-                pointBackgroundColor: paletteSet['女性'].dark,
-                pointHoverBackgroundColor: paletteSet['女性'].main,
-                pointBorderColor: paletteSet['女性'].contrastText,
-                pointHoverBorderColor: paletteSet['女性'].contrastText
-              }]
+              datasets: [
+                {
+                  label: chartDatasets[datasetId][0].label,
+                  data: chartDatasets[datasetId][0].data,
+                  fill: 'start',
+                  borderColor: paletteSet['男性'].main,
+                  backgroundColor: paletteSet['男性'].opacity,
+                  pointBackgroundColor: paletteSet['男性'].dark,
+                  pointHoverBackgroundColor: paletteSet['男性'].main,
+                  pointBorderColor: paletteSet['男性'].contrastText,
+                  pointHoverBorderColor: paletteSet['男性'].contrastText
+                },
+                {
+                  label: chartDatasets[datasetId][1].label,
+                  data: chartDatasets[datasetId][1].data,
+                  fill: 'start',
+                  borderColor: paletteSet['多元性別'].main,
+                  backgroundColor: paletteSet['多元性別'].opacity,
+                  pointBackgroundColor: paletteSet['多元性別'].dark,
+                  pointHoverBackgroundColor: paletteSet['多元性別'].main,
+                  pointBorderColor: paletteSet['多元性別'].contrastText,
+                  pointHoverBorderColor: paletteSet['多元性別'].contrastText
+                },
+                {
+                  label: chartDatasets[datasetId][2].label,
+                  data: chartDatasets[datasetId][2].data,
+                  fill: 'start',
+                  borderColor: paletteSet['女性'].main,
+                  backgroundColor: paletteSet['女性'].opacity,
+                  pointBackgroundColor: paletteSet['女性'].dark,
+                  pointHoverBackgroundColor: paletteSet['女性'].main,
+                  pointBorderColor: paletteSet['女性'].contrastText,
+                  pointHoverBorderColor: paletteSet['女性'].contrastText
+                }
+              ]
             }}
             options={{
               spanGaps: false,
@@ -187,7 +191,7 @@ function WidgetEducationAreaChart(props) {
         </Typography>
       </Card>
     </FuseAnimate>
-  )
+  );
 }
 
 export default WidgetEducationAreaChart;

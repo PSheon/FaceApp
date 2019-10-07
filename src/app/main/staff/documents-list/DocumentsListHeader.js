@@ -191,7 +191,7 @@ function DocumentsListHeader(props) {
               >
                 目前僅支援類型
                 <br />
-                <span className="text-blue">PDF</span> 和{' '}
+                <span className="text-blue">PDF</span> 和
                 <span className="text-blue">Word</span> 的文件
               </Typography>
             </FuseAnimate>

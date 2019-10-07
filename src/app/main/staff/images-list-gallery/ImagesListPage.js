@@ -97,7 +97,7 @@ function ImagesListPage(props) {
             className="mt-8 sm:mt-16 mx-auto max-w-512"
           >
             <span className="opacity-75">
-              我們蒐集世界各地所有最即時、最火熱、最正確的資訊 <br />{' '}
+              我們蒐集世界各地所有最即時、最火熱、最正確的資訊 <br />
               確保您可以做出最正確的判斷.
             </span>
           </Typography>

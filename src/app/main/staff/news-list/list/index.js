@@ -108,14 +108,14 @@ function NewsListPage(props) {
         pageNames={['內容管理', 'YS 新聞列表']}
       />
       <div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-        <FuseAnimate>
+        {/* <FuseAnimate>
           <Typography
             className="sm:pt-24 text-32 sm:text-40 font-300"
             color="inherit"
           >
             YS 新聞列表
           </Typography>
-        </FuseAnimate>
+        </FuseAnimate> */}
         <FuseAnimate>
           <Typography
             className="mt-12 sm:mt-16 sm:py-12 text-20 sm:text-24 font-600 text-center"
@@ -123,9 +123,8 @@ function NewsListPage(props) {
           >
             僅支援
             <br />
-            <span className="text-blue">JPG</span> 和{' '}
-            <span className="text-blue">PNG</span> 以及{' '}
-            <span className="text-blue">上限 5 張</span> 的圖片種類
+            <span className="text-blue">JPG</span> 和
+            <span className="text-blue">PNG</span> 的圖片種類
           </Typography>
         </FuseAnimate>
 
@@ -183,7 +182,7 @@ function NewsListPage(props) {
                       )}
                     >
                       <Typography className="uppercase font-semibold tracking-wide whitespace-no-wrap text-lg leading-relaxed">
-                        {moment(item.updatedAt).format('LL')} -{' '}
+                        {moment(item.updatedAt).format('LL')} -
                         {item.published ? '已發佈' : '未發佈'}
                       </Typography>
                     </div>

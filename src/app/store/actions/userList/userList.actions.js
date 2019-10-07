@@ -13,6 +13,7 @@ export const OPEN_USER_INFO_DIALOG = '[USER LIST] OPEN USER INFO DIALOG';
 export const CLOSE_USER_INFO_DIALOG = '[USER LIST] CLOSE USER INFO DIALOG';
 export const UPDATE_USER_PERMISSION = '[USER LIST] UPDATE USER PERMISSION';
 export const UPDATE_USER_ACTIVE = '[USER LIST] UPDATE USER ACTIVE';
+export const TOGGLE_FILTER_PANEL = '[USER LIST] TOGGLE FILTER PANEL';
 
 export function getUserList(routeParams) {
   /* 
@@ -189,5 +190,11 @@ export function deactiveUsers(userIds) {
         })
       ]).then(() => dispatch(getUserList(routeParams)))
     );
+  };
+}
+
+export function toggleFilterPanel() {
+  return {
+    type: TOGGLE_FILTER_PANEL
   };
 }

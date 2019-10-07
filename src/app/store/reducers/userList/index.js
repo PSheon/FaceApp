@@ -1,155 +1,156 @@
 import * as Actions from 'app/store/actions/userList';
 
 const initialState = {
-	loading: true,
-	docs: null,
-	searchText: '',
-	selectedUserIds: [],
-	routeParams: {},
-	totalPages: 10,
-	totalUsers: 0,
-	userInfoDialog: {
-		props: {
-			open: false
-		},
-		data: null
-	}
+  loading: true,
+  docs: null,
+  searchText: '',
+  selectedUserIds: [],
+  routeParams: {},
+  totalPages: 10,
+  totalUsers: 0,
+  userInfoDialog: {
+    props: {
+      open: false
+    },
+    data: null
+  },
+  filterPanel: {
+    open: false,
+    data: ''
+  }
 };
 
-const userListReducer = function (state = initialState, action) {
-	switch (action.type) {
-		case Actions.SET_USER_LIST_LOADING: {
-			return {
-				...state,
-				loading: true,
-			};
-		}
+const userListReducer = function(state = initialState, action) {
+  switch (action.type) {
+    case Actions.SET_USER_LIST_LOADING: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
 
-		case Actions.GET_USER_LIST:
-			{
-				const { users, routeParams, totalPages, totalUsers } = action.payload;
+    case Actions.GET_USER_LIST: {
+      const { users, routeParams, totalPages, totalUsers } = action.payload;
 
-				return {
-					...state,
-					loading: false,
-					docs: users,
-					routeParams: routeParams,
-					totalPages: totalPages,
-					totalUsers: totalUsers,
-				};
-			}
-		case Actions.UPDATE_USER_LIST:
-			{
-				const { users, routeParams, totalPages } = action.payload;
-				const userIdSet = new Set(state.docs.map(item => item._id));
-				let tempUsersArr = [];
+      return {
+        ...state,
+        loading: false,
+        docs: users,
+        routeParams: routeParams,
+        totalPages: totalPages,
+        totalUsers: totalUsers
+      };
+    }
+    case Actions.UPDATE_USER_LIST: {
+      const { users, routeParams, totalPages } = action.payload;
+      const userIdSet = new Set(state.docs.map(item => item._id));
+      let tempUsersArr = [];
 
-				users.map((user) => !userIdSet.has(user._id) ? tempUsersArr.push(user) : null)
+      users.map(user =>
+        !userIdSet.has(user._id) ? tempUsersArr.push(user) : null
+      );
 
-				return {
-					...state,
-					loading: false,
-					docs: [
-						...state.docs,
-						...tempUsersArr,
-					],
-					routeParams: routeParams,
-					totalPages: totalPages,
-				};
-			}
-		case Actions.SET_SEARCH_TEXT:
-			{
-				const { searchText } = action.payload;
-				return {
-					...state,
-					searchText: searchText
-				};
-			}
-		case Actions.TOGGLE_IN_SELECTED_USERS:
-			{
-				const { userId } = action.payload;
+      return {
+        ...state,
+        loading: false,
+        docs: [...state.docs, ...tempUsersArr],
+        routeParams: routeParams,
+        totalPages: totalPages
+      };
+    }
+    case Actions.SET_SEARCH_TEXT: {
+      const { searchText } = action.payload;
+      return {
+        ...state,
+        searchText: searchText
+      };
+    }
+    case Actions.TOGGLE_IN_SELECTED_USERS: {
+      const { userId } = action.payload;
 
-				let selectedUserIds = [...state.selectedUserIds];
+      let selectedUserIds = [...state.selectedUserIds];
 
-				if (selectedUserIds.find(id => id === userId) !== undefined) {
-					selectedUserIds = selectedUserIds.filter(id => id !== userId);
-				}
-				else {
-					selectedUserIds = [...selectedUserIds, userId];
-				}
+      if (selectedUserIds.find(id => id === userId) !== undefined) {
+        selectedUserIds = selectedUserIds.filter(id => id !== userId);
+      } else {
+        selectedUserIds = [...selectedUserIds, userId];
+      }
 
-				return {
-					...state,
-					selectedUserIds: selectedUserIds
-				};
-			}
-		case Actions.SELECT_ALL_USERS:
-			{
-				const arr = Object.keys(state.docs).map(k => state.docs[k]);
+      return {
+        ...state,
+        selectedUserIds: selectedUserIds
+      };
+    }
+    case Actions.SELECT_ALL_USERS: {
+      const arr = Object.keys(state.docs).map(k => state.docs[k]);
 
-				const selectedUserIds = arr.map(user => user._id);
+      const selectedUserIds = arr.map(user => user._id);
 
-				return {
-					...state,
-					selectedUserIds: selectedUserIds
-				};
-			}
-		case Actions.DESELECT_ALL_USERS:
-			{
-				return {
-					...state,
-					selectedUserIds: []
-				};
-			}
-		case Actions.OPEN_USER_INFO_DIALOG:
-			{
-				return {
-					...state,
-					userInfoDialog: {
-						props: {
-							open: true
-						},
-						data: action.payload.data
-					}
-				};
-			}
-		case Actions.CLOSE_USER_INFO_DIALOG:
-			{
-				return {
-					...state,
-					userInfoDialog: {
-						props: {
-							open: false
-						},
-						data: null
-					}
-				};
-			}
-		case Actions.UPDATE_USER_PERMISSION:
-			{
-				const { userId, role } = action.payload;
+      return {
+        ...state,
+        selectedUserIds: selectedUserIds
+      };
+    }
+    case Actions.DESELECT_ALL_USERS: {
+      return {
+        ...state,
+        selectedUserIds: []
+      };
+    }
+    case Actions.OPEN_USER_INFO_DIALOG: {
+      return {
+        ...state,
+        userInfoDialog: {
+          props: {
+            open: true
+          },
+          data: action.payload.data
+        }
+      };
+    }
+    case Actions.CLOSE_USER_INFO_DIALOG: {
+      return {
+        ...state,
+        userInfoDialog: {
+          props: {
+            open: false
+          },
+          data: null
+        }
+      };
+    }
+    case Actions.UPDATE_USER_PERMISSION: {
+      const { userId, role } = action.payload;
 
-				const newdocs = state.docs.map(user => {
-					if (user._id === userId) {
-						return {
-							...user,
-							role
-						}
-					} else {
-						return user
-					}
-				})
-				return {
-					...state,
-					loading: false,
-					docs: newdocs
-				};
-			}
-		default:
-			{
-				return state;
-			}
-	}
+      const newdocs = state.docs.map(user => {
+        if (user._id === userId) {
+          return {
+            ...user,
+            role
+          };
+        } else {
+          return user;
+        }
+      });
+      return {
+        ...state,
+        loading: false,
+        docs: newdocs
+      };
+    }
+    case Actions.TOGGLE_FILTER_PANEL: {
+      return {
+        ...state,
+        filterPanel: {
+          ...state.filterPanel,
+          open: !state.filterPanel.open
+        }
+      };
+    }
+    default: {
+      return state;
+    }
+  }
 };
 
 export default userListReducer;

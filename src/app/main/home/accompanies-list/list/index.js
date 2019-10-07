@@ -123,7 +123,6 @@ function EventsListPage(props) {
           className="sm:pt-12 text-32 sm:text-40 font-300"
           color="inherit"
         >
-          {' '}
           YS 友站列表
         </Typography>
       </FuseAnimate>
@@ -132,7 +131,7 @@ function EventsListPage(props) {
           className="sm:py-12 text-20 sm:text-24 font-600 whitespace-wrap"
           color="inherit"
         >
-          來看看 Youth Salon 的 <span className="text-blue">大小事</span> 和{' '}
+          來看看 Youth Salon 的 <span className="text-blue">大小事</span> 和
           <span className="text-blue">最新消息</span> 吧！
         </Typography>
       </FuseAnimate>

@@ -161,7 +161,7 @@ function QueueTab() {
               )}
             >
               <Typography className="uppercase font-semibold tracking-wide whitespace-no-wrap text-lg leading-relaxed">
-                {moment(event.startDateTime).format('MM/DD hh:mm')} -{' '}
+                {moment(event.startDateTime).format('MM/DD hh:mm')} -
                 {moment(event.endDateTime).format('MM/DD hh:mm')}
               </Typography>
             </div>

@@ -54,7 +54,7 @@ function UserListMultiSelectMenu() {
               data={userListToCsvConverter(csvSource)}
               filename="會員列表.csv"
             >
-              匯出 CSV
+              匯出 會員名單
             </CsvDownload>
           </MenuItem>
         </MenuList>

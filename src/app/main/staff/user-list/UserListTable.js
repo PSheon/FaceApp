@@ -11,11 +11,11 @@ import { FuseUtils, FuseAnimate } from '@fuse';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTable from "react-table";
+
 import * as Actions from 'app/store/actions';
+import { socialLogoConverter, avatarNameToPathConverter } from 'app/utils';
 import UserListMultiSelectMenu from './UserListMultiSelectMenu';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
-
-import { socialLogoConverter, avatarNameToPathConverter } from 'app/utils';
 
 const useStyles = makeStyles(theme => ({
 	logoImgWrapper: {

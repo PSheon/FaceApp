@@ -276,7 +276,7 @@ function ImagesListHeader(props) {
               >
                 目前僅支援類型
                 <br />
-                <span className="text-blue">JPG、PNG</span> 和{' '}
+                <span className="text-blue">JPG、PNG</span> 和
                 <span className="text-blue">SVG</span> 的圖片
               </Typography>
             </FuseAnimate>

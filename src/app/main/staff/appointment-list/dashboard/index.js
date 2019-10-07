@@ -4,6 +4,7 @@ import { Badge, Tab, Tabs, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { FusePageSimple, FuseAnimate } from '@fuse';
 
+import { countingWaitingAppointmentLogs } from 'app/utils';
 import DashboardBreadcrumbs from 'app/main/shared/DashboardBreadcrumbs';
 import ConsultingAppointmentTab from './tabs/ConsultingAppointmentTab';
 import BorrowAppointmentTab from './tabs/BorrowAppointmentTab';
@@ -80,32 +81,21 @@ function BorrowDashboard(props) {
                 variant="h5"
                 color="inherit"
               >
-                未處理預約 ： 0
+                未處理預約 ：
+                {countingWaitingAppointmentLogs({
+                  CONSULTING_LOGS,
+                  BORROW_LOGS,
+                  GUIDE_LOGS
+                })}
               </Typography>
               <div className="flex justify-center items-center">
                 <Button
                   className="normal-case rounded-full mx-12"
                   variant="contained"
                   color="secondary"
-                  aria-label="YS 的開放空間"
-                >
-                  看看 YS 的開放空間
-                </Button>
-                <Button
-                  className="normal-case rounded-full mx-12"
-                  variant="contained"
-                  color="secondary"
-                  aria-label="YS 的開放空間"
-                >
-                  看看 YS 的開放空間
-                </Button>
-                <Button
-                  className="normal-case rounded-full mx-12"
-                  variant="contained"
-                  color="secondary"
                   aria-label="YS 的最新消息"
                 >
-                  看看 YS 的最新消息
+                  回到 最新消息
                 </Button>
               </div>
             </div>

@@ -168,11 +168,11 @@ function Applicants(props) {
         <div className="flex items-center justify-between px-16 h-64 border-b-1">
           <Typography className="text-16">報名名單</Typography>
           <div className="flex justify-center items-center">
-            <Typography className="text-11 font-500 rounded-4 text-white bg-red px-8 py-4 mx-4">
+            <Typography className="text-11 font-500 rounded-4 text-white bg-red px-8 py-4 mx-4 hidden md:block">
               {eventQueueingInfos &&
                 eventQueueingInfos['canceledCount'] + ' 人已取消'}
             </Typography>
-            <Typography className="text-11 font-500 rounded-4 text-white bg-orange px-8 py-4 mx-4">
+            <Typography className="text-11 font-500 rounded-4 text-white bg-orange px-8 py-4 mx-4 hidden md:block">
               {eventQueueingInfos &&
                 eventQueueingInfos['queueingCount'] + ' 人候補中'}
             </Typography>
@@ -200,7 +200,7 @@ function Applicants(props) {
                 textShadow: '0px 1px 0px #9b14b3'
               }}
             >
-              匯出名單
+              匯出 報名名單
             </CsvDownload>
           </div>
         </div>

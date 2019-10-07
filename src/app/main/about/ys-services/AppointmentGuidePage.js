@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   TextField,
   Typography,
@@ -10,6 +11,7 @@ import {
   MenuItem,
   Button
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import _ from '@lodash';
 import { withStyles } from '@material-ui/core/styles';
@@ -89,6 +91,7 @@ const useStyles = makeStyles(theme => ({
 function AppointmentGuidePage(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const USER = useSelector(({ auth }) => auth.user);
   const { form, handleChange, setForm } = useForm(defaultFormState);
 
   const [termState, setTermState] = useState(false);
@@ -120,7 +123,39 @@ function AppointmentGuidePage(props) {
   }
 
   function renderButton() {
-    if (!termState) {
+    if (USER.role.length === 0) {
+      return (
+        <Link role="button" to="/login">
+          <Button
+            variant="contained"
+            color="primary"
+            className="w-full rounded-full"
+            aria-label="登入"
+            value="legacy"
+          >
+            請先登入以借用空間
+          </Button>
+        </Link>
+      );
+    } else if (!USER.data.fullName || !USER.data.phone) {
+      return (
+        <Link
+          role="button"
+          to="/personal-settings/edit"
+          className="flex justify-center"
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            className="w-full md:w-200 rounded-full"
+            aria-label="填寫基本資訊"
+            value="legacy"
+          >
+            請先填寫您的基本資訊
+          </Button>
+        </Link>
+      );
+    } else if (!termState) {
       return (
         <Button
           variant="contained"

@@ -177,6 +177,24 @@ function SpacePage() {
               </Button>
             </Link>
           );
+        } else if (!USER.data.fullName || !USER.data.phone) {
+          return (
+            <Link
+              role="button"
+              to="/personal-settings/edit"
+              className="flex justify-center"
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                className="w-full md:w-200 rounded-full"
+                aria-label="填寫基本資訊"
+                value="legacy"
+              >
+                請先填寫您的基本資訊
+              </Button>
+            </Link>
+          );
         } else {
           return (
             <Link
@@ -200,7 +218,7 @@ function SpacePage() {
         return null;
       }
     },
-    [USER.role.length]
+    [USER.data.fullName, USER.data.phone, USER.role.length]
   );
 
   return (

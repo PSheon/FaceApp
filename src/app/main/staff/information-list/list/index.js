@@ -111,14 +111,14 @@ function InformationListPage(props) {
         pageNames={['內容管理', 'YS 情報列表']}
       />
       <div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-        <FuseAnimate>
+        {/* <FuseAnimate>
           <Typography
             className="sm:pt-24 text-32 sm:text-40 font-300"
             color="inherit"
           >
             YS 情報列表
           </Typography>
-        </FuseAnimate>
+        </FuseAnimate> */}
         <FuseAnimate>
           <Typography
             className="mt-12 sm:mt-16 sm:py-12 text-20 sm:text-24 font-600 text-center"
@@ -182,7 +182,7 @@ function InformationListPage(props) {
                     )}
                   >
                     <Typography className="uppercase font-semibold tracking-wide whitespace-no-wrap text-lg leading-relaxed">
-                      {moment(item.updatedAt).format('LL')} -{' '}
+                      {moment(item.updatedAt).format('LL')} -
                       {item.published ? '已發佈' : '未發佈'}
                     </Typography>
                   </div>

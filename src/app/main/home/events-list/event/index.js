@@ -254,8 +254,8 @@ function Event(props) {
                       <Typography className="flex items-center font-semibold">
                         {moment(eventDetail.startDateTime).format(
                           'MM/DD (dddd) HH:mm a'
-                        )}{' '}
-                        -{' '}
+                        )}
+                        -
                         {moment(eventDetail.endDateTime).format(
                           'MM/DD (dddd) HH:mm a'
                         )}

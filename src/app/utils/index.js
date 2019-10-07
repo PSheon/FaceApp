@@ -7,6 +7,7 @@ export * from './reduceState';
 export * from './stockChart';
 export * from './statisticChart';
 export * from './adminDashboard';
+export * from './borrowDashboard';
 
 export const exchangesExtractor = (
   EXCHANGES,

@@ -13,11 +13,12 @@ import { useTheme } from '@material-ui/styles';
 
 import LoadingSpinnerOverlay from 'app/main/shared/LoadingSpinnerOverlay';
 
-const labels = ['國中', '高中', '大專', '大學', '研究所', '未提供'];
+/* 學生 > 在職中 > 創業中 > 待業中 > 未提供 */
+const labels = ['學生', '在職中', '創業中', '待業中', '未提供'];
 const DEFAULT_EMPLOYMENT_STATUS_DATASETS = {
   verified: [
     {
-      data: [50, 50, 50, 50, 50, 50, 50]
+      data: [50, 50, 50, 50, 50]
     }
   ]
 };
@@ -98,7 +99,7 @@ function WidgetEmploymentStatusChart() {
             </div>
 
             <div className="p-16 flex flex-row items-center justify-center">
-              {labels.slice(0, 5).map((label, index) => (
+              {labels.slice(0, 4).map((label, index) => (
                 <div key={label} className="px-16 flex flex-col items-center">
                   <Typography className="h4" color="textSecondary">
                     {label}

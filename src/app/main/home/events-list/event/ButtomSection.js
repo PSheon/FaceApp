@@ -216,9 +216,9 @@ function ButtomSection(props) {
             </div>
             <div>
               <Typography variant="caption">
-                還有{' '}
+                還有
                 {eventDetail.maximumOfApplicants -
-                  eventQueueingInfos['succeededCount']}{' '}
+                  eventQueueingInfos['succeededCount']}
                 個名額
               </Typography>
             </div>
@@ -312,9 +312,9 @@ function ButtomSection(props) {
             </div>
             <div>
               <Typography variant="caption">
-                還有{' '}
+                還有
                 {eventDetail.maximumOfApplicants -
-                  eventQueueingInfos['succeededCount']}{' '}
+                  eventQueueingInfos['succeededCount']}
                 個名額
               </Typography>
             </div>

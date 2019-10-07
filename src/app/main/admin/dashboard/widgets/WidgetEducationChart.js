@@ -106,7 +106,7 @@ function WidgetEducationChart() {
                     {label}
                   </Typography>
                   <Typography className="h2 font-300 py-8">
-                    {chartDatasets[datasetId][0].data[index]}
+                    {chartDatasets[datasetId][0].data[index + 1]}
                   </Typography>
                 </div>
               ))}

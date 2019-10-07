@@ -1,5 +1,12 @@
 import React from 'react';
-import { IconButton, Icon, Input, Paper, Typography } from '@material-ui/core';
+import {
+  IconButton,
+  Icon,
+  Input,
+  Tooltip,
+  Paper,
+  Typography
+} from '@material-ui/core';
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined';
 import { ThemeProvider } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
@@ -8,16 +15,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from 'app/store/actions';
 import DashboardBreadcrumbs from 'app/main/shared/DashboardBreadcrumbs';
 
-function UserListHeader(props) {
+function UserListHeader() {
   const dispatch = useDispatch();
   const searchText = useSelector(({ userList }) => userList.searchText);
   const totalUsers = useSelector(({ userList }) => userList.totalUsers);
   const mainTheme = useSelector(({ fuse }) => fuse.settings.mainTheme);
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 p-8 sm:p-12">
       <DashboardBreadcrumbs pageNames={['會員列表']} />
-      <div className="flex flex-1 items-center justify-between p-8 sm:p-24">
+      <div className="flex flex-1 items-center justify-between p-0 sm:p-24">
         <div className="flex flex-col flex-shrink items-center sm:w-224 justify-center xs:justify-end">
           <FuseAnimate animation="transition.slideLeftIn" delay={300}>
             <Typography variant="h6" className="hidden sm:flex">
@@ -49,15 +56,17 @@ function UserListHeader(props) {
                   onChange={ev => dispatch(Actions.setSearchText(ev))}
                 />
 
-                <IconButton
-                  key="FilterList"
-                  aria-label="FilterList"
-                  color="inherit"
-                  className="p-0"
-                  // onClick={() => dispatch(Actions.hideMessage())}
-                >
-                  <FilterListOutlinedIcon color="action" />
-                </IconButton>
+                <Tooltip title="依條件篩選" placement="top">
+                  <IconButton
+                    key="FilterList"
+                    aria-label="FilterList"
+                    color="inherit"
+                    className="p-0"
+                    onClick={() => dispatch(Actions.toggleFilterPanel())}
+                  >
+                    <FilterListOutlinedIcon color="action" />
+                  </IconButton>
+                </Tooltip>
               </Paper>
             </FuseAnimate>
           </ThemeProvider>
