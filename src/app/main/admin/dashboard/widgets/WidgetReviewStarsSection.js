@@ -18,7 +18,7 @@ function WidgetReviewStarsSection() {
     }
   }, [isInitialized, isStarsLoading]);
 
-  if (!isInitialized && isStarsLoading) {
+  if (!isInitialized || isStarsLoading) {
     return (
       <div className="flex justify-center items-center w-full h-full">
         <LoadingSpinner width="128" height="128" />

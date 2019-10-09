@@ -75,8 +75,7 @@ const useStyles = makeStyles(theme => ({
     '& .rbc-header.rbc-today, & .rbc-month-view .rbc-day-bg.rbc-today': {
       height: '100%',
       // borderBottom: '2px solid ' + theme.palette.secondary.main + '!important'
-      borderTop: '2px solid ' + theme.palette.secondary.main + '!important',
-      borderBottom: '2px solid ' + theme.palette.secondary.main + '!important'
+      borderTop: '5px solid ' + theme.palette.secondary.main + '!important'
     },
     '& .rbc-month-view, & .rbc-time-view, & .rbc-agenda-view': {
       padding: 24,
@@ -232,12 +231,14 @@ function AppointmentConsultingPage(props) {
   const { form, handleChange, setForm } = useForm(defaultFormState);
 
   const [termState, setTermState] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const firstValidAppointmentDate = moment().add(3, 'days');
   const [selecredDate, setSelectedDate] = useState(firstValidAppointmentDate);
 
   useEffect(() => {
     if (!consultingLogs.length && !isSyncingAppointmentLogs) {
+      setIsInitialized(true);
       dispatch(Actions.syncPublicConsultingLogs());
     }
     // eslint-disable-next-line
@@ -400,44 +401,46 @@ function AppointmentConsultingPage(props) {
     }
   }
 
-  return !consultingLogs || isSyncingAppointmentLogs ? (
-    <div className="flex justify-center items-center w-full h-full">
-      <LoadingSpinner width={128} height={128} />
-    </div>
-  ) : (
+  return (
     <div className={clsx(classes.root, 'flex flex-col flex-auto relative')}>
       <div ref={headerEl} />
-      <Calendar
-        className="flex flex-1 container"
-        selectable
-        localizer={localizer}
-        events={consultingLogsConverter(consultingLogs)}
-        defaultView={Views.MONTH}
-        defaultDate={firstValidAppointmentDate.toDate()}
-        startAccessor="start"
-        endAccessor="end"
-        views={['month', 'week', 'day', 'agenda']}
-        step={60}
-        eventPropGetter={eventStyleGetter}
-        showMultiDayTimes
-        components={{
-          toolbar: props => {
-            return headerEl.current
-              ? ReactDOM.createPortal(
-                  <ConsultingPageHeader {...props} />,
-                  headerEl.current
-                )
-              : null;
-          },
-          dateCellWrapper: DateCell
-        }}
-        onSelectSlot={handleDateSelected}
-      />
+      {!isInitialized || isSyncingAppointmentLogs ? (
+        <div className="flex justify-center items-center w-full h-full">
+          <LoadingSpinner width={128} height={128} />
+        </div>
+      ) : (
+        <Calendar
+          className="flex flex-1 container"
+          selectable
+          localizer={localizer}
+          events={consultingLogsConverter(consultingLogs)}
+          defaultView={Views.MONTH}
+          defaultDate={firstValidAppointmentDate.toDate()}
+          startAccessor="start"
+          endAccessor="end"
+          views={['month', 'week', 'day', 'agenda']}
+          step={60}
+          eventPropGetter={eventStyleGetter}
+          showMultiDayTimes
+          components={{
+            toolbar: props => {
+              return headerEl.current
+                ? ReactDOM.createPortal(
+                    <ConsultingPageHeader {...props} />,
+                    headerEl.current
+                  )
+                : null;
+            },
+            dateCellWrapper: DateCell
+          }}
+          onSelectSlot={handleDateSelected}
+        />
+      )}
       <div className="flex flex-col flex-1 flex-shrink-0 max-w-xl w-full mx-auto px-16 sm:px-24 py-24 sm:py-32">
         <CssTextField
           className="mt-8 mb-16"
           required
-          label="諮詢日期"
+          label="預約諮詢日期"
           id="consultingDate"
           name="consultingDate"
           value={moment(form.consultingDate).format('LL')}
@@ -623,6 +626,232 @@ function AppointmentConsultingPage(props) {
       </div>
     </div>
   );
+  // return !consultingLogs || isSyncingAppointmentLogs ? (
+  //   <div className="flex justify-center items-center w-full h-full">
+  //     <LoadingSpinner width={128} height={128} />
+  //   </div>
+  // ) : (
+  //   <div className={clsx(classes.root, 'flex flex-col flex-auto relative')}>
+  //     <LoadingSpinnerOverlay />
+  //     <div ref={headerEl} />
+  //     {console.log('headerEl.current, ', headerEl.current)}
+  //     <Calendar
+  //       className="flex flex-1 container"
+  //       selectable
+  //       localizer={localizer}
+  //       events={consultingLogsConverter(consultingLogs)}
+  //       defaultView={Views.MONTH}
+  //       defaultDate={firstValidAppointmentDate.toDate()}
+  //       startAccessor="start"
+  //       endAccessor="end"
+  //       views={['month', 'week', 'day', 'agenda']}
+  //       step={60}
+  //       eventPropGetter={eventStyleGetter}
+  //       showMultiDayTimes
+  //       components={{
+  //         toolbar: props => {
+  //           console.log('props, ', props);
+  //           return headerEl.current
+  //             ? ReactDOM.createPortal(
+  //                 <ConsultingPageHeader {...props} />,
+  //                 headerEl.current
+  //               )
+  //             : null;
+  //         },
+  //         dateCellWrapper: DateCell
+  //       }}
+  //       onSelectSlot={handleDateSelected}
+  //     />
+  //     <div className="flex flex-col flex-1 flex-shrink-0 max-w-xl w-full mx-auto px-16 sm:px-24 py-24 sm:py-32">
+  //       <CssTextField
+  //         className="mt-8 mb-16"
+  //         required
+  //         label="諮詢日期"
+  //         id="consultingDate"
+  //         name="consultingDate"
+  //         value={moment(form.consultingDate).format('LL')}
+  //         variant="outlined"
+  //         InputProps={{
+  //           endAdornment: (
+  //             <InputAdornment position="end">
+  //               <Icon className="text-20" color="action">
+  //                 account_box
+  //               </Icon>
+  //             </InputAdornment>
+  //           )
+  //         }}
+  //         fullWidth
+  //       />
+
+  //       <CssTextField
+  //         select
+  //         required
+  //         className="mt-8 mb-16"
+  //         label="預約時段"
+  //         id="consultingTimeSlot"
+  //         name="consultingTimeSlot"
+  //         value={form.consultingTimeSlot}
+  //         onChange={handleChange}
+  //         variant="outlined"
+  //         SelectProps={{
+  //           IconComponent: Icon
+  //         }}
+  //         InputProps={{
+  //           endAdornment: (
+  //             <InputAdornment position="end">
+  //               <Icon className="text-20" color="action">
+  //                 location_on
+  //               </Icon>
+  //             </InputAdornment>
+  //           )
+  //         }}
+  //         fullWidth
+  //       >
+  //         <MenuItem className="rounded-full" value="10:00-11:00">
+  //           上午(10:00-11:00)
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="11:00-12:00">
+  //           上午(11:00-12:00)
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="14:00-15:00">
+  //           下午(14:00-15:00)
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="15:00-16:00">
+  //           下午(15:00-16:00)
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="16:00-17:00">
+  //           下午(16:00-17:00)
+  //         </MenuItem>
+  //       </CssTextField>
+
+  //       <CssTextField
+  //         select
+  //         required
+  //         className="mt-8 mb-16"
+  //         label="諮詢主題"
+  //         id="consultingTopic"
+  //         name="consultingTopic"
+  //         value={form.consultingTopic}
+  //         onChange={handleChange}
+  //         variant="outlined"
+  //         SelectProps={{
+  //           IconComponent: Icon
+  //         }}
+  //         InputProps={{
+  //           endAdornment: (
+  //             <InputAdornment position="end">
+  //               <Icon className="text-20" color="action">
+  //                 location_on
+  //               </Icon>
+  //             </InputAdornment>
+  //           )
+  //         }}
+  //         fullWidth
+  //       >
+  //         <MenuItem className="rounded-full" value="自我認識">
+  //           自我認識
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="職涯方向探索">
+  //           職涯方向探索
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="職涯目標擬定">
+  //           職涯目標擬定
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="個人優勢分析">
+  //           個人優勢分析
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="擬定職涯計畫">
+  //           擬定職涯計畫
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="職能盤點/履歷健診">
+  //           職能盤點/履歷健診
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="面試演練">
+  //           面試演練
+  //         </MenuItem>
+  //         <MenuItem className="rounded-full" value="其他">
+  //           其他
+  //         </MenuItem>
+  //       </CssTextField>
+
+  //       <CssTextField
+  //         className="mt-8 mb-16"
+  //         multiline
+  //         rows={5}
+  //         required
+  //         label="諮詢意圖"
+  //         id="consultingIntention"
+  //         name="consultingIntention"
+  //         value={form.consultingIntention}
+  //         onChange={handleChange}
+  //         variant="outlined"
+  //         InputProps={{
+  //           endAdornment: (
+  //             <InputAdornment position="end">
+  //               <Icon className="text-20" color="action">
+  //                 account_box
+  //               </Icon>
+  //             </InputAdornment>
+  //           )
+  //         }}
+  //         fullWidth
+  //       />
+
+  //       <CssTextField
+  //         className="mt-8 mb-16"
+  //         multiline
+  //         rows={5}
+  //         required
+  //         label="期待諮詢的結果為？"
+  //         id="consultingexpectation"
+  //         name="consultingexpectation"
+  //         value={form.consultingexpectation}
+  //         onChange={handleChange}
+  //         variant="outlined"
+  //         InputProps={{
+  //           endAdornment: (
+  //             <InputAdornment position="end">
+  //               <Icon className="text-20" color="action">
+  //                 account_box
+  //               </Icon>
+  //             </InputAdornment>
+  //           )
+  //         }}
+  //         fullWidth
+  //       />
+
+  //       <div className="w-full flex flex-col justify-center my-4">
+  //         <p>您對未來感到茫然，不知道什麼職業適合自己？</p>
+  //         <p>升學或就業不知道該如何做選擇？</p>
+  //         <p>希望有人指點履歷和面試等求職技巧？</p>
+  //         <p>
+  //           1. 本服務係以 15 - 29
+  //           歲之青年為優先。【為尊重隱私，請以本人親自預約】
+  //         </p>
+  //         <p>2. 為尊重專業，預約諮詢以主要諮詢需求為主，恕無法指定諮詢師唷！</p>
+  //         <p>
+  //           3.
+  //           預約完個別諮詢的等待過程中，如有YS的未接來電，07-2313232，請務必記得回撥！以免錯失個別諮詢之機會~
+  //         </p>
+
+  //         <FormControl className="items-center">
+  //           <FormControlLabel
+  //             control={
+  //               <Checkbox
+  //                 name="acceptTermsConditions"
+  //                 checked={termState}
+  //                 onChange={() => setTermState(!termState)}
+  //               />
+  //             }
+  //             label="我已閱讀並同意遵守相關規範"
+  //           />
+  //         </FormControl>
+
+  //         {renderButton()}
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default AppointmentConsultingPage;

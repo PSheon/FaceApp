@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export * from './converter';
+export * from './exporter';
 export * from './event';
 export * from './appointment';
 export * from './reduceState';

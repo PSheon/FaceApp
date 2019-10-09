@@ -3,8 +3,14 @@ import { useSelector } from 'react-redux';
 import { Badge, Tab, Tabs, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { FusePageSimple, FuseAnimate } from '@fuse';
+import CsvDownload from 'react-json-to-csv';
 
-import { countingWaitingAppointmentLogs } from 'app/utils';
+import {
+  countingWaitingAppointmentLogs,
+  consultingAppointmentListToCsvConverter,
+  borrowAppointmentListToCsvConverter,
+  guideAppointmentListToCsvConverter
+} from 'app/utils';
 import DashboardBreadcrumbs from 'app/main/shared/DashboardBreadcrumbs';
 import ConsultingAppointmentTab from './tabs/ConsultingAppointmentTab';
 import BorrowAppointmentTab from './tabs/BorrowAppointmentTab';
@@ -56,7 +62,71 @@ function BorrowDashboard(props) {
   function handleTabChange(event, value) {
     setSelectedTab(value);
   }
-
+  function renderExportButton() {
+    switch (selectedTab) {
+      case 1:
+        return (
+          <CsvDownload
+            data={borrowAppointmentListToCsvConverter(BORROW_LOGS.docs)}
+            filename="YS-空間借用名單.csv"
+            style={{
+              backgroundColor: '#FF994C',
+              borderRadius: '40px',
+              display: 'inline-block',
+              cursor: 'pointer',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              padding: '8px 24px',
+              textDecoration: 'none'
+            }}
+          >
+            匯出 空間借用名單
+          </CsvDownload>
+        );
+      case 2:
+        return (
+          <CsvDownload
+            data={guideAppointmentListToCsvConverter(GUIDE_LOGS.docs)}
+            filename="YS-預約導覽名單.csv"
+            style={{
+              backgroundColor: '#FF994C',
+              borderRadius: '40px',
+              display: 'inline-block',
+              cursor: 'pointer',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              padding: '8px 24px',
+              textDecoration: 'none'
+            }}
+          >
+            匯出 預約導覽名單
+          </CsvDownload>
+        );
+      case 0:
+      default:
+        return (
+          <CsvDownload
+            data={consultingAppointmentListToCsvConverter(CONSULTING_LOGS.docs)}
+            filename="YS-預約諮詢名單.csv"
+            style={{
+              backgroundColor: '#FF994C',
+              borderRadius: '40px',
+              display: 'inline-block',
+              cursor: 'pointer',
+              color: '#ffffff',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              padding: '8px 24px',
+              textDecoration: 'none'
+            }}
+          >
+            匯出 預約諮詢名單
+          </CsvDownload>
+        );
+    }
+  }
   return (
     <FusePageSimple
       classes={{
@@ -97,6 +167,7 @@ function BorrowDashboard(props) {
                 >
                   回到 最新消息
                 </Button>
+                {renderExportButton()}
               </div>
             </div>
           </div>

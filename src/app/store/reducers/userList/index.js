@@ -119,19 +119,30 @@ const userListReducer = function(state = initialState, action) {
         }
       };
     }
-    case Actions.UPDATE_USER_PERMISSION: {
-      const { userId, role } = action.payload;
-
+    case Actions.UPDATE_USER_ACTIVE: {
+      const { userId, activeAction } = action.payload;
       const newdocs = state.docs.map(user => {
         if (user._id === userId) {
           return {
             ...user,
-            role
+            active: activeAction
           };
         } else {
           return user;
         }
       });
+
+      return {
+        ...state,
+        loading: false,
+        docs: newdocs
+      };
+    }
+    case Actions.UPDATE_USER_PERMISSION: {
+      // eslint-disable-next-line
+      const { userId, role } = action.payload;
+      const newdocs = state.docs.filter(user => user._id !== userId);
+
       return {
         ...state,
         loading: false,

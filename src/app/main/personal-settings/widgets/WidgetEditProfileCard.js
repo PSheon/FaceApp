@@ -35,6 +35,7 @@ import {
 } from '../suggestions';
 import * as Actions from 'app/auth/store/actions';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
+import SchoolNameSelector from './SchoolNameSelector';
 
 const CssTextField = withStyles({
   root: {
@@ -99,8 +100,10 @@ function WidgetEditProfileCard(props) {
 
   const [isLoading, setIsLoading] = useState(false);
   const { form, handleChange, setForm } = useForm(null);
-  const [userBob, setUserBob] = useState('1995-08-23');
-  const [userFirstYearOfCareer, setUserFirstYearOfCareer] = useState('2003-06');
+  const [userBob, setUserBob] = useState(moment('1995-08-23'));
+  const [userFirstYearOfCareer, setUserFirstYearOfCareer] = useState(
+    moment('2003-06')
+  );
 
   useEffect(() => {
     if (!form) {
@@ -158,6 +161,9 @@ function WidgetEditProfileCard(props) {
   }
   function handleFirstYearOfCareerDateChange(date) {
     setForm(form => _.setIn({ ...form }, 'firstYearOfCareer', date));
+  }
+  function handleSchoolChange(schoolName) {
+    setForm(form => _.setIn({ ...form }, 'schoolName', schoolName));
   }
   function handleUpdateProfile() {
     setIsLoading(true);
@@ -335,7 +341,13 @@ function WidgetEditProfileCard(props) {
                   </RadioGroup>
                 </FormControl>
 
-                <CssTextField
+                {/* NOTE */}
+                <SchoolNameSelector
+                  schoolName={form.schoolName}
+                  handleSchoolChange={handleSchoolChange}
+                />
+
+                {/* <CssTextField
                   className="mt-8 mb-16"
                   label="學校名稱"
                   id="schoolName"
@@ -353,7 +365,7 @@ function WidgetEditProfileCard(props) {
                     )
                   }}
                   fullWidth
-                />
+                /> */}
 
                 {/* <CssTextField
                     className="mt-8 mb-16"
@@ -614,7 +626,7 @@ function WidgetEditProfileCard(props) {
 
                 <CssTextField
                   className="mt-8 mb-16"
-                  label="詳細地址"
+                  label="詳細地址(希望收到YS紙本DM可填寫)"
                   placeholder="居住地於高雄地區希望收到YS紙本DM之會員，歡迎填寫居住地址"
                   id="postAddress"
                   name="postAddress"

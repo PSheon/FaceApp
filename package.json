@@ -97,7 +97,7 @@
     "webpack-bundle-analyzer": "3.4.1"
   },
   "scripts": {
-    "deploy": "pm2 start server.js --name FRONT-END --env -i 2",
+    "deploy": "pm2 start server.js --name FRONT-END --env production -i 2",
     "start": "yarn run tailwind && PORT=8080 react-app-rewired start",
     "build": "yarn run tailwind && node ./purge-tailwindcss.js && cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-app-rewired build",
     "tailwind": "./node_modules/.bin/tailwind build ./src/styles/tailwind.base.css -c ./tailwind.js -o ./src/styles/tailwind.css",

@@ -21,7 +21,7 @@ import { FuseAnimate } from '@fuse';
 import { makeStyles } from '@material-ui/styles';
 
 import * as Actions from 'app/store/actions';
-import { avatarNameToPathConverter, eventLogToCsvConverter } from 'app/utils';
+import { avatarNameToPathConverter, eventLogToCsvExporter } from 'app/utils';
 import LoadingSpinner from 'app/main/shared/LoadingSpinner';
 import LoadingSpinnerOverlay from 'app/main/shared/LoadingSpinnerOverlay';
 
@@ -181,7 +181,7 @@ function Applicants(props) {
                 eventQueueingInfos['succeededCount'] + ' 人已報名'}
             </Typography>
             <CsvDownload
-              data={eventLogToCsvConverter(eventLogs)}
+              data={eventLogToCsvExporter(eventLogs)}
               filename={`${EVENT_DETAIL.title}.csv`}
               style={{
                 boxShadow: 'inset 0px 1px 0px 0px #e184f3',

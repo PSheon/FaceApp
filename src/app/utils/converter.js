@@ -1,48 +1,4 @@
-import moment from 'moment';
-
 import { AUTH_REST_BASE_END_POINT } from 'app/fuse-configs/envsConfig';
-
-export const userListToCsvConverter = originalJson =>
-  originalJson.map(userDetail => ({
-    會員編號: userDetail['_id'],
-    顯示名稱: userDetail['displayName'],
-    全名: userDetail['fullName'] || '未填寫',
-    性別: userDetail['gender']
-      ? genderConverter(userDetail['gender'])
-      : '未填寫',
-    生日: userDetail['bob']
-      ? moment(userDetail['bob']).format('YYYY-MM-DD')
-      : '未填寫',
-    信箱: userDetail['email'],
-    電話: userDetail['phone'] || '未填寫',
-    居住地: userDetail['city'] || '未填寫',
-    地址: userDetail['postAddress'] || '未填寫',
-
-    '連結 Google 帳號': userDetail['google']
-      ? userDetail.google['displayName']
-      : '未綁定',
-    '連結 Facebook 帳號': userDetail['facebook']
-      ? userDetail.facebook['displayName']
-      : '未綁定',
-
-    教育程度: userDetail['education']
-      ? educationConverter(userDetail['education'])
-      : '未填寫',
-    學校名稱: userDetail['schoolName'] || '未填寫',
-    科系類別: userDetail['departmentName']
-      ? departmentNameConverter(userDetail['departmentName'])
-      : '未填寫',
-    身分狀態: userDetail['employmentStatus']
-      ? statusConverter(userDetail['employmentStatus'])
-      : '未填寫',
-
-    任職企業: userDetail['companyName'] || '未填寫',
-    任職部門: userDetail['serviceDepartment'] || '未填寫',
-    職稱: userDetail['jobTitle'] || '未填寫',
-
-    啟用狀態: userDetail['active'] ? '啟用中' : '未啟用',
-    身分驗證: userDetail['verified'] ? '通過' : '未通過'
-  }));
 
 export const exchangeIconConverter = exchange => {
   switch (exchange) {

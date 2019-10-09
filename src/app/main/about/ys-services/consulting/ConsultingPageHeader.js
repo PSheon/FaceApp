@@ -139,7 +139,9 @@ class ConsultingPageHeader extends Toolbar {
           className={clsx(
             classes.root,
             'flex h-200 min-h-200 relative',
-            moment(date).format('MMM')
+            moment(date)
+              .locale('en')
+              .format('MMM')
           )}
         >
           <div className="flex flex-1 flex-col p-12 justify-between z-10 container">
@@ -174,13 +176,13 @@ class ConsultingPageHeader extends Toolbar {
                 {moment(date)
                   .add(3, 'days')
                   .isSame(new Date(), 'month') ? (
-                  <IconButton aria-label="上個月" disabled>
+                  <IconButton aria-label="上一頁" disabled>
                     <Icon>chevron_left</Icon>
                   </IconButton>
                 ) : (
-                  <Tooltip title="上個月">
+                  <Tooltip title="上一頁" placement="top">
                     <IconButton
-                      aria-label="上個月"
+                      aria-label="上一頁"
                       onClick={this.navigate.bind(null, navigate.PREVIOUS)}
                     >
                       <Icon>chevron_left</Icon>
@@ -191,16 +193,16 @@ class ConsultingPageHeader extends Toolbar {
                 {moment(date)
                   .add(3, 'days')
                   .diff(new Date(), 'weeks') < 8 ? (
-                  <Tooltip title="下個月">
+                  <Tooltip title="下一頁" placement="top">
                     <IconButton
-                      aria-label="下個月"
+                      aria-label="下一頁"
                       onClick={this.navigate.bind(null, navigate.NEXT)}
                     >
                       <Icon>chevron_right</Icon>
                     </IconButton>
                   </Tooltip>
                 ) : (
-                  <IconButton aria-label="下個月" disabled>
+                  <IconButton aria-label="下一頁" disabled>
                     <Icon>chevron_right</Icon>
                   </IconButton>
                 )}

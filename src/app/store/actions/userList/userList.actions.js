@@ -117,8 +117,6 @@ export function closeUserInfoDialog() {
 
 export function updateUserPermission({ userId, email, role }) {
   return (dispatch, getState) => {
-    const { routeParams } = getState().userList;
-
     const request = axios.patch(
       `${AUTH_REST_BASE_END_POINT}/api/user/permission/${userId}`,
       {
@@ -130,23 +128,29 @@ export function updateUserPermission({ userId, email, role }) {
     dispatch({ type: SET_USER_LIST_LOADING });
 
     return request.then(response =>
-      Promise.all([
-        dispatch({
-          type: UPDATE_USER_PERMISSION,
-          payload: {
-            userId,
-            role
-          }
-        })
-      ]).then(() => dispatch(getUserList(routeParams)))
+      /* NOTE */
+      // Promise.all([
+      //   dispatch({
+      //     type: UPDATE_USER_PERMISSION,
+      //     payload: {
+      //       userId,
+      //       role
+      //     }
+      //   })
+      // ]).then(() => dispatch(getUserList(routeParams)))
+      dispatch({
+        type: UPDATE_USER_PERMISSION,
+        payload: {
+          userId,
+          role
+        }
+      })
     );
   };
 }
 
 export function toggleUserActivation({ userId, email, active }) {
   return (dispatch, getState) => {
-    const { routeParams } = getState().userList;
-
     const request = axios.patch(
       `${AUTH_REST_BASE_END_POINT}/api/user/activation/${userId}`,
       {
@@ -157,16 +161,27 @@ export function toggleUserActivation({ userId, email, active }) {
 
     dispatch({ type: SET_USER_LIST_LOADING });
 
-    return request.then(response =>
-      Promise.all([
-        dispatch({
-          type: UPDATE_USER_ACTIVE
-        }),
-        dispatch({
-          type: Actions.CLOSE_DIALOG
-        })
-      ]).then(() => dispatch(getUserList(routeParams)))
-    );
+    return request.then(response => {
+      /* NOTE */
+      // Promise.all([
+      //   dispatch({
+      //     type: UPDATE_USER_ACTIVE
+      //   }),
+      //   dispatch({
+      //     type: Actions.CLOSE_DIALOG
+      //   })
+      // ]).then(() => dispatch(getUserList(routeParams)))
+      dispatch({
+        type: UPDATE_USER_ACTIVE,
+        payload: {
+          userId,
+          activeAction: active
+        }
+      });
+      dispatch({
+        type: Actions.CLOSE_DIALOG
+      });
+    });
   };
 }
 
@@ -182,9 +197,6 @@ export function deactiveUsers(userIds) {
 
     return request.then(response =>
       Promise.all([
-        dispatch({
-          type: DESELECT_ALL_USERS
-        }),
         dispatch({
           type: DESELECT_ALL_USERS
         })

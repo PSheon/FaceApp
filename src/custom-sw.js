@@ -47,7 +47,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  new RegExp('https://stage.ys.nat.gov.tw/api/'),
+  new RegExp('https://stage.ys.nat.gov.tw/api/(stastic|avatar)'),
   workbox.strategies.staleWhileRevalidate({
     cacheName: 'poc-cache-api',
     cacheExpiration: {
