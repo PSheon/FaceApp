@@ -101,7 +101,7 @@ function FaqPage() {
 	}
 
 	return (
-		<div className="w-full flex flex-col flex-auto">
+		<div className="flex flex-col flex-auto flex-shrink-0 w-full">
 
 			<div className={clsx(classes.header, "flex flex-col flex-shrink-0 items-center justify-center text-center p-16 sm:p-24 h-200 sm:h-360")}>
 

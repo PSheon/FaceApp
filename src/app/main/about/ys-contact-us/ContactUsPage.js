@@ -34,7 +34,7 @@ function ContactUsPage() {
 	const classes = useStyles();
 
 	return (
-		<div className="w-full flex flex-col flex-auto">
+		<div className="flex flex-col flex-auto flex-shrink-0 w-full">
 
 			<FuseAnimate animation="transition.slideUpIn" duration={400} delay={100}>
 				<div className={clsx(classes.header, "h-200 sm:h-360")}>

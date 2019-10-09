@@ -209,7 +209,7 @@ function AppointmentGuidePage(props) {
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils} locale="zh-tw">
-      <div className="w-full flex flex-col flex-auto">
+      <div className="flex flex-col flex-auto flex-shrink-0 w-full">
         <div
           className={clsx(
             classes.header,
