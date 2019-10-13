@@ -1,22 +1,22 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d83363e547fae09dc324fa9e25cad206",
+    "revision": "0c60390247ce851da739838e9836281c",
     "url": "/FaceApp/index.html"
   },
   {
-    "url": "/FaceApp/precache-manifest.a3ec682f29e262183a23c5b893baea9b.js"
+    "url": "/FaceApp/precache-manifest.72900f0a09908dfcf26708b5b4850191.js"
   },
   {
-    "revision": "37186bdacd17d9b94d7bfea3ce95e4e0",
+    "revision": "2972602c50d162dcc1d7887b50884c21",
     "url": "/FaceApp/service-worker.js"
   },
   {
-    "revision": "4c6da06e55932455d627",
+    "revision": "cf4ea6af4c877a0128c8",
     "url": "/FaceApp/static/css/3.91537527.chunk.css"
   },
   {
-    "revision": "d677bf7d85e3561e09b4",
-    "url": "/FaceApp/static/css/main.e0c5b5f2.chunk.css"
+    "revision": "c46c2f8e5484152b4320",
+    "url": "/FaceApp/static/css/main.a7d7cfbc.chunk.css"
   },
   {
     "revision": "9e8fbec5999dfa5e834b",
@@ -27,16 +27,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/10.d8215023.chunk.js"
   },
   {
-    "revision": "4c6da06e55932455d627",
-    "url": "/FaceApp/static/js/3.11555f85.chunk.js"
+    "revision": "cf4ea6af4c877a0128c8",
+    "url": "/FaceApp/static/js/3.c23c7e3d.chunk.js"
   },
   {
     "revision": "3f2c60d12daef325e8fe",
     "url": "/FaceApp/static/js/4.c03242dd.chunk.js"
   },
   {
-    "revision": "09237a7c024969e0c29c",
-    "url": "/FaceApp/static/js/5.fa9b63e0.chunk.js"
+    "revision": "9936f1bcace91d54a14f",
+    "url": "/FaceApp/static/js/5.2f3adc16.chunk.js"
   },
   {
     "revision": "87c904a905bd6d85031d",
@@ -55,12 +55,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/9.6c3eaa7a.chunk.js"
   },
   {
-    "revision": "d677bf7d85e3561e09b4",
+    "revision": "c46c2f8e5484152b4320",
     "url": "/FaceApp/static/js/main.a24f1772.chunk.js"
   },
   {
-    "revision": "6cb1f35c45360869758a",
-    "url": "/FaceApp/static/js/runtime~main.0a5d3857.js"
+    "revision": "8741404c12a9e5494335",
+    "url": "/FaceApp/static/js/runtime~main.35478e05.js"
   },
   {
     "revision": "1dfc66c75d0bc90cfbffb5076a7c6f90",
