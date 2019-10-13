@@ -91,7 +91,7 @@ function TestPage() {
       let _X = detection.box._x;
       let _Y = detection.box._y;
       return (
-        <div key={i}>
+        <div key={i} className="absolute top-0 left-0">
           {!!match && !!match[i] ? (
             <Typography
               variant="subtitle1"
@@ -186,48 +186,40 @@ function TestPage() {
     }
   }, 1000);
   return (
-    <div className="Camera flex flex-col justify-center items-center">
-      <div
-        style={{
-          width: WIDTH,
-          height: HEIGHT
-        }}
-      >
-        <div className="relative" style={{ width: WIDTH, height: HEIGHT }}>
-          {isModelLoading && (
-            <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10">
-              <Typography variant="h6" className="text-gray-600">
-                載入模型中
-              </Typography>
-              <LoadingSpinner width="128" height="128" />
-            </div>
-          )}
-          {!!videoConstraints ? (
-            <div className="absolute">
-              {faceFound ? null : (
-                <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10 bottom-0">
-                  <Typography
-                    variant="h6"
-                    className="text-white flex justify-center"
-                  >
-                    <span>比對臉孔 </span>
-                    <LoadingSpinner width={32} height={32} />
-                  </Typography>
-                </div>
-              )}
-              <Webcam
-                audio={false}
-                width={WIDTH}
-                height={HEIGHT}
-                ref={webcam}
-                screenshotFormat="image/jpeg"
-                videoConstraints={videoConstraints}
-              />
-            </div>
-          ) : null}
-          {!!drawBox ? drawBox : null}
+    <div
+      className="Camera flex flex-col justify-center items-center"
+      style={{
+        width: WIDTH,
+        height: HEIGHT
+      }}
+    >
+      {isModelLoading && (
+        <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10">
+          <Typography variant="h6" className="text-gray-600">
+            載入模型中
+          </Typography>
+          <LoadingSpinner width="128" height="128" />
         </div>
-      </div>
+      )}
+      {!!videoConstraints && !faceFound ? (
+        <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10 bottom-0">
+          <Typography variant="h6" className="text-white flex justify-center">
+            <span>比對臉孔 </span>
+            <LoadingSpinner width={32} height={32} />
+          </Typography>
+        </div>
+      ) : null}
+      {!!videoConstraints ? (
+        <Webcam
+          audio={false}
+          width={WIDTH}
+          height={HEIGHT}
+          ref={webcam}
+          screenshotFormat="image/jpeg"
+          videoConstraints={videoConstraints}
+        />
+      ) : null}
+      {!!drawBox ? drawBox : null}
     </div>
   );
 }
