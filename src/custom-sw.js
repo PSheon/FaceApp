@@ -45,6 +45,19 @@ workbox.routing.registerRoute(
     ]
   })
 );
+workbox.routing.registerRoute(
+  new RegExp('/models'),
+  workbox.strategies.cacheFirst({
+    cacheName: 'poc-cache-Images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 7,
+        maxEntries: 50,
+        purgeOnQuotaError: true
+      })
+    ]
+  })
+);
 
 workbox.routing.registerRoute('/', workbox.strategies.networkFirst());
 // We need this in Webpack plugin (refer to swSrc option): https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#full_injectmanifest_config
