@@ -1,0 +1,24 @@
+{
+  "files": {
+    "static/js/0.bd44f011.chunk.js": "/FaceFinder/static/js/0.bd44f011.chunk.js",
+    "main.css": "/FaceFinder/static/css/main.12cdac2d.chunk.css",
+    "main.js": "/FaceFinder/static/js/main.a6142e9c.chunk.js",
+    "runtime~main.js": "/FaceFinder/static/js/runtime~main.01f922de.js",
+    "static/css/3.3600bd45.chunk.css": "/FaceFinder/static/css/3.3600bd45.chunk.css",
+    "static/js/3.9c9261b5.chunk.js": "/FaceFinder/static/js/3.9c9261b5.chunk.js",
+    "static/js/4.c03242dd.chunk.js": "/FaceFinder/static/js/4.c03242dd.chunk.js",
+    "static/js/5.c6006621.chunk.js": "/FaceFinder/static/js/5.c6006621.chunk.js",
+    "static/js/6.28485f7e.chunk.js": "/FaceFinder/static/js/6.28485f7e.chunk.js",
+    "static/js/7.318e1e2b.chunk.js": "/FaceFinder/static/js/7.318e1e2b.chunk.js",
+    "static/js/8.5c57df87.chunk.js": "/FaceFinder/static/js/8.5c57df87.chunk.js",
+    "static/js/9.6c3eaa7a.chunk.js": "/FaceFinder/static/js/9.6c3eaa7a.chunk.js",
+    "static/js/10.d8215023.chunk.js": "/FaceFinder/static/js/10.d8215023.chunk.js",
+    "custom-sw.js": "/FaceFinder/custom-sw.js",
+    "index.html": "/FaceFinder/index.html",
+    "precache-manifest.390fd3db39ce7c18387fa8dc572180d1.js": "/FaceFinder/precache-manifest.390fd3db39ce7c18387fa8dc572180d1.js",
+    "precache-manifest.a99a6182a1f7abb3ec8e4a38c3fb6f59.js": "/FaceFinder/precache-manifest.a99a6182a1f7abb3ec8e4a38c3fb6f59.js",
+    "service-worker.js": "/FaceFinder/service-worker.js",
+    "static/media/index.css": "/FaceFinder/static/media/muli-latin-900italic.f99056b6.woff2",
+    "static/media/target3.jpg": "/FaceFinder/static/media/target3.434a3021.jpg"
+  }
+}
