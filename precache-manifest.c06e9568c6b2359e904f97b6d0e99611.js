@@ -1,17 +1,17 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f4c7dbddb9a3770a947b61355fcb906d",
+    "revision": "d83363e547fae09dc324fa9e25cad206",
     "url": "/FaceApp/index.html"
   },
   {
-    "url": "/FaceApp/precache-manifest.182fd81b3221155ac6e49b38c7a3b150.js"
+    "url": "/FaceApp/precache-manifest.a3ec682f29e262183a23c5b893baea9b.js"
   },
   {
-    "revision": "293b5d641c8c5d83c07cdc15efc8b775",
+    "revision": "37186bdacd17d9b94d7bfea3ce95e4e0",
     "url": "/FaceApp/service-worker.js"
   },
   {
-    "revision": "cf4ea6af4c877a0128c8",
+    "revision": "4c6da06e55932455d627",
     "url": "/FaceApp/static/css/3.91537527.chunk.css"
   },
   {
@@ -27,16 +27,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/10.d8215023.chunk.js"
   },
   {
-    "revision": "cf4ea6af4c877a0128c8",
-    "url": "/FaceApp/static/js/3.c23c7e3d.chunk.js"
+    "revision": "4c6da06e55932455d627",
+    "url": "/FaceApp/static/js/3.11555f85.chunk.js"
   },
   {
     "revision": "3f2c60d12daef325e8fe",
     "url": "/FaceApp/static/js/4.c03242dd.chunk.js"
   },
   {
-    "revision": "2b1cb2ac46386ee5cd77",
-    "url": "/FaceApp/static/js/5.8c2fb3b3.chunk.js"
+    "revision": "09237a7c024969e0c29c",
+    "url": "/FaceApp/static/js/5.fa9b63e0.chunk.js"
   },
   {
     "revision": "87c904a905bd6d85031d",
@@ -59,8 +59,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/main.a24f1772.chunk.js"
   },
   {
-    "revision": "38a36247216789f8e1bf",
-    "url": "/FaceApp/static/js/runtime~main.b42b6bc6.js"
+    "revision": "6cb1f35c45360869758a",
+    "url": "/FaceApp/static/js/runtime~main.0a5d3857.js"
   },
   {
     "revision": "1dfc66c75d0bc90cfbffb5076a7c6f90",
