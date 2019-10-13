@@ -29,11 +29,42 @@ function useInterval(callback, delay) {
     }
   }, [delay]);
 }
+function useWindowSize() {
+  const isClient = typeof window === 'object';
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined
+    };
+  }
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return false;
+    }
+
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+    /* eslint-disable-next-line */
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return windowSize;
+}
 function TestPage() {
   const webcam = useRef(null);
+  const size = useWindowSize();
 
-  const [WIDTH, SET_WIDTH] = useState(0);
-  const [HEIGHT, SET_HEIGHT] = useState(0);
+  const WIDTH = size.width;
+  const HEIGHT = size.height;
+  // const [WIDTH, SET_WIDTH] = useState(0);
+  // const [HEIGHT, SET_HEIGHT] = useState(0);
   const [isModelLoading, setIsModelLoading] = useState(true);
   const [shouldStartCapture, setShouldStartCapture] = useState(false);
   const [faceFound, setFaceFound] = useState(false);
@@ -129,10 +160,11 @@ function TestPage() {
     });
   }, []);
 
-  useEffect(() => {
-    SET_WIDTH(window.innerWidth);
-    SET_HEIGHT(window.innerHeight);
-  }, []);
+  // useEffect(() => {
+  //   SET_WIDTH(window.innerWidth);
+  //   SET_HEIGHT(window.innerHeight);
+
+  // }, []);
   useEffect(() => {
     async function initModel() {
       await loadModels();
