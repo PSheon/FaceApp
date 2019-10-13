@@ -161,7 +161,7 @@ function TestPage() {
           height: HEIGHT
         }}
       >
-        <div className="relative" style={{ width: WIDTH }}>
+        <div className="relative" style={{ width: WIDTH, height: HEIGHT }}>
           {isModelLoading && (
             <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10">
               <Typography variant="h6" className="text-gray-600">
