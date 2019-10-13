@@ -1,5 +1,5 @@
-importScripts("/FaceFinder/precache-manifest.a99a6182a1f7abb3ec8e4a38c3fb6f59.js", "/FaceFinder/workbox-v4.3.1/workbox-sw.js");
-workbox.setConfig({modulePathPrefix: "/FaceFinder/workbox-v4.3.1"});
+importScripts("/FaceApp/precache-manifest.17ae188e1506aaa26d0ab4e3ff4ce7bb.js", "/FaceApp/workbox-v4.3.1/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "/FaceApp/workbox-v4.3.1"});
 /* eslint-disable no-undef */
 // See https://developers.google.com/web/tools/workbox/guides/configure-workbox
 
