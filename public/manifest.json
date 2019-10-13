@@ -5,7 +5,7 @@
   "background_color": "#fafafa",
   "display": "standalone",
   "Scope": "/",
-  "start_url": "/",
+  "start_url": "/FaceApp",
   "icons": [{
     "src": "favicon.ico",
     "sizes": "64x64 32x32 24x24 16x16",

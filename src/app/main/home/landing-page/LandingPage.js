@@ -164,8 +164,8 @@ function TestPage() {
         <div className="relative" style={{ width: WIDTH }}>
           {isModelLoading && (
             <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10">
-              <Typography variant="h6" className="text-white">
-                載入模型
+              <Typography variant="h6" className="text-gray-600">
+                載入模型中
               </Typography>
               <LoadingSpinner width="128" height="128" />
             </div>
