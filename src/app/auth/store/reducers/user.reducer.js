@@ -5,7 +5,7 @@ import { avatarNameToPathConverter } from 'app/utils';
 const initialState = {
   role: [], //guest
   data: {
-    displayName: 'YS 青年',
+    displayName: '青年',
     photoURL: 'assets/images/avatars/penguin.png',
     email: 'penguin@gmail.com',
     shortcuts: ['ys-home']

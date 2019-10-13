@@ -1,65 +1,56 @@
-import _ from 'lodash';
+import * as faceapi from 'face-api.js';
+// import _ from 'lodash';
 
 export * from './converter';
-export * from './exporter';
-export * from './event';
-export * from './appointment';
-export * from './reduceState';
-export * from './stockChart';
-export * from './statisticChart';
-export * from './adminDashboard';
-export * from './borrowDashboard';
+export * from './descriptor';
 
-export const exchangesExtractor = (
-  EXCHANGES,
-  { onlyTradable = false, onlyImportable = false }
-) => {
-  let exchanges = Object.assign({}, EXCHANGES);
+// Load models and weights
+export async function loadModels() {
+  const MODEL_URL = process.env.PUBLIC_URL + '/models';
+  await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
+  await faceapi.loadFaceLandmarkTinyModel(MODEL_URL);
+  await faceapi.loadFaceRecognitionModel(MODEL_URL);
+}
 
-  if (_.isEmpty(exchanges)) return false;
+export async function getFullFaceDescription(blob, inputSize = 512) {
+  // tiny_face_detector options
+  let scoreThreshold = 0.5;
+  const OPTION = new faceapi.TinyFaceDetectorOptions({
+    inputSize,
+    scoreThreshold
+  });
+  const useTinyModel = true;
 
-  if (onlyTradable) {
-    _.each(exchanges, (e, name) => {
-      if (!e.tradable) delete exchanges[name];
-    });
-  }
+  // fetch image to api
+  let img = await faceapi.fetchImage(blob);
 
-  if (onlyImportable) {
-    _.each(exchanges, (e, name) => {
-      if (!e.importable) delete exchanges[name];
-    });
-  }
+  // detect all faces and generate full description from image
+  // including landmark and descriptor of each face
+  let fullDesc = await faceapi
+    .detectAllFaces(img, OPTION)
+    .withFaceLandmarks(useTinyModel)
+    .withFaceDescriptors();
+  return fullDesc;
+}
 
-  return exchanges;
-};
-
-export const userDetailChecker = userDetail => {
-  return (
-    !!userDetail.fullName &&
-    !!userDetail.bob &&
-    !!userDetail.gender &&
-    !!userDetail.education &&
-    !!userDetail.schoolName &&
-    !!userDetail.departmentName &&
-    !!userDetail.employmentStatus &&
-    !!userDetail.phone &&
-    !!userDetail.city &&
-    !!userDetail.heardFrom &&
-    !!userDetail.haveParticipated
+const maxDescriptorDistance = 0.5;
+export async function createMatcher(faceProfile) {
+  // Create labeled descriptors of member from profile
+  let members = Object.keys(faceProfile);
+  let labeledDescriptors = members.map(
+    member =>
+      new faceapi.LabeledFaceDescriptors(
+        faceProfile[member].name,
+        faceProfile[member].descriptors.map(
+          descriptor => new Float32Array(descriptor)
+        )
+      )
   );
-};
 
-export const preQuestionFormChecker = (form, requiredList) => {
-  if (!requiredList || requiredList.length === 0) {
-    return true;
-  } else {
-    let tempStatus = true;
-    requiredList.forEach(item => {
-      if (!form[item]) {
-        tempStatus = false;
-      }
-    });
-
-    return tempStatus;
-  }
-};
+  // Create face matcher (maximum descriptor distance is 0.5)
+  let faceMatcher = new faceapi.FaceMatcher(
+    labeledDescriptors,
+    maxDescriptorDistance
+  );
+  return faceMatcher;
+}

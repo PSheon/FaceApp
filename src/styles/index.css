@@ -3,6 +3,7 @@
 * {
   outline: none !important;
 }
+
 ::selection {
   background-color: #20bebe;
   color: white;
@@ -17,6 +18,13 @@ html {
 body {
   font-size: 14px;
   line-height: 1.4;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+  /* object-fit: contain;
+  object-position: 0% 0%; */
 }
 
 html,
@@ -58,8 +66,8 @@ h6,
   font-size: 12px;
 }
 
-.ps > .ps__rail-y,
-.ps > .ps__rail-x {
+.ps>.ps__rail-y,
+.ps>.ps__rail-x {
   z-index: 99;
 }
 

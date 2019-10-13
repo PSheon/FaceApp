@@ -1,6 +1,6 @@
 {
-  "name": "Youth Salon",
-  "short_name": "YS",
+  "name": "臉部辨識小幫手",
+  "short_name": "臉部辨識小幫手",
   "theme_color": "#ff9800",
   "background_color": "#fafafa",
   "display": "standalone",

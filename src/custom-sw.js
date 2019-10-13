@@ -46,15 +46,6 @@ workbox.routing.registerRoute(
   })
 );
 
-workbox.routing.registerRoute(
-  new RegExp('https://stage.ys.nat.gov.tw/api/(statistic|avatar)'),
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: 'poc-cache-api',
-    cacheExpiration: {
-      maxAgeSeconds: 60 * 30 //cache the news content for 30mn
-    }
-  })
-);
 workbox.routing.registerRoute('/', workbox.strategies.networkFirst());
 // We need this in Webpack plugin (refer to swSrc option): https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#full_injectmanifest_config
 workbox.precaching.precacheAndRoute(self.__precacheManifest);

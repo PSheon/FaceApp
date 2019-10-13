@@ -56,54 +56,7 @@ const defaultNavigationConfig = [
     icon: 'live_help',
     url: '/accompanies-list'
   }
-  // {
-  // 	'id': 'divider',
-  // 	'type': 'divider',
-  // },
-  // {
-  // 	'id': 'login-hint',
-  // 	'title': '登入後使用更多功能',
-  // 	'type': 'item',
-  // 	'url': '/login'
-  // }
 ];
-
-// export const HOME_SECTION = {
-// 	'id': 'ys-home-section',
-// 	'title': 'Youth Salon',
-// 	'type': 'group',
-// 	'icon': 'apps',
-// 	'children': [
-// 		{
-// 			'id': 'ys-home',
-// 			'title': 'YS 首頁',
-// 			'type': 'item',
-// 			'icon': 'home',
-// 			'url': '/home',
-// 		},
-// 		{
-// 			'id': 'ys-space',
-// 			'title': '空間運用與介紹',
-// 			'type': 'item',
-// 			'icon': 'home',
-// 			'url': '/space',
-// 		},
-// 		{
-// 			'id': 'ys-about',
-// 			'title': '關於 YS',
-// 			'type': 'item',
-// 			'icon': 'photo_filter',
-// 			'url': '/about',
-// 		},
-// 		{
-// 			'id': 'ys-faq',
-// 			'title': '常見問答',
-// 			'type': 'item',
-// 			'icon': 'live_help',
-// 			'url': '/faq'
-// 		},
-// 	]
-// };
 
 export const ADMIN_SECTION = {
   id: 'admin-section',
@@ -111,13 +64,6 @@ export const ADMIN_SECTION = {
   type: 'group',
   icon: 'apps',
   children: [
-    // {
-    //   id: 'admin-dashboard',
-    //   title: 'YS 主控版',
-    //   type: 'item',
-    //   icon: 'chrome_reader_mode',
-    //   url: '/admin/dashboard'
-    // },
     {
       id: 'staff-helping',
       title: '員工列表',

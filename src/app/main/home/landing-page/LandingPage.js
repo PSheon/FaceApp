@@ -1,188 +1,203 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
-import { FuseAnimate } from '@fuse';
-import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Webcam from 'react-webcam';
 
-import * as Actions from 'app/store/actions';
-import WidgetCarouselSection from './widgets/WidgetCarouselCard';
-import SectionNews from './sections/SectionNews';
-import SectionSpeakers from './sections/SectionSpeakers';
-import SectionInformation from './sections/SectionInformation';
-import SectionEvents from './sections/SectionEvents';
+import LoadingSpinner from 'app/main/shared/LoadingSpinner';
+import { loadModels, getFullFaceDescription, createMatcher } from 'app/utils';
+// Import face profile
+/* TODO */
+const JSON_PROFILE = require('../../../../descriptors/main.json');
 
-const useStyles = makeStyles(theme => ({
-  linWrapper: {
-    transitionProperty: 'box-shadow',
-    transitionDuration: theme.transitions.duration.short,
-    transitionTimingFunction: theme.transitions.easing.easeInOut
+const inputSize = 160;
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+function TestPage() {
+  const webcam = useRef(null);
+
+  const [WIDTH, SET_WIDTH] = useState(0);
+  const [HEIGHT, SET_HEIGHT] = useState(0);
+  const [isModelLoading, setIsModelLoading] = useState(true);
+  const [shouldStartCapture, setShouldStartCapture] = useState(false);
+  const [faceFound, setFaceFound] = useState(false);
+  const [detections, set_detections] = useState(null);
+  const [descriptors, set_descriptors] = useState(null);
+  const [faceMatcher, set_faceMatcher] = useState(null);
+  const [match, set_match] = useState(null);
+  const [facingMode, set_facingMode] = useState(null);
+
+  let videoConstraints = null;
+  if (!!facingMode) {
+    videoConstraints = {
+      width: WIDTH,
+      height: HEIGHT,
+      facingMode: facingMode
+    };
   }
-}));
 
-function LandingPage() {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  let drawBox = null;
+  if (!!detections) {
+    drawBox = detections.map((detection, i) => {
+      let _H = detection.box.height;
+      let _W = detection.box.width;
+      let _X = detection.box._x;
+      let _Y = detection.box._y;
+      return (
+        <div key={i}>
+          {!!match && !!match[i] ? (
+            <Typography
+              variant="subtitle1"
+              className="absolute text-center bg-green-300 mt-0 text-white"
+              style={{
+                border: 'solid',
+                borderColor: 'green',
+                width: _W,
+                transform: `translate(${_X}px,${_Y - 30}px)`
+              }}
+            >
+              {match[i]._label}
+            </Typography>
+          ) : null}
+          <div
+            className="absolute"
+            style={{
+              border: 'solid',
+              borderColor: 'green',
+              height: _H,
+              width: _W,
+              transform: `translate(${_X}px,${_Y}px)`
+            }}
+          />
+        </div>
+      );
+    });
+  }
+
+  const capture = useCallback(async () => {
+    if (!!webcam.current) {
+      await getFullFaceDescription(
+        webcam.current.getScreenshot(),
+        inputSize
+      ).then(fullDesc => {
+        if (!!fullDesc) {
+          setFaceFound(true);
+          set_detections(fullDesc.map(fd => fd.detection));
+          set_descriptors(fullDesc.map(fd => fd.descriptor));
+        } else {
+          setFaceFound(false);
+        }
+      });
+
+      if (!!descriptors && !!faceMatcher) {
+        let match = await descriptors.map(descriptor =>
+          faceMatcher.findBestMatch(descriptor)
+        );
+        set_match(match);
+      } else {
+        setFaceFound(false);
+      }
+    }
+  }, [descriptors, faceMatcher]);
+  const setInputDevice = useCallback(() => {
+    navigator.mediaDevices.enumerateDevices().then(async devices => {
+      let inputDevice = await devices.filter(
+        device => device.kind === 'videoinput'
+      );
+      if (inputDevice.length < 2) {
+        await set_facingMode('user');
+      } else {
+        await set_facingMode({ exact: 'environment' });
+      }
+      setShouldStartCapture(true);
+    });
+  }, []);
 
   useEffect(() => {
-    dispatch(Actions.syncHomePageCarousels());
-  }, [dispatch]);
+    SET_WIDTH(window.innerWidth);
+    SET_HEIGHT(window.innerHeight);
+  }, []);
+  useEffect(() => {
+    async function initModel() {
+      await loadModels();
+      const matcher = await createMatcher(JSON_PROFILE);
+      set_faceMatcher(matcher);
+      setInputDevice();
+      setIsModelLoading(false);
+    }
 
+    if (!facingMode) {
+      initModel();
+    }
+  }, [facingMode, isModelLoading, setInputDevice]);
+
+  useInterval(() => {
+    // if (0 && shouldStartCapture) {
+    if (shouldStartCapture) {
+      capture();
+    }
+  }, 1000);
   return (
-    <div className="w-full">
-      <WidgetCarouselSection />
-
-      <FuseAnimate animation="transition.slideUpIn" delay={200}>
-        <div className="flex flex-col-reverse md:flex-row sm:p-8 container">
-          <div className="flex flex-1 flex-col min-w-0">
-            {/* YS News */}
-            <FuseAnimate delay={600}>
-              <Typography className="p-16 pb-8 text-18 font-600 flex justify-between">
-                YS 新聞快訊
-                <Link
-                  to="/news-list"
-                  className="px-12 text-black"
-                  role="button"
-                >
-                  更多新聞
-                </Link>
+    <div className="Camera flex flex-col justify-center items-center">
+      <div
+        style={{
+          width: WIDTH,
+          height: HEIGHT
+        }}
+      >
+        <div className="relative" style={{ width: WIDTH }}>
+          {isModelLoading && (
+            <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10">
+              <Typography variant="h6" className="text-white">
+                載入模型
               </Typography>
-            </FuseAnimate>
-            <div className="flex flex-col sm:flex sm:flex-row">
-              <SectionNews />
+              <LoadingSpinner width="128" height="128" />
             </div>
-          </div>
-
-          <div className="flex flex-col flex-wrap w-full md:w-400 lg:w-460">
-            {/* YS Events */}
-            <FuseAnimate delay={600}>
-              <Typography className="w-full p-16 pb-8 text-18 font-600 flex justify-between">
-                活動預告
-                <Link
-                  to="/events-list"
-                  className="px-12 text-black"
-                  role="button"
-                >
-                  更多活動
-                </Link>
-              </Typography>
-            </FuseAnimate>
-            <div className="widget w-full p-16">
-              <SectionEvents />
+          )}
+          {!!videoConstraints ? (
+            <div className="absolute">
+              {faceFound ? null : (
+                <div className="w-full h-640 absolute flex flex-col justify-center items-center z-10 bottom-0">
+                  <Typography
+                    variant="h6"
+                    className="text-white flex justify-center"
+                  >
+                    <span>比對臉孔 </span>
+                    <LoadingSpinner width={32} height={32} />
+                  </Typography>
+                </div>
+              )}
+              <Webcam
+                audio={false}
+                width={WIDTH}
+                height={HEIGHT}
+                ref={webcam}
+                screenshotFormat="image/jpeg"
+                videoConstraints={videoConstraints}
+              />
             </div>
-            {/* <div className="mb-32 w-full sm:w-1/2 md:w-full">
-							<FuseAnimate delay={600}>
-								<Typography className="p-16 pb-8 text-18 font-600 flex justify-between">
-									活動預告
-									<Link to="/events-list" className="px-12 text-black" role="button">更多活動</Link>
-								</Typography>
-							</FuseAnimate>
-							<div className="widget w-full p-16">
-								<SectionEvents />
-							</div>
-						</div> */}
-          </div>
+          ) : null}
+          {!!drawBox ? drawBox : null}
         </div>
-      </FuseAnimate>
-
-      {/* YS Information */}
-      <FuseAnimate delay={600}>
-        <div className="container">
-          <Typography className="p-16 pb-8 text-18 font-600 flex justify-between">
-            職場情報站
-            <Link
-              to="/information-list"
-              className="px-12 text-black"
-              role="button"
-            >
-              更多情報
-            </Link>
-          </Typography>
-          <div className="flex flex-col sm:flex sm:flex-row">
-            <SectionInformation />
-          </div>
-        </div>
-      </FuseAnimate>
-
-      {/* YS About */}
-      <FuseAnimate delay={600}>
-        <div className="container">
-          <div className="flex flex-wrap mt-32">
-            <div className="w-1/2 sm:w-1/4 mb-10 flex justify-center items-center">
-              <Link
-                to="/ys-services"
-                role="button"
-                className={clsx(
-                  classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
-                )}
-              >
-                <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
-                  關於 YS
-                </Typography>
-              </Link>
-            </div>
-            <div className="w-1/2 sm:w-1/4 mb-10 flex justify-center items-center">
-              <Link
-                to="/ys-space"
-                role="button"
-                className={clsx(
-                  classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
-                )}
-              >
-                <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
-                  空間介紹
-                </Typography>
-              </Link>
-            </div>
-            <div className="w-1/2 sm:w-1/4 mb-10 flex justify-center items-center">
-              <Link
-                to="/ys-faq"
-                role="button"
-                className={clsx(
-                  classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
-                )}
-              >
-                <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
-                  常見 Q & A
-                </Typography>
-              </Link>
-            </div>
-            <div className="w-1/2 sm:w-1/4 mb-10 flex justify-center items-center">
-              <Link
-                to="/ys-contact-us"
-                role="button"
-                className={clsx(
-                  classes.linWrapper,
-                  'flex justify-center items-center h-128 w-128 md:h-200 md:w-200 p-12 rounded-full bg-orange shadow-md hover:shadow-lg'
-                )}
-              >
-                <Typography className="leading-loose text-white text-lg md:text-2xl bg-no-repeat bg-contain">
-                  聯絡我們
-                </Typography>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </FuseAnimate>
-
-      {/* YS Speaker */}
-      <FuseAnimate delay={600}>
-        <div className="container">
-          <Typography className="p-16 pb-8 text-18 font-600 flex justify-between">
-            名人回顧
-            {/* <Link to="/news" className="px-12 text-black" role="button">更多活動</Link> */}
-          </Typography>
-        </div>
-      </FuseAnimate>
-      <div className="mb-32">
-        <SectionSpeakers />
       </div>
     </div>
   );
 }
 
-export default LandingPage;
+export default TestPage;

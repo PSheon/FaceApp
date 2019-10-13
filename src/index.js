@@ -5,8 +5,8 @@
 // import 'react-app-polyfill/ie11';
 // import 'react-app-polyfill/stable';
 import 'typeface-muli';
-import './react-table-defaults';
-import './react-chartjs-2-defaults';
+// import './react-table-defaults';
+// import './react-chartjs-2-defaults';
 import './moment-Localization';
 import './styles/index.css';
 import React from 'react';

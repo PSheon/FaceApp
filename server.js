@@ -16,5 +16,5 @@ app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 app.listen(port, () => {
-  console.log(`YS-MAIN-WEB running on port ${port}`);
+  console.log(`Face-Bot running on port ${port}`);
 });
