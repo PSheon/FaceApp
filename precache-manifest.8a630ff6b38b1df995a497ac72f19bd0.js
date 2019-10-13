@@ -1,15 +1,22 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dff7fd09590597a07e155c9243e9ab77",
+    "revision": "f4c7dbddb9a3770a947b61355fcb906d",
     "url": "/FaceApp/index.html"
   },
   {
-    "revision": "e047e0c8bd67970c2154",
+    "url": "/FaceApp/precache-manifest.182fd81b3221155ac6e49b38c7a3b150.js"
+  },
+  {
+    "revision": "293b5d641c8c5d83c07cdc15efc8b775",
+    "url": "/FaceApp/service-worker.js"
+  },
+  {
+    "revision": "cf4ea6af4c877a0128c8",
     "url": "/FaceApp/static/css/3.91537527.chunk.css"
   },
   {
-    "revision": "58022d046a0e7d50862e",
-    "url": "/FaceApp/static/css/main.12cdac2d.chunk.css"
+    "revision": "d677bf7d85e3561e09b4",
+    "url": "/FaceApp/static/css/main.e0c5b5f2.chunk.css"
   },
   {
     "revision": "9e8fbec5999dfa5e834b",
@@ -20,16 +27,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/10.d8215023.chunk.js"
   },
   {
-    "revision": "e047e0c8bd67970c2154",
-    "url": "/FaceApp/static/js/3.9ddb6531.chunk.js"
+    "revision": "cf4ea6af4c877a0128c8",
+    "url": "/FaceApp/static/js/3.c23c7e3d.chunk.js"
   },
   {
     "revision": "3f2c60d12daef325e8fe",
     "url": "/FaceApp/static/js/4.c03242dd.chunk.js"
   },
   {
-    "revision": "9682a4ef95b64b872ea2",
-    "url": "/FaceApp/static/js/5.c6006621.chunk.js"
+    "revision": "2b1cb2ac46386ee5cd77",
+    "url": "/FaceApp/static/js/5.8c2fb3b3.chunk.js"
   },
   {
     "revision": "87c904a905bd6d85031d",
@@ -48,12 +55,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/9.6c3eaa7a.chunk.js"
   },
   {
-    "revision": "58022d046a0e7d50862e",
+    "revision": "d677bf7d85e3561e09b4",
     "url": "/FaceApp/static/js/main.a24f1772.chunk.js"
   },
   {
-    "revision": "dc1f4147a23c82371aa7",
-    "url": "/FaceApp/static/js/runtime~main.b6aa4a99.js"
+    "revision": "38a36247216789f8e1bf",
+    "url": "/FaceApp/static/js/runtime~main.b42b6bc6.js"
   },
   {
     "revision": "1dfc66c75d0bc90cfbffb5076a7c6f90",
