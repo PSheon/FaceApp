@@ -1,13 +1,13 @@
 {
   "files": {
     "static/js/0.bd44f011.chunk.js": "/FaceApp/static/js/0.bd44f011.chunk.js",
-    "main.css": "/FaceApp/static/css/main.a7d7cfbc.chunk.css",
+    "main.css": "/FaceApp/static/css/main.e2ba30ed.chunk.css",
     "main.js": "/FaceApp/static/js/main.a24f1772.chunk.js",
-    "runtime~main.js": "/FaceApp/static/js/runtime~main.35478e05.js",
+    "runtime~main.js": "/FaceApp/static/js/runtime~main.2a3edc7d.js",
     "static/css/3.91537527.chunk.css": "/FaceApp/static/css/3.91537527.chunk.css",
-    "static/js/3.c23c7e3d.chunk.js": "/FaceApp/static/js/3.c23c7e3d.chunk.js",
+    "static/js/3.1bd2db3f.chunk.js": "/FaceApp/static/js/3.1bd2db3f.chunk.js",
     "static/js/4.c03242dd.chunk.js": "/FaceApp/static/js/4.c03242dd.chunk.js",
-    "static/js/5.2f3adc16.chunk.js": "/FaceApp/static/js/5.2f3adc16.chunk.js",
+    "static/js/5.2c9177eb.chunk.js": "/FaceApp/static/js/5.2c9177eb.chunk.js",
     "static/js/6.28485f7e.chunk.js": "/FaceApp/static/js/6.28485f7e.chunk.js",
     "static/js/7.318e1e2b.chunk.js": "/FaceApp/static/js/7.318e1e2b.chunk.js",
     "static/js/8.5c57df87.chunk.js": "/FaceApp/static/js/8.5c57df87.chunk.js",
@@ -15,8 +15,8 @@
     "static/js/10.d8215023.chunk.js": "/FaceApp/static/js/10.d8215023.chunk.js",
     "custom-sw.js": "/FaceApp/custom-sw.js",
     "index.html": "/FaceApp/index.html",
-    "precache-manifest.72900f0a09908dfcf26708b5b4850191.js": "/FaceApp/precache-manifest.72900f0a09908dfcf26708b5b4850191.js",
-    "precache-manifest.789b484a98213d85bffc662a5ed9d918.js": "/FaceApp/precache-manifest.789b484a98213d85bffc662a5ed9d918.js",
+    "precache-manifest.888da21c50540a32d19e79502f4f1f17.js": "/FaceApp/precache-manifest.888da21c50540a32d19e79502f4f1f17.js",
+    "precache-manifest.d955768e993c73fe4e31a9fff2b74e52.js": "/FaceApp/precache-manifest.d955768e993c73fe4e31a9fff2b74e52.js",
     "service-worker.js": "/FaceApp/service-worker.js",
     "static/media/index.css": "/FaceApp/static/media/muli-latin-900italic.f99056b6.woff2",
     "static/media/target3.jpg": "/FaceApp/static/media/target3.434a3021.jpg"

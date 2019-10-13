@@ -1,4 +1,4 @@
-importScripts("/FaceApp/precache-manifest.789b484a98213d85bffc662a5ed9d918.js", "/FaceApp/workbox-v4.3.1/workbox-sw.js");
+importScripts("/FaceApp/precache-manifest.888da21c50540a32d19e79502f4f1f17.js", "/FaceApp/workbox-v4.3.1/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/FaceApp/workbox-v4.3.1"});
 /* eslint-disable no-undef */
 // See https://developers.google.com/web/tools/workbox/guides/configure-workbox
