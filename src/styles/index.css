@@ -1,4 +1,4 @@
-@import 'normalize.css';
+@import "normalize.css";
 
 * {
   outline: none !important;
@@ -11,24 +11,13 @@
 
 html {
   font-size: 62.5%;
-  font-family: 'Noto Sans TC', Muli, Roboto, Helvetica Neue, Arial, sans-serif;
+  font-family: "Noto Sans TC", Muli, Roboto, Helvetica Neue, Arial, sans-serif;
   background-color: #262933;
 }
 
 body {
   font-size: 14px;
   line-height: 1.4;
-}
-
-video {
-  left: 50%;
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  /* object-fit: contain;
-  object-position: 0% 0%; */
 }
 
 html,
@@ -70,16 +59,16 @@ h6,
   font-size: 12px;
 }
 
-.ps>.ps__rail-y,
-.ps>.ps__rail-x {
+.ps > .ps__rail-y,
+.ps > .ps__rail-x {
   z-index: 99;
 }
 
-a[role='button'] {
+a[role="button"] {
   text-decoration: none;
 }
 
-[role='tooltip'] {
+[role="tooltip"] {
   z-index: 999;
 }
 
@@ -113,12 +102,12 @@ form label {
   z-index: 99;
 }
 
-@import 'print.css';
+@import "print.css";
 
-@import 'tables.css';
+@import "tables.css";
 
-@import 'react-table.css';
+@import "react-table.css";
 
-@import 'prism.css';
+@import "prism.css";
 
-@import 'tailwind.css';
+@import "tailwind.css";

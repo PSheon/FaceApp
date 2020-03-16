@@ -11,6 +11,11 @@
     "@material-ui/lab": "^4.0.0-alpha.25",
     "@material-ui/pickers": "3.2.2",
     "@material-ui/styles": "4.3.0",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
+    "@types/webrtc": "^0.0.26",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
     "auth0-lock": "11.17.1",
     "autosuggest-highlight": "3.1.1",
     "axios": "0.19.0",
@@ -81,6 +86,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^2.2.0",
     "typeface-muli": "0.0.71",
+    "typescript": "3.6.2",
     "validator": "^11.1.0",
     "velocity-react": "1.4.3",
     "workbox-webpack-plugin": "^4.3.1"
@@ -102,7 +108,7 @@
   },
   "scripts": {
     "deploy": "gh-pages -d build",
-    "start": "yarn run tailwind && PORT=8080 react-app-rewired start",
+    "dev": "yarn run tailwind && PORT=8080 react-app-rewired start",
     "build": "yarn run tailwind && node ./purge-tailwindcss.js && cross-env GENERATE_SOURCEMAP=false NODE_ENV=production react-app-rewired build",
     "tailwind": "./node_modules/.bin/tailwind build ./src/styles/tailwind.base.css -c ./tailwind.js -o ./src/styles/tailwind.css",
     "test": "react-app-rewired test --env=node",

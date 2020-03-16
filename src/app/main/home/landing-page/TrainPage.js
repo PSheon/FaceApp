@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
-import { withRouter } from 'react-router-dom';
-import { loadModels, getFullFaceDescription } from 'app/utils';
+import { withRouter } from "react-router-dom";
+import { loadModels, getFullFaceDescription } from "app/utils";
 
 // Import image to test API
-const testImg = require('../../../../img/target3.jpg');
+const testImg = require("../../../../img/chair-man.jpg");
 
 function ImageInput(props) {
   const [imageURL] = useState(testImg);
