@@ -1,21 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "870caf89f5e4119e17d370156687ebcf",
+    "revision": "7df986f2475099a073f5d8b02cced342",
     "url": "/FaceApp/index.html"
-  },
-  {
-    "url": "/FaceApp/precache-manifest.a7108f8c446f61178348783069f1321f.js"
-  },
-  {
-    "revision": "4490994d047f1371568c3c2000b6aeca",
-    "url": "/FaceApp/service-worker.js"
   },
   {
     "revision": "65a9abc2cd9b94e3d5f0",
     "url": "/FaceApp/static/css/3.91537527.chunk.css"
   },
   {
-    "revision": "c0b9e22264384eba81a6",
+    "revision": "d01e3fd99e2580b940ea",
     "url": "/FaceApp/static/css/main.a986d3c3.chunk.css"
   },
   {
@@ -35,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/4.526d9f9e.chunk.js"
   },
   {
-    "revision": "52405fda48c824a17040",
-    "url": "/FaceApp/static/js/5.520a480b.chunk.js"
+    "revision": "0115328ee9a6b42ed80a",
+    "url": "/FaceApp/static/js/5.f362e238.chunk.js"
   },
   {
     "revision": "fdb361f269b483da8c2c",
@@ -55,12 +48,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FaceApp/static/js/9.3c10bff3.chunk.js"
   },
   {
-    "revision": "c0b9e22264384eba81a6",
-    "url": "/FaceApp/static/js/main.cd004558.chunk.js"
+    "revision": "d01e3fd99e2580b940ea",
+    "url": "/FaceApp/static/js/main.2f9bbec6.chunk.js"
   },
   {
-    "revision": "b5d9371c305743ce0744",
-    "url": "/FaceApp/static/js/runtime~main.3e62af39.js"
+    "revision": "21606f26704096211b12",
+    "url": "/FaceApp/static/js/runtime~main.2a454d9e.js"
   },
   {
     "revision": "230946c7dbbe08152950baecbb205b3a",
